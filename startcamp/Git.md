@@ -77,3 +77,6 @@ $ git commit -m "First Commit"
 
 *INSERT가 뜨면 = Esc - wq 입력 - Enter
 
+###### git 상태 확인
+```
+$ git status
