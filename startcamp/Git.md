@@ -80,3 +80,12 @@ $ git commit -m "First Commit"
 ###### git 상태 확인
 ```
 $ git status
+```
+###### push
+```
+$ git remote TIL URL
+```
+```
+$ git push TIL
+```
+
