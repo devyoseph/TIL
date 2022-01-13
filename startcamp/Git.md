@@ -14,9 +14,9 @@
 
 > 맨 나중 파일과, 이전 변경사항만 남겨 용량을 효율적으로 사용한다
 
-![image2]](../image/git2.png)
+![image2](../image/git2.png)
 
-![image3]](../image/git3.png)
+![image3](../image/git3.png)
 
 > 왜 수정을 해야했는지 이유만 적어준다면 Git이 모두 관리해준다.
 
