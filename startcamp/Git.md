@@ -10,13 +10,13 @@
 
 버전 관리 = 컴퓨터 소프트웨어의 특정 상태들을 관리하는 것?
 
-![image1](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F1LATp%2FbtrqFn27p3h%2FoBUNN22InFHR0nwPDjisC0%2Fimg.png)
+![image1](../image/git1.png)
 
 > 맨 나중 파일과, 이전 변경사항만 남겨 용량을 효율적으로 사용한다
 
-![image2](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcdK4Gl%2FbtrqFjGr4Ss%2FjwjthT1RboHjhzEl38TYDk%2Fimg.png)
+![image2]](../image/git2.png)
 
-![image3](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbf5l0n%2FbtrqAbXckYP%2FBJKZmKwxKzfSKLn5GHQpP0%2Fimg.png)
+![image3]](../image/git3.png)
 
 > 왜 수정을 해야했는지 이유만 적어준다면 Git이 모두 관리해준다.
 
