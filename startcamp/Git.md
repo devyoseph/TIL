@@ -37,6 +37,7 @@ $ git init
 이로써 로컬 저장소가 생성된다.
 
 ###### 단계
+![image4](../image/git4.png)
 
 실제 폴더 - 로컬 저장소 ( working directory - staging area - commit ) - 원격 저장소(git hub)
 
