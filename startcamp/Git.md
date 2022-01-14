@@ -159,4 +159,5 @@ $ git clone
 > 조건: .git 폴더 & remote가 있어야한다
 ```
 $ git pull 리모트명
+$ git pull origin master
 ```
