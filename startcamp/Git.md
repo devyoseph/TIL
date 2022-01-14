@@ -161,3 +161,5 @@ $ git clone
 $ git pull 리모트명
 $ git pull origin master
 ```
+###### .git 내부 .git
+서브 모듈(submodule)로 서로 분리해서 관리 가능
