@@ -163,3 +163,4 @@ $ git pull origin master
 ```
 ###### .git 내부 .git
 서브 모듈(submodule)로 서로 분리해서 관리 가능
+> 프로젝트 단위가 작으므로 git init을 하위 폴더에서 하지 않는다
