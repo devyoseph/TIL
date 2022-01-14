@@ -108,7 +108,12 @@ $ git status
 ```
 ###### push
 ```
+$ git remote add origin URL
+//메인 저장소인 경우 이름을 origin으로 등록
+```
+```
 $ git remote TIL URL
+//메인 저장소가 아닌 경우 
 ```
 ```
 $ git push TIL
