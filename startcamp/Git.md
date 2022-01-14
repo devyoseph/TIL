@@ -156,6 +156,7 @@ $ git clone
 //git init, remote, add가 합쳐져있다
 ```
 2. 원래 작업 공간일 때: pull 사용
+조건: .git 폴더 & remote가 있어야한다
 ```
 $ git pull 리모트명
 ```
