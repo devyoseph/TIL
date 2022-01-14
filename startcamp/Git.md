@@ -126,6 +126,8 @@ $ git log -숫자 //숫자만큼만 보여준다
 > 1. gitignore_test 폴더를 만든다
 > 2. 폴더 안에서 vscode(code로 열기) 실행
 > 3. ctrl + ``` : 터미널 오픈
+> 4. .gitignore 파일을 만들고 내부에 목록 작성
+>     ex) `*.png` 등으로 표현한다. 이 중 다시 특정 파일을 add하고 싶을 때 !abc.png를 한다
 ```
 git restore --staged 파일명
 ```
