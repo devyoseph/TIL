@@ -134,6 +134,8 @@ $ git log -숫자 //숫자만큼만 보여준다
 git restore --staged 파일명
 ```
 관련 페이지: https://www.toptal.com/developers/gitignore
+검색창 키워드 예시: Window - Python - VisualCode
+vs .ignore 파일에 전체 복사 붙여넣기한다.
 ###### push
 ```
 $ git remote add origin URL
