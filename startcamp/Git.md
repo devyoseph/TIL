@@ -164,3 +164,13 @@ $ git pull origin master
 ###### .git 내부 .git
 서브 모듈(submodule)로 서로 분리해서 관리 가능
 > 프로젝트 단위가 작으므로 git init을 하위 폴더에서 하지 않는다
+
+###### submodule 오류메세지
+1. 어떤 폴더가 submodule 인지 파악한다.
+2. 해당 폴더에서 ,git 폴더를 제거한다
+3. 이미 Staging Area에 올라간 상태라면
+```
+$ git rm -rf --cached
+```
+4. 다시 git add . 로 올린다음 commit
+5. CLI 환경에서 (master)가 보이면 git init을 하지 않는다
