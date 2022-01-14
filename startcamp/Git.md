@@ -133,6 +133,7 @@ $ git log -숫자 //숫자만큼만 보여준다
 ```
 git restore --staged 파일명
 ```
+관련 페이지: https://www.toptal.com/developers/gitignore
 ###### push
 ```
 $ git remote add origin URL
