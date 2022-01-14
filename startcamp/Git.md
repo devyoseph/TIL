@@ -106,6 +106,29 @@ $ git commit -m "First Commit"
 ```
 $ git status
 ```
+```
+$ git log
+$ git log --oneline  //한 줄로 확인하기
+$ git log -p //파일 변경 내용도 보여준다
+$ git log -숫자 //숫자만큼만 보여준다
+
+//commit 로그 확인하기
+```
+###### gitignore
+> 주의 gitignore에 먼저 등록하고 add한다
+> 관리하고 싶지 않은 파일도 git add .를 하면 전부 등록되기 떄문에 이를 제외하고자 사용한다.
+> 일종의 블랙리스트 (Working Directory에 올라가지 않음)
+* 민감한 bin 파일
+* 개인 컴퓨터 설정파일(OS에서 활용되는 프로젝트 관련 없는 파일)
+* IDE 환경설정파일(.idea/)
+* 가상환경 폴더 및 파일(venv/)
+> git ignore 파일을 생성(확장자는 필요없음)
+> 1. gitignore_test 폴더를 만든다
+> 2. 폴더 안에서 vscode(code로 열기) 실행
+> 3. ctrl + ``` : 터미널 오픈
+```
+git restore --staged 파일명
+```
 ###### push
 ```
 $ git remote add origin URL
