@@ -149,3 +149,13 @@ $ git remote TIL URL
 $ git push TIL
 ```
 
+###### pull
+1. 완전 새로운 컴퓨터에서 자료를 내려받을 때: clone을 사용
+```
+$ git clone
+//git init 과 git remote가 합쳐져있다
+```
+2. 원래 작업 공간일 때: pull 사용
+```
+$ git pull 리모트명
+```
