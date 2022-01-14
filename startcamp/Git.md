@@ -61,11 +61,15 @@ $ git init
 
 ###### untracked
 
-처음으로 관리되는 대상
+* 처음으로 관리되는 대상
+* WD에서 해당 단어를 확인할 수 있음
 
 ###### tracked
 
 관리되고 있는 대상
+
+* New file: git으로 관리되지 않았던 파일이 Staging Area에 등록되어 있을 때 생긴다
+* Modified: git으로 관리되는데 수정된 파일이 Staging Area에 등록되었을 때
 
 > 초록색(new): 처음 관리되고 있는 대상
 
@@ -74,6 +78,14 @@ $ git add startcamp
 $ git add readme.md
 ```
 
+```bash
+$ git add .
+//현재 폴더 내에 있는 병경/추가된 파일 모두 등록
+```
+
+아래 명령문을 통해 전체를 한번에 추가할 수 있다.
+
+> git add를 실행하면 두 파일이 staging area로 이동한다.
 > 위 명령어를 실행하면 두 파일이 staging area로 이동한다.
 
 ```bash
