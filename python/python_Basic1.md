@@ -142,6 +142,8 @@ None
 불린(Boolean)
 
 * True / False 값을 가진 타입은 boolean
+* False: 0, 0.0, (), [], {}, '', None
+* True: ' ', [0], {1}
 * bool() 함수: 특정 데이터가 True인지 False인지 검증
 
 > bool(0) # False
