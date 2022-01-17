@@ -9,3 +9,5 @@
 ### Git
   1. [git 사용법](https://github.com/devyoseph/TIL/blob/master/startcamp/Git.md)
   
+### Python
+  1. [변수와 자료형]()
