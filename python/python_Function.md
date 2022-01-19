@@ -314,7 +314,7 @@ print(a)
 
 
 
-> **zip(*iterables)**
+> **zip(iterables)**
 >
 > : 복수의 iterable을 모아 튜플을 원소로 하는 zip object를 반환
 >
