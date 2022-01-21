@@ -17,13 +17,13 @@
 
 버전 관리 = 컴퓨터 소프트웨어의 특정 상태들을 관리하는 것?
 
-![image1](../image/git1.png)
+<img src="https://github.com/devyoseph/TIL/blob/master/image/git1.png?raw=true"  width="500" height="300">
+<img src="https://github.com/devyoseph/TIL/blob/master/image/git3.png?raw=true"  width="500" height="300">
 
 > 맨 나중 파일과, 이전 변경사항만 남겨 용량을 효율적으로 사용한다
 
-![image2](../image/git2.png)
 
-![image3](../image/git3.png)
+<img src="https://github.com/devyoseph/TIL/blob/master/image/git2.png?raw=true"  width="500" height="300">
 
 > 왜 수정을 해야했는지 이유만 적어준다면 Git이 모두 관리해준다.
 
@@ -37,7 +37,6 @@
 * 분산버전관리 시스템은 원격 저장소(remote repository)를 통하여 협업하고 모든 히스토리를 클라이언트들이 공유
 
 ### Git
-
 TIL 폴더에서 다음 명령문 입력
 
 ```bash
@@ -47,7 +46,7 @@ $ git init
 이로써 **저장소가 초기화**되고 로컬 저장소가 생성된다.
 
 ###### 단계
-![image4](../image/git4.png)
+<img src="https://github.com/devyoseph/TIL/blob/master/image/git4.png?raw=true"  width="500" height="300">
 
 실제 폴더 - 로컬 저장소 ( working directory - staging area - commit ) - 원격 저장소(git hub)
 | Working directory                                      | Staging Area                                                 | Local Repository (commit)                    |
