@@ -74,6 +74,12 @@ $ git init
 
 > 초록색(new): 처음 관리되고 있는 대상
 
+###### 상태확인
+```
+$ git status
+$ git log
+```
+
 ```bash
 $ git add startcamp
 $ git add readme.md
