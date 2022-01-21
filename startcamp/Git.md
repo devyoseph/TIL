@@ -52,8 +52,7 @@ $ git init
 | Working directory                                      | Staging Area                                                 | Local Repository (commit)                    |
 | ------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------------------- |
 | 실제적인 작업 공간. 변경점이 나타나면 이곳에 파일 등록 | commit 되기 전 임시로 파일이 보여지는 곳. 이곳에서 commit 되는지 파일을 확인한다. | git으로 관리되는 파일들의 버전이 기록되는 곳 |
-
-
+<img src="https://github.com/devyoseph/TIL/blob/master/image/git5.png?raw=true"  width="500" height="300">
 
 > git add: working directory - staging area 단계 이동
 
