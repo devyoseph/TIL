@@ -12,8 +12,8 @@ $ cd /
 ```
 
 ```markdown
-$ ~/ssafy7
-> home 디렉토리의 ssafy7 폴더로 이동
+$ ~/abcd
+> home 디렉토리의 abcd 폴더로 이동
 ```
 
 ### **경로**
