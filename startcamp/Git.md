@@ -72,14 +72,14 @@ $ git init
 * New file: git으로 관리되지 않았던 파일이 Staging Area에 등록되어 있을 때 생긴다
 * Modified: git으로 관리되는데 수정된 파일이 Staging Area에 등록되었을 때
 
-> 초록색(new): 처음 관리되고 있는 대상
-
 ###### 상태확인
 ```
 $ git status
 $ git log
 ```
 
+> 초록색(new): 처음 관리되고 있는 대상
+> 
 ```bash
 $ git add startcamp
 $ git add readme.md
