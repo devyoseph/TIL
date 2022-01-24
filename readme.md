@@ -2,7 +2,14 @@
 
 ***
 
+## CS 공부
+
+* 운영체제(OS)
+
+  ​	1) [운영체제 개요](/CS/CS_os_1)
+
 ### CLI
+
   * [CLI 기초](/startcamp/CLI.md)
 ### Markdown
   * [Markdown 기초](/startcamp/markdown.md)
@@ -11,7 +18,7 @@
 
 ### JSON
   * [JSON 기초](/python/json_basic.md)
-  
+
 ### Python
   1. [변수와 자료형](/python/python_Basic1.md)
   2. [반복문](/python/python_Basic2.md)
