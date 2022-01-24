@@ -3,7 +3,7 @@
 ***
 
 ### CLI
-  * [CLI 기초](https://github.com/devyoseph/TIL/blob/master/startcamp/CLI.md)
+  * [CLI 기초](/startcamp/CLI.md)
 ### Markdown
   * [Markdown 기초](https://github.com/devyoseph/TIL/blob/master/startcamp/markdown.md)
 ### Git
