@@ -17,6 +17,7 @@
   2. [반복문](https://github.com/devyoseph/TIL/blob/master/python/python_Basic2.md)
   3. [함수](https://github.com/devyoseph/TIL/blob/master/python/python_Function.md)
   4. [모듈](https://github.com/devyoseph/TIL/blob/master/python/python_module.md)
+  5. [데이터 구조](https://github.com/devyoseph/TIL/blob/master/python/python_dataStructure.md)
 
 ### Algorithm - Python
   1. [행렬의 회전](https://github.com/devyoseph/TIL/blob/master/python/algo_python_matrix.py)
