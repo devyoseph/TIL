@@ -31,7 +31,7 @@
   >
   > [ 입출력(I/0) 디바이스 ] 디스크, 키보드, 프린트 , 모니터 등
 
-  ![image-20220126001900411](CS_os_1.assets/image-20220126001900411.png)   
+  <img src="CS_os_1.assets/image-20220126001900411.png" alt="image-20220126001900411" style="zoom:67%;" />   
 
    
 
@@ -61,7 +61,7 @@
   >
   > 디스크 입출력 큐, 키보드 입력 큐 모두 비슷한 원리
 
-![image-20220126001914996](CS_os_1.assets/image-20220126001914996.png)   
+<img src="CS_os_1.assets/image-20220126001914996.png" alt="image-20220126001914996" style="zoom:67%;" />   
 
    
 
@@ -69,11 +69,11 @@
 
 ### - SJF(Shortest Job First) 방식
 
-![image-20220125231505067](CS_os_1.assets/image-20220125231505067.png)
+<img src="CS_os_1.assets/image-20220125231505067.png" alt="image-20220125231505067" style="zoom:67%;" />
 
 > 가장 긴 시간을 사용하는 프로세스```P1```이 맨 앞에 있다면 ```P1```을 제외한 모든 ```Pn```에 긴 대기 시간이 추가되고 평균 대기 시간은 커진다. 
 
-![image-20220125231806049](CS_os_1.assets/image-20220125231806049.png)
+<img src="CS_os_1.assets/image-20220125231806049.png" alt="image-20220125231806049" style="zoom:67%;" />
 
 > 금번 CPU 사용시간이 가장 짧은 프로세스를 제일 먼저 스케줄한다(=Shortest Job First, **SJF**). 이를 통해 **minimim average waiting time**을 보장한다.
 
@@ -85,7 +85,7 @@
 
 ### - RR(Round Robin) 방식
 
-![image-20220125232535197](CS_os_1.assets/image-20220125232535197.png)
+<img src="CS_os_1.assets/image-20220125232535197.png" alt="image-20220125232535197" style="zoom:67%;" />
 
 > 모든 프로세스가 동일한 할당시간동안 CPU를 사용하는 방식, 할당시간이 끝나면 **인터럽트(CPU를 빼앗음)**가 발생해 프로세스는 CPU를 빼앗기고 큐 맨 뒤로 이동
 >
@@ -103,7 +103,7 @@
 디스크: 비휘발성
 ```
 
-![image-20220125233447528](CS_os_1.assets/image-20220125233447528.png)
+<img src="CS_os_1.assets/image-20220125233447528.png" alt="image-20220125233447528" style="zoom:67%;" />
 
 > **< 프로그램 실행 >**
 >
@@ -129,13 +129,13 @@
 >
 > LFU: 참조횟수가 가장 적은 페이지 삭제
 
-![image-20220125235155832](CS_os_1.assets/image-20220125235155832.png)
+<img src="CS_os_1.assets/image-20220125235155832.png" alt="image-20220125235155832" style="zoom:67%;" />
 
 ​    
 
 ## 디스크 스케줄링
 
-![image-20220125235348906](CS_os_1.assets/image-20220125235348906.png)
+<img src="CS_os_1.assets/image-20220125235348906.png" alt="image-20220125235348906" style="zoom:67%;" />
 
 > 디스크 헤드의 이동을 최소화하는 방식으로 스케줄링해야한다.
 
@@ -161,11 +161,11 @@
 
   \- seek time = seek distance
 
-  ![image-20220125235916150](CS_os_1.assets/image-20220125235916150.png)
+  <img src="CS_os_1.assets/image-20220125235916150.png" alt="image-20220125235916150" style="zoom:67%;" />
 
   * **SCAN** 방식: 헤드가 디스크의 한쪽 끝에서 다른쪽 끝으로 이동하며 가는 골목에 있는 모든 요청을 처리한다. 다른 한쪽 끝에 도달하면 역방향으로 이동하며 오는 길목에 있는 모든 요청을 처리하며 다시 반대쪽 끝으로 이동한다.(엘레베이터)
 
-    ![image-20220126000238191](CS_os_1.assets/image-20220126000238191.png)
+    <img src="CS_os_1.assets/image-20220126000238191.png" alt="image-20220126000238191" style="zoom:67%;" />
 
    
 
@@ -173,7 +173,7 @@
 
 > 빠른 속도의 CPU+메모리와 느린 저장장치 디스크 사이를 어떻게 조율하는지 알아본다
 
-![image-20220126000536488](CS_os_1.assets/image-20220126000536488.png)
+<img src="CS_os_1.assets/image-20220126000536488.png" alt="image-20220126000536488" style="zoom:67%;" />
 
 ```
 *위쪽으로 갈수록 빠르고 비싸다, 초록색 부분은 휘발성이며 Executable(CPU 접근가능)하다.
