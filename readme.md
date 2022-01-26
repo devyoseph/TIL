@@ -28,6 +28,7 @@
   4. [모듈](/python/python_module.md)
   5. [데이터 구조](/python/python_dataStructure.md)
   6. [예외 처리](/python/python_debug.md)
+  6. [객체 지향 프로그래밍](/python/python_object.md)
 
 ### Algorithm - Python
   1. [행렬의 회전](/python/algo_python_matrix.py)
