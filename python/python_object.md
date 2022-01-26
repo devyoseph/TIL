@@ -291,3 +291,236 @@ print(p2.species)
   > 일반 함수처럼 동작하지만 클래스 이름공간에 귀속
   >
   > * 주로 해당 클래스로 한정하는 용도로 사용
+
+   
+
+## 객체지향의 핵심 4가지
+
+* 추상화: 현실 세계를 프로그램 설계에 반영
+* 상속: 두 클래스 사이 부모 - 자식 관계를 정립하는 것
+* 다형성
+* 캡슐화
+
+   
+
+#### 상속
+
+```python
+class ChildClass(ParentClass):
+  pass
+```
+
+* 하위 클래스는 상위 클래스의 정의된 속성, 행동, 관계 및 제약 조건을 모두 상속 받음
+* 부모 클래스의 메소드를 그대로 사용하므로 코드의 **재사용성**이 높아짐
+
+   
+
+​	**<상속 관련 메소드>**
+
+* 관계 확인
+
+```python
+isinstance(object, class)
+# class의 instance거나 subclass인 경우
+
+issubclass(sub, class)
+# sub가 class의 subclass면 True
+# class는 클래스 객체의 튜플일 수 있으며 class의 모든 항목을 검사
+issubclass(Professor, (Person, Student))
+# True: Person의 서브클래스
+```
+
+* super(): 자식 클래스에서 부모클래스를 사용하고 싶은 경우
+
+  ```python
+  class Person:
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+          
+  class Student(Person)
+      def __init__(self,name,age,hobby):
+          # Person 클래스
+          super().__init__(name,age,name)
+          self.hobby = hobby 
+  ```
+
+  \* 오버라이딩을 통해 부모 클래스를 자식 클래스에서 정의할 수 있다
+
+  \* 다중 상속: 두개 이상의 클래스를 상속 받는 경우, 상속 받은 모든 클래스의 요소를 활용 가능함(메소드 중복 시: 순서에 의해 결정)
+
+  ```python
+  class Person:
+      def __init__(self, name):
+          self.name = name
+          print('사람이 미래다')
+  
+  
+  class Mom(Person):
+      gene = 'XX'
+  
+      def swim(self):
+          return '엄마의 능력: 수영'
+  
+  
+  class Dad(Person):
+      gene = 'XY'
+  
+      def walk(self):
+          return '아빠의 능력: 걷기'
+  
+  class Child(Dad, Mom):
+  
+      def swim(self):
+          return '엄마의 능력을 얻지 못했다'
+  
+  baby1 = Child('아가') # '사람이 미래다' 출력
+  print(baby1.name, baby1.swim(), baby1.walk())
+  # 아가 엄마의 능력을 얻지 못했다 아빠의 능력: 걷기
+  ```
+
+​    
+
+### 다형성(Polymorphism)
+
+* 여러 모양을 뜻하는 그리스어
+* 동일한 메소드가 클래스에 따라 다르게 행동할 수 있다
+* 다른 클래스에 속해있는 객체들이 **동일한 메시지에 대해 다른 방식으로 응답한다**
+
+
+
+#### <메소드 오버라이딩>
+
+* 상속 받은 메소드를 재정의
+  * 클래스 상속 시 부모 클래스에서 정의한 메소드를 자식 클래스에서 변경
+  * 부모 클래스의 메소드 이름과 기본 기능은 그대로 사용하지만 특정 기능을 바꾸고 싶을 때 사용
+* 방법: **상속받은 클래스에서 같은 이름의 메소드로 덮어쓴다**
+
+   
+
+### 캡슐화
+
+* 객체의 일부 구현 내용에 대한 외부로부터 직접적인 엑세스를 차단
+* 파이썬에서 암묵적으로 존재하지만 언어적으로는 존재하지 않음
+
+   
+
+#### 접근 제어자 종류
+
+* Public Access Modifier
+* Protected Access Modifier
+* Private Access Modifier
+
+   
+
+##### Public Member
+
+> 언더바가 없이 시작하는 메소드나 속성
+>
+> 어디서나 호출 가능, 하위 클래스 override 허용
+>
+> 일반적으로 작성되는 메소드와 속성의 대다수 차지
+
+   
+
+##### Protected Member
+
+> 언더바 1개로 시작하는 메소드나 속성
+>
+> 암묵적 규칙: 부모클래스 내부와 자식 클래스에서만 호출이 가능
+>
+> 하위 클래스 override 허용
+
+```python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self._age = age
+        
+    def get_age(self):
+        return self._age
+      # 단지 암묵적으로 이렇게 활용할 뿐이다
+```
+
+   
+
+##### Private Member
+
+> 언더바 2개로 시작하는 메소드나 속성
+>
+> 본 클래스 내부에서만 사용이 가능
+>
+> 하위클래스 상속 및 호출 불가능 (오류)
+>
+> 외부 호출 불가능(오류)
+
+```python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.__age = age
+
+    def get_age(self):
+        return self.__age
+
+p1 = Person('철수',99)
+print(p1.get_age()) ## 메소드로는 호출 가능
+
+p1.__age # 직접 변수를 얻어내려면 오류 발생
+# AttributeError: 'Person' object has no attribute '__age'
+```
+
+   
+
+#### getter & setter
+
+* 변수에 접근할 수 있는 메소드를 별도로 생성
+
+  \- getter 메소드: 변수의 값을 읽는 메소드
+
+  ​		\- ```@property``` 데코레이터 사용
+
+  \- setter 메소드: 변수의 값을 설정하는 성격의 메소드
+
+  ​		\- @변수.setter 사용
+
+```python
+class Person:
+    def __init__(self, age):
+        self._age = age
+
+    @property
+    def age(self):
+        return self._age
+
+    @age.setter
+    def age(self,new_age):
+        if new_age <= 19:
+            raise ValueError('20세 미만입니다')
+            return
+        self._age = new_age
+
+p1 = Person(20)
+print(p1.age) # 20
+
+# 변수를 직접 조작
+p1._age = 25
+print(p1.age) # 25
+
+# getter로 값 변환
+p1.age = 30
+print(p1.age)
+
+# 직접 값을 변경하면 가능해진다
+p1._age = 19
+print(p1.age) # 19
+
+# 초기 생성할 때 설정해도 가능하다
+p2 = Person(10)
+
+# Getter를 통해 접근하면 에러
+p1.age = 17
+print(p1.age) # ValueError
+```
+
+  
