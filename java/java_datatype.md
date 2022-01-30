@@ -11,7 +11,7 @@
 > * C++ CPP: 컴파일 후 기계어 변환, 운영체제 종속적
 > * Java: 컴파일러 후 바이트 코드 변환
 
-​    
+​      
 
 #### 1)GC(Garbage Collection)
 
@@ -23,14 +23,14 @@ System.out.println(hello)
 hello = null; //연결을 끊은 것 뿐 메모리 상 데이터는 남아있음
 ```
 
-   
+​     
 
 #### 2) 자바의 객체지향 특징 4가지
 
 * OOP is A.P.I.E
 * Abstraction, Polymorphism, Inheritance, Encapsulation
 
-   
+    
 
 ## [WITH PYTHON]
 
@@ -44,7 +44,7 @@ hello = null; //연결을 끊은 것 뿐 메모리 상 데이터는 남아있음
 | 기본 타입은 변수에 값을 집어넣는다(Stack), 참조형은 주소 참조 | 기본 타입마저도 메모리 주소의 값을 **참조**한다(Heap) |
 | 기본형(Primitive type), 참조형(Reference)                    | 모든 변수가 객체                                      |
 
-   
+​      
 
 ### 동시할당
 
@@ -61,7 +61,7 @@ a, b = 2, 3
 a, b = b, a
 ```
 
-   
+​      
 
 ### 출력(formatting)
 
@@ -71,7 +71,7 @@ a, b = b, a
 | 2    |                                                            | ```print("{}, {}".format(sum, avg))``` |
 | 3    |                                                            | ```print(f'{x}, {y}')```               |
 
-   
+​      
 
 ### 데이터 타입
 
@@ -84,7 +84,7 @@ a, b = b, a
 
 *문자형 vs 문자열
 
-   
+​      
 
 ### 아스키코드
 
@@ -98,7 +98,7 @@ a, b = b, a
 97: 'Z'
 ```
 
-​    
+​         
 
 ### 실수의 계산
 
@@ -127,7 +127,7 @@ a, b = b, a
 | ----------------- | ----------------- |
 | 자료 손실X = 자동 | 자료 손실O = 수동 |
 
-   
+​      
 
 **\- JAVA 형 변환 주의점**
 
@@ -155,13 +155,13 @@ float a = 10f/3F; // 3.3333333
 double a = 10f/3D; // 3.3333333333333335
 ```
 
-   
+​     
 
 ### 연산자
 
 #### * 소괄호()가 최우선이다
 
-   
+​       
 
 #### \- Java의 에러 상황
 
@@ -172,7 +172,7 @@ double a = 10f/3D; // 3.3333333333333335
    ++(i-2); // 컴파일 에러: i-2는 변수가 아닌 값이기 때문 ++, --는 변수만 사용 가능
    ```
 
-   
+​       
 
 |                 | JAVA                                                         | PYTHON                        |
 | --------------- | ------------------------------------------------------------ | ----------------------------- |
@@ -181,7 +181,7 @@ double a = 10f/3D; // 3.3333333333333335
 | 아스키코드변환1 | ```int a = (int) 'a';```                                     | ```a = ord('a')```            |
 | 아스키코드변환2 | ```char a = (char) 97;```                                    | ```i = chr(97)```             |
 
-​      
+​          
 
 ### 비트 연산자
 
@@ -200,7 +200,9 @@ double a = 10f/3D; // 3.3333333333333335
      print(bin(x)) # bin(), oct(), hex() 이용
      ```
 
-​      ​      
+​      ​         
+
+​       
 
 ### 논리 연산자
 
@@ -209,7 +211,7 @@ double a = 10f/3D; // 3.3333333333333335
 | AND, OR, NOT         | &, \|, !, **^** | and, or, not                    |
 | Short Circuit 연산자 | &&, \|\|        | 파이썬은 **원래 short circuit** |
 
-   
+​        
 
 ### 랜덤
 
@@ -218,7 +220,7 @@ double a = 10f/3D; // 3.3333333333333335
 | 0<=난수<1 | ```double d = Math.random()```                               | ```import random  x = random.random()```      |
 | 0<=난수<N | ```Random rand = new Random();``` ```int x = rand.nextInt(50);``` | ```import random  x = random.randrange(50)``` |
 
-   
+​       
 
    ### 조건문(Conditional Statement)
 
@@ -229,7 +231,7 @@ double a = 10f/3D; // 3.3333333333333335
 
 *Nested If = 중첩 if문
 
-   
+​     
 
 ### 반복문( Statement)
 
@@ -240,7 +242,7 @@ double a = 10f/3D; // 3.3333333333333335
 | while문          | while(반복조건){증감식; break;}               | while 조건: break                           |
 | 라벨링(Labeling) | outer: for(int i=0; i<10; i++){ break outer;} | **X**                                       |
 
-   
+​      
 
 ### 반복문제어
 
@@ -249,6 +251,8 @@ double a = 10f/3D; // 3.3333333333333335
 | break;          | break    |
 | continue;       | continue |
 | **라벨링 활용** | pass     |
+
+​     
 
 
 
