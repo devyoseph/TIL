@@ -30,5 +30,15 @@
   6. [예외 처리](/python/python_debug.md)
   6. [객체 지향 프로그래밍](/python/python_object.md)
 
-### Algorithm - Python
+### Java with Python
+
+1. [변수와 배열](/java/java_datatype.md)
+
+
+
+### Algorithm
+
   1. [행렬의 회전](/python/algo_python_matrix.py)
+
+
+
