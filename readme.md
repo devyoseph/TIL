@@ -34,7 +34,7 @@
 
 1. [변수와 배열](/java/java_datatype.md)
 
-
+2. [객체지향 프로그래밍](/java/java_object.md)
 
 ### Algorithm
 
