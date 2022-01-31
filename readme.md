@@ -33,8 +33,8 @@
 ### Java with Python
 
 1. [변수와 배열](/java/java_datatype.md)
-
 2. [객체지향 프로그래밍](/java/java_object.md)
+2. [상속과 다형성](/java/java_inheritance.md)
 
 ### Algorithm
 

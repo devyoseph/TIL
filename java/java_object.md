@@ -167,3 +167,42 @@
 | 불가, 오버로딩 필수 | ```def walk(s = 100):     print("보폭은 %s입니다" % s)``` |
 
 ​			
+
+### 생성자
+
+* this(args): 해당 파라미터에 형식에 맞는 생성자를 찾아서 호출합니다.
+
+  * **생성자 코드 this( )위에 다른 소스코드는 사용할 수 없습니다.**
+
+* 생성자 오버로딩 this(params);
+
+  ```java
+  class Parent{
+  	String x = "parent";
+  	
+  	Parent(String x){
+  	  super(); // Object의 기본 생성자 호출
+  		this.x = x;
+  	}
+  }
+  class Child extends Parent{
+  	String x = "child";
+  	
+  	Child(String y){
+  		super(y);
+  	}
+  	
+  	Child(){ //부모 클래스에 매개변수가 필수기 때문에 이를 물려받은 Child의 생성자에도 만들어줘야했다.
+      			// 오버로딩: 매개변수를 입력하지 않아도 되게 하기 위해 Child의 생성자를 재정의한다
+  		this("부모"); // this()를 통해 현재 상속 받은 생성자를 오버로딩할 수 있다.
+  	}
+  	void method() {
+  		String x = "method";
+  		System.out.println(x);
+  		System.out.println(this.x);
+  		System.out.println(super.x);
+  	}
+  }
+  ```
+
+  
