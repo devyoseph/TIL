@@ -238,5 +238,128 @@
 
     *ctrl + shift + o: import시 사용
 
+​			
+
 ​		
 
+### 접근 제한자 및 데이터 은닉과 보호
+
+#### 제한자(modifier)
+
+* 클래스, 변수 , 메서드 선언부에 함께 사용되어 부가적인 의미 부여
+* 종류: public, protected, default = package, private
+* 그 외 제한자: final, static, abstract, synchronized(멀티스레드에서의 동기화 처리)
+* 하나의 대상에 여러 제한자를 조합 가능하나 접근 제한자는 하나만 사용 가능
+* 순서는 무관
+
+​		
+
+#### final
+
+* 마지막, 더 이상 바뀔 수 없음
+
+* 용도: 클래스, 메소드, 변수
+
+  ```java
+  final class 클래스명{} //더 이상 확장할 수 없음: 상속X, 오버라이드 방지
+  //이미 완벽한 클래스들: String, Math
+  ```
+
+  ```java
+  final void method{} //더 이상 재정의할 수 없음: overriding 금지
+  ```
+
+  ```javascript
+  final variable; //더 이상 값을 바꿀 수 없음 = 상수화
+  ```
+
+​		
+
+#### 접근 제한자(Access modifier)
+
+* 멤버 등에 사용되며 해당 요소를 외부에서 사용할 수 있는지 설정
+
+| 제한자           | 용도               | 접근 가능 범위                                |
+| ---------------- | ------------------ | --------------------------------------------- |
+| public           | 클래스/생성자/멤버 | 같은 클래스/같은 패키지/다른 패키지 자식/전체 |
+| protected        | 생성자/멤버        | 같은 클래스/같은 패키지/다른 패키지 자식      |
+| package(default) | 클래스/생성자/멤버 | 같은 클래스/같은 패키지                       |
+| private          | 생성자/멤버        | 같은 클래스                                   |
+
+* **메소드 Override 조건의 확인**
+
+  * 부모의 제한자 범위와 같거나 넓은 범위로만 사용 가능
+
+    > 부모의 메소드가 protected 인데 default인 method는 Override할 수 없다.
+
+​	
+
+### Encapsulation: 데이터 은닉과 보호
+
+* 정보 보호: 외부에서 변수에 직접 접근하지 못하도록 함
+
+* 대책
+
+  1. 공개되는 메서드를 통해 접근 통로를 마련: getter/setter
+
+     ```java
+     public getName(){
+     	return this.name;
+     }
+     ```
+
+     ```java
+     public void setName(String name){
+     	if (name != null){ //조건을 걸어주어 이상한 값이 들어가지 않도록 하기
+     		this.name = name;
+     	}
+     }
+     ```
+
+  2. private 사용
+
+​		
+
+#### 객체의 생성 제어와 Singleton 디자인 패턴
+
+* 객체의 생성을 제한해야 한다면?
+  * 여러 개의 객체가 필요 없는 경우
+    * 객체를 구별할 필요가 없는 경우 = 수정 가능한 멤버 변수가 없고 기능만 있는 경우
+    * 이런 객체를 stateless한 객체라고 한다
+  * 객체를 계속 생성/삭제 하는데 많은 비용이 들어서 재사용이 유리한 경우
+
+​		
+
+* **Singleton 디자인 패턴**
+
+  ```java
+  class SingleMethod{
+  	
+  	public static SingleMethod sm = new SingleMethod(); // 내부에서 생성해버리기 + static으로 외부 접근 허용
+  
+  	private SingleMethod() { } //생성자를 private로 지정해 인스턴스 생성을 막기
+  
+  	public static SingleMethod getAccess() { //static으로 생성한 인스턴스를 반환하도록 함
+  		return sm;
+  	}
+  	
+  	void access() {
+  		System.out.println("접근");
+  	}
+  }
+  
+  public class Main {
+  	public static void main(String[] args) {
+  		// SingleMethod sm = new SingleMethod(); 생성 불가
+  		SingleMethod sm1 = SingleMethod.getAccess(); //static한 메소드에 접근해 가져온 내부 인스턴스
+  		sm1.access();
+  }}
+  ```
+
+  ​		
+
+  * 외부에서 생성자에 접근 금지 = **생성자의 접근 제한자를 private으로 설정**
+  * 내부에서는 private에 접근 가능하므로 직접 객체를 생성 = 멤버 변수이므로 private 설정
+  * 외부에서 private member에 접근 가능한 getter 생성 = setter는 불필요
+  * 객체 없이 외부에서 접근할 수 있도록 getter와 변수에 static 추가
+  * 외부에서는 언제나 getter를 통해서 객체를 참조하므로 하나의 객체를 재사용할 수 있다.
