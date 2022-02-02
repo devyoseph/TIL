@@ -36,6 +36,8 @@
 2. [객체지향 프로그래밍](/java/java_object.md)
 2. [상속](/java/java_inheritance.md)
 2. [다형성](/java/java_polymorphism.md)
+2. [Abstract](/java/java_abstract.md)
+2. [Interface](/java/java_interface.md)
 
 ### Algorithm
 
