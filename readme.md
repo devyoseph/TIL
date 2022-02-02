@@ -38,6 +38,7 @@
 2. [다형성](/java/java_polymorphism.md)
 2. [Abstract](/java/java_abstract.md)
 2. [Interface](/java/java_interface.md)
+2. [Generic](/java/java_generic.md)
 
 ### Algorithm
 
