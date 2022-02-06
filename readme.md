@@ -67,6 +67,8 @@
 ### Algorithm
 
   1. [행렬의 회전](/python/algo_python_matrix.py)
+  1. [브루트 포스](/Algorithm/algo_brute.md)
+  1. [배열](/Algorithm/algo_array.md)
 
 
 
