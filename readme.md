@@ -60,6 +60,7 @@
 2. [Abstract](/java/java_abstract.md)
 2. [Interface](/java/java_interface.md)
 2. [Generic](/java/java_generic.md)
+2. [Exception](/java/java_exception.md)
 
 ​      
 
