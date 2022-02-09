@@ -8,7 +8,8 @@
 
 * 운영체제(OS)
 
-  	1) [운영체제 개요](/CS/CS_os_1.md)
+  1) [운영체제 개요](/CS/CS_os_1.md)
+  2) [Race Condition](/CS/cs_control.md)
 
 ​       
 
