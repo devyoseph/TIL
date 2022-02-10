@@ -81,5 +81,5 @@
 ### Spring
 
 1. 스프링 입문
-   1. [정적 컨텐츠, MVC와 템플릿 엔진, API](/Spring/spring_basic)
+   1. [정적 컨텐츠, MVC와 템플릿 엔진, API](/Spring/spring_basic.md)
 
