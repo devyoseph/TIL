@@ -268,3 +268,30 @@ DFS(A)
 ### java.lang.Comparable\<T\>
 
 * Int compareTo(T other)
+* 자신과 인자로 전달 받는 타 원소와 비교하여 정수 리턴
+  * 음수 결과 : 타 원소가 크다
+  * 0 결과 : 둘이 같다
+  * 양수 결과 : 자신이 크다
+
+```java
+class Student implements Comparable<Student>{
+	int no, score;
+	
+	public Student(int no, int score){
+		super();
+    this.no = no;
+    this.score = score;
+	}
+	
+  @Override
+  public int compareTo(Student o){ //자신과 인자로 전달 받는 타 원소와 비교하여 정수 리턴
+		return this.no - o.no;
+  }
+
+  @Override
+  public int compare(Student o1, Student o2){ //두 원소를 비교하여 정수 리턴
+		return o1.no - o2.no; // 음수 = o2가 크다, 양수 = o1이 크다
+  }
+}
+```
+
