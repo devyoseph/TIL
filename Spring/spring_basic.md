@@ -7,6 +7,8 @@
 ​        
 
 > 파라미터 정보 : Cmd + P
+>
+> 당연한 입력 완성(자동완성): Cmd + Shift + Enter
 
 ​         
 
@@ -89,3 +91,56 @@ view 파일(resouces/templates 내부)의 장점은 절대경로를 가져와 �
 실행화면과 소스를 한 번에 볼 수 있다.
 
 <img src="spring_basic.assets/image-20220210153135888.png" alt="image-20220210153135888" style="zoom:67%;" />
+
+​           
+
+​              
+
+## API 방식
+
+* MVC 와 마찬가지로 컨트롤러에 추가
+
+​      
+
+#### 차이점
+
+```java
+@GetMapping() 외에 @ResponseBody 를 추가한다
+```
+
+```java
+@GetMapping("hello-string")
+@ResponseBody // HTTP 통신 프로토콜 Body부에 직접 넣어주겠다는 뜻(HTML의 body 태그X)
+public String helloString(@RequestParam("name") String name){
+  
+  return "hello" + name; //모델로 값을 넘기는 것이 아니라 그대로 데이터를 서버에 올려줌
+}
+```
+
+​        
+
+#### <응용>
+
+```java
+@GetMapping("hello-api")
+@ResponseBody
+public Hello helloApi(@RequestParam("name") String name){ 
+  Hello hello = new Hello();  //객체 인스턴스 만들고
+  hello.setName(name);  //setter 사용
+  return hello; // 가져오기
+}
+
+
+static class Hello{ // 객체 생성
+  private String name;
+
+  public String getName() { // 마우스 우클릭 - generate - getter/setter 열기
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+}
+```
+
