@@ -3,16 +3,16 @@
 * 비선형 구조인 트리, 그래프의 각 노드(정점)를 중복되지 않게 전부 방문(visit) 하는 것
   * 선후 연견 관계는 알 수 없기 때문에 특별한 탐색 방법이 필요하다.
 
-​       
+​             
 
 #### 두 가지 방법
 
 * 너비 우선 탐색(Breadth First Search, BFS)
 * 깊이 우선 탐색(Depth First Search, DFS)
 
-​           
+​                
 
-​       
+​              
 
 ## 트리 탐색 - BFS
 
@@ -69,6 +69,8 @@ end BFS()
 
 ​          
 
+​                  
+
 ​               
 
 ## DFS(Depth First Search)
@@ -117,7 +119,11 @@ DFS(A)
 
 ​          
 
-​             
+
+
+​                   
+
+​                            
 
 ## 이진트리 - 순회(traversal)
 
@@ -182,6 +188,8 @@ DFS(A)
 
 ​            
 
+​                 
+
 ## 수식 트리
 
 > 수식을 표현하는 이진 트리, 수식 이진 트리(Expression Binary Tree)
@@ -199,6 +207,8 @@ DFS(A)
 ​          
 
 ​               
+
+​                  
 
 ## 힙(Heap)
 
