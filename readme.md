@@ -81,7 +81,7 @@
 
   1. [트리](/Algorithm/algo_tree.md)
 
-     1. [트리의 스택 순회](algo_tree_stack_search.md)
+     1. [트리의 스택 순회](/Algorithm/algo_tree_stack_search.md)
 
      2. [비선형 자료 구조 완전 탐색](/Algorithm/algo_tree_search.md)
 
