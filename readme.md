@@ -68,13 +68,22 @@
 ### Algorithm
 
   1. [행렬의 회전](/python/algo_python_matrix.py)
+
   1. [브루트 포스](/Algorithm/algo_brute.md)
+
   1. [배열](/Algorithm/algo_array.md)
+
   1. [스택](/Algorithm/algo_stack.md)
+
   1. [큐](/Algorithm/algo_queue.md)
+
+     1. [우선순위 큐](/Algorithm/algo_priority_queue.md)
+
   1. [트리](/Algorithm/algo_tree.md)
-  1. [비선형 자료 구조 완전 탐색](/Algorithm/algo_tree_search.md)
-  1. [우선순위 큐](/Algorithm/algo_priority_queue.md)
+
+     1. [트리의 스택 순회](algo_tree_stack_search.md)
+
+     2. [비선형 자료 구조 완전 탐색](/Algorithm/algo_tree_search.md)
 
 ​          
 
