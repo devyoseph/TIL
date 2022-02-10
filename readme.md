@@ -72,6 +72,8 @@
   1. [배열](/Algorithm/algo_array.md)
   1. [스택](/Algorithm/algo_stack.md)
   1. [큐](/Algorithm/algo_queue.md)
+  1. [트리](/Algorithm/algo_tree.md)
+  1. [비선형 자료 구조 완전 탐색](/Algorithm/algo_tree_search.md)
 
 
 
