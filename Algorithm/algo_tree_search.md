@@ -45,6 +45,39 @@ end BFS()
 
 ### < BFS 예 > 
 
+```java
+public void bfs2() { // 너비 단위 업무처리
+        if(isEmpty()) {
+            System.out.println("출력 정보 없음");
+            return;
+        }
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(1);
+        while(!q.isEmpty()) {
+
+            //같은 너비들만 탐색(할일)처리== 같은 행에 처리
+            int size = q.size();
+            for(int i =0; i < size; i++) {
+                int cur = q.poll();
+                System.out.print(nodes[cur] + " ");
+
+
+                //왼쪽 자식 있으면 추가
+                if(cur2 <= lastIndex) {
+                    q.offer(cur2);
+                }
+                //오른쪽 자식 있으면 추가
+                if(cur2 + 1 <= lastIndex) {
+                    q.offer(cur2 + 1);
+                }
+            }
+            System.out.println();
+
+        }
+
+    }
+```
+
 ​       
 
 #### 1. 초기 상태
