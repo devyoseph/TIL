@@ -10,6 +10,7 @@
 
   1) [운영체제 개요](/CS/CS_os_1.md)
   2) [Race Condition](/CS/CS_control.md)
+  2) [공유데이터 접근 문제 해결](/CS/CS_control2.md)
 
 ​       
 
