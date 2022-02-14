@@ -73,17 +73,14 @@
      1. [행렬의 회전](/python/algo_python_matrix.py)
      1. [Comparable](/Algorithm/algo_comparator.md)
      1. [시간복잡도](/Algorithm/algo_bigo.md)
-
   1. [브루트 포스](/Algorithm/algo_brute.md)
+     1. [순열의 응용](/Algorithm/algo_permutation.md)
 
   1. [배열](/Algorithm/algo_array.md)
-
   1. [스택](/Algorithm/algo_stack.md)
-
   1. [큐](/Algorithm/algo_queue.md)
 
      1. [우선순위 큐](/Algorithm/algo_priority_queue.md)
-
   1. [트리](/Algorithm/algo_tree.md)
 
      1. [트리의 스택 순회](/Algorithm/algo_tree_stack_search.md)
