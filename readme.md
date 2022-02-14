@@ -71,7 +71,8 @@
   1. 기초
 
      1. [행렬의 회전](/python/algo_python_matrix.py)
-     1. [정렬 커스터마이징](/Algorithm/algo_comparator.md)
+     1. [Comparable](/Algorithm/algo_comparator.md)
+     1. [시간복잡도](/Algorithm/algo_bigo)
 
   1. [브루트 포스](/Algorithm/algo_brute.md)
 
