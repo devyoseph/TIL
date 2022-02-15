@@ -14,6 +14,8 @@
 >
 > 1 : 사용O인 상태, true
 
+* 연산 수가 커질 때 비트마스킹이 훨씬 효율적인 방법
+
 ```java
 input[ ] //숫자 배열
 numbers[ ] //순열 저장 배열
@@ -119,5 +121,100 @@ public class Solution {
 }
 ```
 
+​                   
 
+​                            
+
+# 조합의 응용
+
+> 재귀, 반복문이 아닌 방법을 알아본다.
+
+​                
+
+### NextPermutation
+
+> 원소크기와 같은 크기의 배열 생성, int 배열을 만드나 0과 1만 사용
+>
+> nCr에서 r개를 뽑는다고 할 때 뒤의 **r개의 원소를 1로 만들기**
+>
+> 오른쪽부터 검사하면서 **왼쪽보다 오른쪽이 더 높은 수**일때 **왼쪽 수를 기준으로 다시 맨 오른쪽부터 검사**한다.
+>
+> 왼쪽 수[i-1]보다 큰 수 [j]를 만나면 서로 위치를 교환한다.
+
+```bash
+5C3 을 시작할 때 : [ 0 0 1 1 1 ]
+
+오른쪽부터 계속 검사해서 왼쪽 원소<오른쪽 원소 → 다시 오른쪽에서 검사하면서 왼쪽<오른쪽 만족시 교체 → i+1부터 정렬
+
+0 0 1 1 1   =  2번 < 3번 → 2번과 5번 위치 변경 → 3번부터 정렬
+0 1 0 1 1   =  3번 < 4번 → 3번과 5번 위치 변경 → 4번부터 정렬
+0 1 1 0 1   =  2번 < 5번 → 2번과 5번 위치 변경 → 5번부터 정렬
+```
+
+​        
+
+**코드**
+
+```java
+package workplace;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+	static int N,R,arr[],p[];
+	static void swap(int i, int j) {
+		int tmp = p[i];
+		p[i] = p[j];
+		p[j] = tmp;
+	}
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		N = sc.nextInt();
+		R = sc.nextInt();
+		
+		arr = new int[N];
+		
+		for(int i=0; i<N; i++) {
+			arr[i] = i+1;
+		}
+		
+		p = new int[N];
+		//p배열에 0보다 큰 값으로 R개를 매춘다
+		int cnt = 0;
+		while(++cnt<=R) p[N-cnt] = 1;
+	
+		while(true) {
+	    	
+			//출력부
+			for(int k=0; k<p.length; k++) {
+	    		if(p[k]==1) {
+	    			System.out.print(arr[k]+" ");
+	    		}
+	    	}
+			
+	    	System.out.println();
+	    	int i = N-1; //i는 끝에서부터 시작
+	    	int j = N-1; //j도 끝에서 부터 시작
+	    	
+	    	while(i>=1 && p[i-1]>=p[i]) i--; //오른쪽이 더 큰 값일 때 빠져나옴
+	    	i--; // i를 i-1로 변경
+	    	
+	    	if(i<0) break; //0보다 작다면 모두 내림차순이므로 종료 
+	    	
+	    	while(j>i && p[i]>=p[j]) j--; //i를 집고 다시 오른쪽에서 찾기
+	    
+	    	swap(i,j); //그 둘의 자리를 자꾸고
+	    	
+	    	int last = N-1;
+	    	i++; //i부터 내림차순 정렬
+	    	
+	    	while(i<last) {
+	    		swap(i,last);
+	    		i++;
+	    		last--;
+	    	}
+		}
+}
+}
+```
 

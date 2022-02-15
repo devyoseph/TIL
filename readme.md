@@ -74,8 +74,9 @@
      1. [Comparable](/Algorithm/algo_comparator.md)
      1. [시간복잡도](/Algorithm/algo_bigo.md)
   1. [브루트 포스](/Algorithm/algo_brute.md)
-     1. [순열의 응용](/Algorithm/algo_permutation.md)
-
+     1. [순열과 조합 응용](/Algorithm/algo_permutation.md)
+     1. [부분집합 응용](/Algorithm/algo_powerset.md)
+     
   1. [배열](/Algorithm/algo_array.md)
   1. [스택](/Algorithm/algo_stack.md)
   1. [큐](/Algorithm/algo_queue.md)
