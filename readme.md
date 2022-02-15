@@ -77,6 +77,7 @@
      1. [순열과 조합 응용](/Algorithm/algo_permutation.md)
      1. [부분집합 응용](/Algorithm/algo_powerset.md)
      1. [그리디 알고리즘](/Algorithm/algo_greedy.md)
+     1. [분할 정복](/Algorithm/algo_devide.md)
      
   1. [배열](/Algorithm/algo_array.md)
   1. [스택](/Algorithm/algo_stack.md)
