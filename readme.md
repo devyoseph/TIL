@@ -79,8 +79,9 @@
      1. [그리디 알고리즘](/Algorithm/algo_greedy.md)
      1. [분할 정복](/Algorithm/algo_divide.md)
      1. [이진 탐색](/Algorithm/algo_binary_search.md)
-     
   1. [배열](/Algorithm/algo_array.md)
+     1. [비트마스킹을 이용한 원소 표현](/Algorithm/algo_powersetBit.md)
+
   1. [스택](/Algorithm/algo_stack.md)
   1. [큐](/Algorithm/algo_queue.md)
 
