@@ -81,16 +81,15 @@
      1. [이진 탐색](/Algorithm/algo_binary_search.md)
   1. [배열](/Algorithm/algo_array.md)
      1. [비트마스킹을 이용한 원소 표현](/Algorithm/algo_powersetBit.md)
-
   1. [스택](/Algorithm/algo_stack.md)
   1. [큐](/Algorithm/algo_queue.md)
 
      1. [우선순위 큐](/Algorithm/algo_priority_queue.md)
   1. [트리](/Algorithm/algo_tree.md)
-
      1. [트리의 스택 순회](/Algorithm/algo_tree_stack_search.md)
-
      2. [비선형 자료 구조 완전 탐색](/Algorithm/algo_tree_search.md)
+  1. [그래프](/Algorithm/algo_graph.md)
+  1. [백트래킹](/Algorithm/algo_backtrack.md)
 
 ​          
 
