@@ -63,6 +63,8 @@
 2. [Interface](/java/java_interface.md)
 2. [Generic](/java/java_generic.md)
 2. [Exception](/java/java_exception.md)
+2. [Stream](/java/java_stream.md)
+2. [Serialization](/java/java_serialization.md)
 
 ​      
 
