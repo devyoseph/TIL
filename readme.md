@@ -64,8 +64,8 @@
 2. [Generic](/java/java_generic.md)
 2. [Exception](/java/java_exception.md)
 9. Collection
-   1. [Collection](/java/java_collection.md)
-   2. [Collection](/java/java_collection2.md)
+   1. [Collection과 배열](/java/java_collection.md)
+   2. [ List / Set / Map ](/java/java_collection2.md)
 
 10. [Stream](/java/java_stream.md)
 11. [Serialization](/java/java_serialization.md)
