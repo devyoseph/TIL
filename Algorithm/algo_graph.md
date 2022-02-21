@@ -58,6 +58,27 @@
 >
 > 희소그래프(Sparse Graph)인 경우 비효율적이다.
 
+```java
+// 무향 그래프
+	static int N;
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		N = sc.nextInt();
+		int C = sc.nextInt(); //간선 수
+		
+		int[][] adjMatrix = new int[N][N]; // 정점수 크기로 생성
+		
+		for(int i = 0; i < C; i++) {
+			int from = sc.nextInt();
+			int to = sc.nextInt();
+			adjMatrix[from][to] = adjMatrix[to][from] = 1; //무향 그래프
+		}
+		for(int[] is : adjMatrix) {
+			System.out.println(Arrays.toString(is));
+		}
+}
+```
+
 * VxV 정방 행렬
 * 행 번호와 열 번호는 그래프의 정점에 대응
 * 두 정점이 인접되어 있으면 1, 그렇지 않으면 0
@@ -78,6 +99,43 @@
 >
 > 하나의 정점에 대한 인접 정점들을 각각의 노드로 하는 연결 리스트로 저장한다.
 
+```java
+import java.util.*;
+
+public class Main {
+	static int N;
+	static class Node{
+		int vertex;
+		Node link;
+		
+		public Node(int vertex, Node link) {
+			this.vertex = vertex;
+			this.link = link;
+		}
+		@Override
+		public String toString() {
+			return "Node [vertex= " + vertex + ", link= " + link +"]";
+		}
+		
+	}
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		N = sc.nextInt();
+		int C = sc.nextInt(); //간선 수
+		Node[] adjList = new Node[N];
+		for(int i = 0; i < C; i++) {
+			int from = sc.nextInt();
+			int to = sc.nextInt();
+			adjList[from] = new Node(to,adjList[from]);
+			adjList[to] = new Node(from,adjList[to]);
+		}
+		for(Node head : adjList) {
+			System.out.println(head);
+		}
+}
+}
+```
+
 * 무향 그래프
 
   * 인접리스트에 존재하는 노드의 수 = 그래프 상 **간선**의 개수x2
@@ -97,5 +155,63 @@
 * 리스트에 들어가는 정보
   * [ 시작 정점의 번호 / 끝 정점의 번호 ]
 
-​                   
+
+
+​          
+
+​             
+
+## BFS(Breadth First Search)
+
+> 너비우선탐색은 탐색 시작점의 인접한 정점들을 모두 차례대로 방문한 후에 방문했던 정점을 시작점으로 하여 다시 인접한 정점들을 차례로 방문하는 방식
+>
+> **큐**를 활용
+
+​             
+
+### Sudo코드
+
+```java
+BFS(G,v) // 그래프 G, 탐색 시작 정점 v
+	큐 생성
+	시작 정점 v를 큐에 삽입
+	정점 v를 방문한 것으로 표시
+	
+	while(큐가 비어있지 않은 경우){
+			t = 큐의 첫번째 원소
+      for(t와 연결된 모든 간선에 대해){
+					u = t의 인접정점
+          u가 방문되지 않은 곳이면
+          u를 큐에 넣고 방문 표시
+      }
+	}
+```
+
+​          
+
+​           
+
+## DFS(Depth First Search)
+
+> 시작점의 한 방향으로 갈 수 있는 경로까지 탐색해 더 이상 갈 곳이 없게되면 갈림길 간선이 있는 정점으로 되돌아와서 다른 방향의 정점으로 탐색 반복
+>
+> **재귀**로 구현
+
+​         
+
+### Sudo 코드
+
+```java
+G : 그래프
+
+DFS(v) // v 탐색 정점
+
+	visited[v] = true //방문 설정
+	
+	FOR each all w in adjacency( G, v )
+		IF visited[w] != true
+				DFS(w)
+```
+
+
 
