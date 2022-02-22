@@ -11,3 +11,8 @@
 * F5 : 라인 오른쪽 명령으로 진행
 * F6 : 라인 다음 줄로 진행
 
+​        
+
+### Preferences - debug - Step Filtering
+
+![image-20220222123459146](java_eclipse_debug.assets/image-20220222123459146.png)
