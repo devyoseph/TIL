@@ -95,6 +95,8 @@
      1. [트리의 스택 순회](/Algorithm/algo_tree_stack_search.md)
      2. [비선형 자료 구조 완전 탐색](/Algorithm/algo_tree_search.md)
   1. [그래프](/Algorithm/algo_graph.md)
+     1. [서로소 집합](/Algorithm/algo_disjoint.md)
+
   1. [백트래킹](/Algorithm/algo_backtrack.md)
 
 ​          
