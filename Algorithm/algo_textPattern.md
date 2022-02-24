@@ -2,7 +2,7 @@
 
 > X 문자열 안에 Y 문자열이 있는지 확인하여라
 
-<img src="/Users/yang-yoseb/Library/Application Support/typora-user-images/image-20220224151025077.png" alt="image-20220224151025077" style="zoom:67%;" />
+<img src="algo_textPattern.assets/image-20220224162718107.png" alt="image-20220224162718107" style="zoom:67%;" />
 
 ​         
 
