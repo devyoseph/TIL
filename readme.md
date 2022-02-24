@@ -103,8 +103,8 @@
      1. [서로소 집합](/Algorithm/algo_disjoint.md)
      1. [최소신장트리 - KRUSKAL, PRIM](/Algorithm/algo_MST.md)
      1. [최소신장트리 - Dijkstra](/Algorithm/algo_MST2.md)
-     
   1. [백트래킹](/Algorithm/algo_backtrack.md)
+  1. [문자열 패턴-라빈-카프,보이어무어,KMP](/Algorithm/algo_textPattern.md)
 
 ​          
 

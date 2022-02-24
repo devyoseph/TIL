@@ -96,3 +96,108 @@ public class Main {
 }
 ```
 
+​        
+
+
+
+### 우선순위 큐를 이용한 구현
+
+```java
+import java.util.Arrays;
+import java.util.PriorityQueue;
+import java.util.Scanner;
+
+
+/*
+ * 
+5
+0 5 10 8 7 
+5 0 5 3 6 
+10 5 0 1 3 
+8 3 1 0 1 
+7 6 3 1 0
+
+output==>10
+
+7
+0 32 31 0 0 60 51
+32 0 21 0 0 0 0
+31 21 0 0 46 0 25
+0 0 0 0 34 18 0
+0 0 46 34 0 40 51
+60 0 0 18 40 0 0
+51 0 25 0 51 0 0
+
+output==>175
+ * 
+ * 
+ */
+
+class Data implements Comparable<Data>{ // 배열이 아니라 객체로 최소값을 갱신
+	int ver, dis;
+	public Data(int ver, int dis) { // 노드 번호, 최소 거리
+		super();
+		this.ver = ver;
+		this.dis = dis;
+	}	
+	@Override
+	public int compareTo(Data o) { // 우선순위 큐에 넣기 때문에 우선순위를 어떻게 할 것인지 결정
+		// TODO Auto-generated method stub 
+		return Integer.compare(dis, o.dis); // 거리 오름차순 : 거리의 최소값이 위로 올라옴
+	}
+	
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
+
+		int[][] map = new int[N][N];
+
+		for(int i =0; i < N; i++) {
+			for(int j = 0; j < N; j++) {
+				map[i][j] = sc.nextInt();
+			}
+		}
+		
+		//신장트리에 포함여부 판단 배열
+		boolean[] v = new boolean[N];
+		
+    int[] distance = new int[N];
+    Arrays.fill(distance,Integer.MAX_VALUE);
+    
+    // 우선순위큐를 만들고 갱신되는 최소값들을 모두 우선순위큐에 집어넣어 바로바로 뽑도록함
+		PriorityQueue<Data> pq = new PriorityQueue<>();
+		pq.offer(new Data(0,0)); // 0번노드의 최소거리를 0으로 넣어줌
+		// O(NlogN)
+		Data cur = null;
+		int res = 0;
+		
+		while(!pq.isEmpty()){
+			cur = pq.poll(); // 맨 위 노드를 뽑고
+			
+    	if(v[cur.ver]) continue;
+    	// result로 합치는게 아니기 때문에 통과해도 상관은 없지만 빠른 연산을 위해 스킵
+    													
+			v[cur.ver] = true; // 방문체크
+			
+			for(int j = 0; j<N; j++) {
+				if(v[j] || map[cur.ver][j] == 0) continue; //방문하지 않았던 노드 중 연결된 노드의 값들 넣기
+				
+        if(distance[j] > distance[cur.ver] + map[cur.ver][j]){
+						distance[j] = distance[cur.ver] + map[cur.ver][j];
+          pq.offer(new Data(j,distance[j])); // 굳이 갱신하지 않고 우선순위 큐에 넣으면 자동으로 됨
+        }
+			}
+			
+		}
+		//MST값 출력
+		
+		System.out.println(res);
+	}
+
+}
+```
+
