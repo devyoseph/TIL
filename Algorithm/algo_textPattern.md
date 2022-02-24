@@ -42,7 +42,64 @@
 * **패턴이 문자열이고 길이가 매우 길어지면 MOD 연산을 활용한다**
   * **해쉬값 일치의 오류**: MOD연산을 하는 경우 나눈 나머지가 같다고 해서 둘이 같은 수가 아니므로 본 내용끼리 한 번 더 비교해야한다.
 
-​            
+```java
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.Random;
+import java.math.BigInteger;
+
+public class RabinKarp1 
+{
+	static void rabinfindPattern(String text,String pattern){
+		/*
+	    q a prime number
+	    p hash value for pattern
+	    t hash value for text
+	    d is the number of unique characters in input alphabet
+		 */
+		int d=128;
+		int q=107;
+		int end=text.length();
+		int m=pattern.length();
+		int t=0,p=0;
+		int h=1;
+		int i,j;
+		int start = 0;
+		//hash value calculating function
+		for (i=0;i<m-1;i++)
+			h = (h*d)%q;
+		for (i=0;i<m;i++){
+			p = (d*p + pattern.charAt(i))%q;
+			t = (d*t + text.charAt(i))%q;
+		}
+		//search for the pattern 
+		for(i=0;i<end-m;i++){
+			if(p==t){
+				//if the hash value matches match them character by character
+				for(j=0;j<m;j++)
+					if(text.charAt(j+i)!=pattern.charAt(j))
+						break;
+				if(j==m && i>=start)
+					System.out.println("Pattern match found at index "+i);            
+			}
+			if(i<end-m){
+				t =(d*(t - text.charAt(i)*h) + text.charAt(i+m))%q;
+				if(t<0)
+					t=t+q;
+			}    
+		}                                
+	}
+
+	public static void main(String[] args) {    
+		rabinfindPattern("I love yoe ve move. Plovse, love me.", "love");       
+	}
+}
+```
+
+​         
+
+​             
 
 ​           
 
@@ -73,6 +130,57 @@
 | 4    | 3    | 2    | 1    | 5    | 5              |
 
 * 맨 뒤 글자가 서로 다른데 t이고 tiger에 t는 포함되므로 글자를 4칸 민다.
+
+```java
+public class Boyer_Moore {
+	
+	static int skipTable[];
+	public static void main(String[] args) {
+		skipTable = new int[256];
+		String str = "I love you ve move. Plovse, love me.";
+		String pattern = "love";
+		
+		generateSkipTable(pattern, pattern.length());
+		int found = search(str, str.length(), 0, pattern, pattern.length());
+//		System.out.println(found);
+		while (found != -1 && found < str.length()){
+			System.out.println(found);
+			found = search(str, str.length(), found + pattern.length(), pattern, pattern.length());
+		}
+		
+	}
+	static void generateSkipTable(String pattern, int patternLength){
+		for (int i = 0; i < 256; i++)
+			skipTable[i] = pattern.length();
+		for (int i = 0; i < pattern.length(); i++)
+			skipTable[pattern.charAt(i)] = pattern.length() - 1 - i;
+	}
+	
+	static int strcmp(String str, int str_index, String pattern, int pattern_length){
+		int index = pattern_length - 1;
+		while (index >= 0 && str.charAt(str_index) == pattern.charAt(index)  ){
+			str_index--;
+			index--;
+		}
+		return index;
+	}
+	
+	static int search(String str, int str_length, int start_index, String pattern, int pattern_length){
+		int index = start_index + pattern.length() - 1; //starting point
+		while (index < str_length){
+			if (str.charAt(index) == pattern.charAt(pattern.length() - 1)){
+				int p_index = strcmp(str, index, pattern, pattern_length);
+				if (p_index == -1){
+					return index - pattern_length + 1; //found
+				}
+				index = index - pattern_length + 1 + p_index; //틀린 문자가 있는 위치
+			}
+			index = index + skipTable[str.charAt(index)];	//틀린 문자에 해당되는 거리만큼 jump
+		}
+		return -1; //not found
+	}	
+}
+```
 
 ​          
 
@@ -119,4 +227,238 @@ ab c ab t
 | 4    | **ababa**              | aba                               | 3    |
 | 5    | ababac                 | X                                 | 0    |
 | 6    | **a**babac**a**        | a                                 | 1    |
+
+​          
+
+### 이해
+
+* i 와 j 두 개의 인덱스를 활용한다
+
+```javascript
+a b a c a a b a
+j i
+0
+```
+
+* j와 i가 일치하지 않으면 i가 증가하고 해당 자리는 0이된다
+
+```java
+a b a c a a b a
+j x i
+0 0
+```
+
+* 둘이 일치하는 순간 1을 넣어주고 다음 문자도 같은지 최대 길이를 확인해야하기 때문에 i와 j를 둘 다 증가시켜준다
+
+```java
+a b a c a a b a
+  j   i
+0 0 1
+```
+
+* 근데 같지 않으므로 j를 다시 초기화시킨다.
+
+```java
+a b a c a a b a
+j     i
+0 0 1 
+```
+
+* 둘을 다시 비교하기 시작하지만 같지 않다. i는 증가하고 그 자리는 0이 된다.
+
+```java
+a b a c a a b a
+j       i
+0 0 1 0
+```
+
+* i와 j가 일치하기 때문에 1을 넣어주고 i와 j가 둘다 이동
+
+```java
+a b a c a a b a
+  j       i
+0 0 1 0 1
+```
+
+* 둘이 다시 일치하지 않기 때문에 j를 0인덱스로 이동
+
+```java
+a b a c a a b a
+j         i
+0 0 1 0 1
+```
+
+* 새로운 길이에서 i와 j가 일치 : 1을 넣고 둘 다 이동
+
+```java
+a b a c a a b a
+  j         i
+0 0 1 0 1 1
+```
+
+* j와 i가 달라질 때마다 j는 초기화되기 때문에 현재 j위치는 지금까지 같아진 값이라고도 판단할 수 있다.
+* i와 j가 같으므로 j에 1을 더한 2를 써준다
+
+```java
+a b a c a a b a
+    j         i
+0 0 1 0 1 1 2
+```
+
+* 다시 둘이 일치하므로 이동시킨다음 j의 위치인 2에 1을 더한 3을 써준다.
+
+```java
+a b a c a a b a
+    j         i
+0 0 1 0 1 1 2 3
+```
+
+​           
+
+#### 테이블의 의미
+
+ ```java
+ a b a c a a b a         
+ 0 0 1 0 1 1 2 3
+ 
+ // 배열의 i의 값의 뜻 : 문자열 0 인덱스부터 i인덱스까지 문자의 접두사 접미사 최대 일치길이
+ // 2번 인덱스가 1인데 a b a 의 접두사 접미사 같은 최대 길이가 1임을 의미 
+ ```
+
+​        
+
+### 코드로 이해
+
+```java
+import java.util.ArrayList;
+
+
+//KMP 알고리즘
+public class KMPTest {
+	public static void main(String[] args) {
+		ArrayList<Integer> list = kmp("ABCDabacaabaABCabacaabaDABEE", "abacaaba");
+		System.out.println(list);
+	}
+
+  // 테이블 구축함수
+	public static ArrayList<Integer> kmp(String str, String pattern) { 
+		ArrayList<Integer> list = new ArrayList<Integer>(); 
+		int[] pi = getPi(pattern); 
+		for(int i = 0 ; i < pi.length; i++){
+			System.out.print(pi[i]);
+		}
+		int n = str.length(), m = pattern.length();
+		char[] s = str.toCharArray(); // 검사할 문자열
+		char[] p = pattern.toCharArray(); // 패턴   
+		
+    int j = 0;
+		for (int i = 1; i < n; i++) { // j는 0, i는 1부터 시작
+      
+			while (j > 0 && s[i] != p[j]) { 
+				j = pi[j - 1]; // j위치에서 1을 뺀 값의 테이블 값으로 j가 이동
+			} 
+			if (s[i] == p[j]) {  // 패턴 문자와 같아지는 순간
+				if (j == m - 1) { 
+			
+					list.add(i - m + 1); 
+					
+					j = pi[j]; 
+				} else { // 둘이 일치하면 j위치의 1만큼 더해줌
+					j++;
+				}
+			}
+		}
+		return list; 
+	}
+//	실패시 이후 인덱스 위치 구하는 메소드
+	public static int[] getPi(String pattern) {
+		int m = pattern.length();
+		int j = 0;
+		char[] p = new char[m];
+		int[] pi = new int[m];
+
+		p = pattern.toCharArray();
+		for (int i = 1; i < m; i++) {
+			while (j > 0 && p[i] != p[j]) {
+				j = pi[j - 1];
+			}
+			if (p[i] == p[j]) {
+				pi[i] = ++j;
+
+			}
+
+		}
+		return pi;
+	}
+}
+```
+
+​     
+
+### 또 다른 설명
+
+```java
+import java.util.ArrayList;
+
+
+//KMP 알고리즘
+public class KMPTest {
+	public static void main(String[] args) {
+		ArrayList<Integer> list = kmp("ABCDabacaabaABCabacaabaDABEE", "abacaaba");
+		System.out.println(list);
+	}
+
+	public static ArrayList<Integer> kmp(String str, String pattern) { 
+		ArrayList<Integer> list = new ArrayList<Integer>(); 
+		int[] pi = getPi(pattern); 
+		for(int i = 0 ; i < pi.length; i++){
+			System.out.print(pi[i]);
+		}
+		int n = str.length(), m = pattern.length(), j = 0; 
+		char[] s = str.toCharArray(); 
+		char[] p = pattern.toCharArray();         
+		// str - 전체 문자열, pattern - 찾을 문자열 
+		// j - 찾을 문자열의 비교 인덱스. 
+		// i - 전체 문자열과 비교할 인덱스이기 때문에 1씩 증가하기만 함. 절대 불규칙적으로 변경되지 않음. 
+		for (int i = 0; i < n; i++) { 
+			while (j > 0 && s[i] != p[j]) { 
+				// 중간 단계 뛰어넘기. 
+				// pi배열을 이용하여 j인덱스를 변경시킴으로써 while문 중단. 
+				j = pi[j - 1]; 
+			} 
+			if (s[i] == p[j]) { 
+				if (j == m - 1) { 
+					// j는 비교 인덱스로써, 인덱스가 찾을 문자열의 크기에 도달하면 문자열 찾음. 
+					list.add(i - m + 1); 
+					// 여러 개의 찾을 문자열이 있을 수 있기 때문. 
+					j = pi[j]; 
+				} else { 
+					j++;
+				}
+			}
+		}
+		return list; 
+	}
+//	실패시 이후 인텍스 위치 구하는 메소드
+	public static int[] getPi(String pattern) {
+		int m = pattern.length();
+		int j = 0;
+		char[] p = new char[m];
+		int[] pi = new int[m];
+
+		p = pattern.toCharArray();
+		for (int i = 1; i < m; i++) {
+			while (j > 0 && p[i] != p[j]) {
+				j = pi[j - 1];
+			}
+			if (p[i] == p[j]) {
+				pi[i] = ++j;
+
+			}
+
+		}
+		return pi;
+	}
+}
+```
 
