@@ -2,6 +2,14 @@
 
 > **Array.sort( )**를 적용하기 전에 정렬 기준을 바꿔줄 수 있다
 
+```java
+Integer.MAX_VALUE - Integer.MIN_VALUE;// -1 로 결과값이 나오므로
+
+Integer.compare(Integer.MAX_VALUE,Integer.MIN_VALUE); // Integer.compare() 메서드 활용
+```
+
+
+
 ​             
 
 ## 객체 정렬
