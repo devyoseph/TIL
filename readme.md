@@ -15,6 +15,7 @@
   5) [메모리 관리](/CS/Memory.md)
      1) [Paging](/CS/CS_memory2.md)
      2) [Segmentation](/CS/CS_memory3.md)
+  6) [가상메모리](/CS/CS_vm.md)
 
 ​       
 
