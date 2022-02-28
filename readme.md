@@ -118,4 +118,7 @@
    1. [회원 등록 / 조회](/Spring/spring_web.md)
    1. [스프링 DB 접근 기술](/Spring/spring_db.md)
       1. [순수 JDBC](/Spring/spring_jdbc.md)
+      1. [스프링 통합 테스트 / JdbcTemplate](/Spring/spring_DBtest.md)
+      1. [JPA](/Spring/spring_jpa.md)
+      1. [스프링 데이터 JPA](/Spring/spring_jpa2.md)
 
