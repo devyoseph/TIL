@@ -16,7 +16,8 @@
      1) [Paging](/CS/CS_memory2.md)
      2) [Segmentation](/CS/CS_memory3.md)
   6) [가상메모리](/CS/CS_vm.md)
-  6) [파일시스템](/CS/CS_filesys.md)
+  7) [파일시스템](/CS/CS_filesys.md)
+     1) [파일 할당/빈 영역 관리/폴더 관리/캐시](/CS/CS_filesys2.md)
 
 ​       
 
