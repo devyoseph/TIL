@@ -357,13 +357,13 @@ function(매개변수1, 매개변수2,...,매개변수n);
 
 ### 주의
 
-* 함수 선언문이 아닌 **함수 표현식**의 경우 **변수 호이스팅**이 발생
+* 함수 선언문이 아닌 **함수 표현식**의 경우 **변수 호이스팅**이 일어나지 않음
 
   ```javascript
   var result = plus(5, 7); //함수를 찾아야함: 하지만 plus는 var로 정의 = TypeError
   console.log(result);
   
-  var plus = function(num1, num2){ //이 함수는 변수 안에 저장되므로 위에서 호출해도 사용 불가
+  var plus = function(num1, num2){ //함수 선언이 아닌 표현식이므로 호이스팅이 일어나지 않음
   	return num1 + num2;
   };
   ```
