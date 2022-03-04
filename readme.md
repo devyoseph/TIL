@@ -18,6 +18,7 @@
   6) [가상메모리](/CS/CS_vm.md)
   7) [파일시스템](/CS/CS_filesys.md)
      1) [파일 할당/빈 영역 관리/폴더 관리/캐시](/CS/CS_filesys2.md)
+  8) [입출력시스템](/CS/CS_IO.md)
 
 ​       
 
