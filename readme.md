@@ -37,16 +37,15 @@
 
 ​       
 
-### HTML & CSS
+### HTML & CSS & JavaScript
 
 1. [HTML](/HTML/html_basic.md)
    1. [form 태그](/HTML/html_re.md)
-
 2. [CSS](/CSS/css_basic.md)
    1. [복습](/CSS/css_re.md)
+3. [JavaScript](/JS/JS_basic.md)
 
-
-​    
+​             
 
 ### JSON
   * [JSON 기초](/python/json_basic.md)
