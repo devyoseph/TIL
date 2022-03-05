@@ -127,4 +127,5 @@
       1. [스프링 통합 테스트 / JdbcTemplate](/Spring/spring_DBtest.md)
       1. [JPA](/Spring/spring_jpa.md)
       1. [스프링 데이터 JPA](/Spring/spring_jpa2.md)
+   1. [AOP](/Spring/spring_AOP.md)
 
