@@ -115,7 +115,7 @@
 
 ​          
 
-### Spring
+### Spring [inflearn]
 
 1. 스프링 입문
    1. [정적 컨텐츠, MVC와 템플릿 엔진, API](/Spring/spring_basic.md)
@@ -129,3 +129,8 @@
       1. [스프링 데이터 JPA](/Spring/spring_jpa2.md)
    1. [AOP](/Spring/spring_AOP.md)
 
+​        
+
+### Vue [코딩애플]
+
+1. [설치 & 세팅](/Vue/vue_setting.md)
