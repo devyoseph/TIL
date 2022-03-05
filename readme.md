@@ -134,3 +134,4 @@
 ### Vue [코딩애플]
 
 1. [설치 & 세팅](/Vue/vue_setting.md)
+2. [데이터보관](/Vue/vue_basic.md)
