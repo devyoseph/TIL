@@ -135,3 +135,6 @@
 
 1. [설치 & 세팅](/Vue/vue_setting.md)
 2. [데이터보관](/Vue/vue_basic.md)
+2. [반복문](/Vue/vue_for.md)
+2. [이벤트 핸들러](/Vue/vue_event.md)
+2. [모달창](/Vue/vue_modal.md)
