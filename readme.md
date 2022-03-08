@@ -45,6 +45,11 @@
 2. [CSS](/CSS/css_basic.md)
    1. [복습](/CSS/css_re.md)
 3. [JavaScript](/JS/JS_basic.md)
+   1. [DOM](/JS/JS_dom.md)
+   1. [event](/JS/JS_event.md)
+   1. [Storage](/JS/JS_storage.md)
+   1. [주의사항 정리](/JS/JS_test.md)
+
 
 ​             
 
