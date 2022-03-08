@@ -126,3 +126,17 @@ pollViewDiv.innerHTML = poll; // 그 동안의 문자열의 합을 HTML로 변�
 
 
 
+### 10. 요소 숨기기
+
+* display는 속성이 아니기에 `setAttribute`로 변경할 수 없음을 주의한다.
+
+```css
+display : none;
+display : block;
+을 이용한다
+```
+
+```javascript
+login.style.display = 'none';
+```
+
