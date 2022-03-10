@@ -52,6 +52,7 @@
 4. [jQuery](/jQuery/jq_basic.md)
    * [외부 문서 사용시 자동완성기능](/jQuery/jq_autocomplete.md)
 5. [Ajax](/Ajax/ajax_basic.md)
+   * [기본 전송 포맷](/Ajax/ajax_format.md)
 
 
 ​             
