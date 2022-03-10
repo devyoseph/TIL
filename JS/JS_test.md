@@ -140,3 +140,18 @@ display : block;
 login.style.display = 'none';
 ```
 
+​         
+
+### 11. forEach()
+
+* 내부 function의 첫번째 인자는 data, 두번째는 index, 세번째는 자기자신
+
+  ```javascript
+  let arr = ["A", "B", "C", "D", "E"];
+  
+  arr.forEach(function(e, i, obj){ // data / index / 자기자신
+    console.log("출력 : ", e, i, obj, obj[i]);
+  });
+  ```
+
+  

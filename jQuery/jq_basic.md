@@ -67,6 +67,14 @@ $(selector).action(); //Selector 표현식 + Action 메소드 조합
   });
   ```
 
+  ```javascript
+  jQuery(function () {
+      
+  });
+  ```
+
+  
+
 * **메소드 체인**
 
   ```javascript
@@ -488,7 +496,15 @@ $(selector).on(eventType, delegate Selector, function(event) {});
 ```
 
 * `bind()` 와 사용은 같지만 **동적으로 생성한 DOM에도 사용이 가능하다**.
-* 연결을 권장하는 방법이다.
+  * 연결을 권장하는 방법이다.
+
+````javascript
+$(document).on("click", ".button.btn-remove", function () {
+ //delegate 내부에 클래스명 등이 겹쳐서 들어간다 
+});
+````
+
+
 
 ​        
 
