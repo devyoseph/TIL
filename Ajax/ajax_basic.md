@@ -140,6 +140,7 @@ $.xxx(url, data, function(result, textStatus, jqXHR){});
 * URL에 데이터가 노출되지 않기에 기본 보안은 되어있다.
 * 전송하는 길이에 제한이 없다
 * 캐싱할 수 없다.
+* **Header**을 포함해야한다.
 
 ​            
 
@@ -148,4 +149,25 @@ $.xxx(url, data, function(result, textStatus, jqXHR){});
 ```javascript
 $(selector).load(url, data, function(result, textStatus, jqXHR){}));
 ```
+
+​           
+
+​              
+
+## Event 관리(전역함수)
+
+> Ajax는 서버와 통신하는 과정이 브라우저 내부에서 이루어지므로 진행상황을 알기 어렵다.
+>
+> 이를 확인하기 위해 전역함수를 사용한다.
+>
+> **단 jQuery의 전역함수는 $.ajaxSetup()함수에 global 프로퍼티 설정이 true이어야 한다.(디폴트: true)**
+
+| 전역함수     | 호출시점                                            | 매개변수                                                     |
+| ------------ | --------------------------------------------------- | ------------------------------------------------------------ |
+| ajaxStart    | Ajax함수 실행, XHR 객체 생성 전                     | 전역 콜백정보 객체                                           |
+| ajaxSend     | XHR 객체 생성 뒤, 서버전송 전                       | 전역 콜백정보 객체, XHR 인스턴스, $.ajax()가 사용하는 프로퍼티 |
+| ajaxSuccess  | 서버 요청 반환, 응답이 성공인 상태                  | 전역 콜백정보 객체, XHR 인스턴스, $.ajax()가 사용하는 프로퍼티 |
+| ajaxError    | 서버요청 반환, 응답이 실패인 상태                   | 전역 콜백정보 객체, XHR 인스턴스, $.ajax()가 사용하는 프로퍼티, XHR 인스턴스가 반환한 예외객체 |
+| ajaxComplete | 서버요청 반환, ajaxSuccess 또는 ajaxError 호출된 후 | 전역 콜백정보 객체, XHR 인스턴스, $.ajax()가 사용하는 프로퍼티 |
+| ajaxStop     | 모든 Ajax 진행이 완료, 다른 전역 콜백이 호출된 후   | 전역 콜백정보 객체                                           |
 
