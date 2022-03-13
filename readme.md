@@ -54,6 +54,7 @@
 5. [Ajax](/Ajax/ajax_basic.md)
    * [기본 전송 포맷](/Ajax/ajax_format.md)
    * [HTML 포맷](/Ajax/ajax_html.md)
+   * [JSON 연결](/Ajax/ajax_json.md)
 
 
 ​             
