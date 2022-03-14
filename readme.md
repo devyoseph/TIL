@@ -4,10 +4,11 @@
 
    
 
-## CS 공부
+## CS 팀 스터디
+
+> gitHub 주소: https://github.com/devyoseph/csStudy
 
 * 운영체제(OS)
-
   1) [운영체제 개요](/CS/CS_os_1.md)
   2) [Race Condition](/CS/CS_control.md)
   2) [공유데이터 접근 문제 해결](/CS/CS_control2.md)
@@ -19,6 +20,8 @@
   7) [파일시스템](/CS/CS_filesys.md)
      1) [파일 할당/빈 영역 관리/폴더 관리/캐시](/CS/CS_filesys2.md)
   8) [입출력시스템](/CS/CS_IO.md)
+* 네트워크
+  1. [네트워크 로드맵](/CS/NTW/CS_roadmap.md)
 
 ​       
 
