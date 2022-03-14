@@ -53,3 +53,26 @@ $(function () {
     })
 ```
 
+​        
+
+​         
+
+​          
+
+## XML 연결
+
+> JSON데이터는 `getJSON`을 통해 가져오고 function에서 i,e 인자를 통해 데이터를 꺼내온다음 `e.adress`로 key검색을 했지만 XML은 `find("요소명")`을 통해 요소의 값을 가져온다.
+
+```javascript
+  $(data)
+    .find("item")
+    .each(function () {
+    aptListInfo += `
+              <div class="col-3">
+              <div class="apt-name">${$(this).find("아파트").text()}</div>
+              <p>${$(this).find("법정동").text()}</p>
+              <p>${$(this).find("거래금액").text()} 만 원</p>
+
+            });
+```
+
