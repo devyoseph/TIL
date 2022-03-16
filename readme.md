@@ -134,9 +134,12 @@
 
 ### MySQL
 
-1. [기초](/DB/mysql/mysql_basic.md)
+1. [주의점 요약](/DB/mysql/mysql_test.md)
+2. [기초](/DB/mysql/mysql_basic.md)
    1. [DDL](/DB/mysql/mysql_basic.md)
    2. [DML](/DB/mysql/mysql_basic.md)
+   3. [TCL & 함수](/DB/mysql/db_function_pre.md)
+3. [GROUP BY & 제약조건 & VIEW](/DB/mysql/db_function_pre2.md)
 
 ​         
 
