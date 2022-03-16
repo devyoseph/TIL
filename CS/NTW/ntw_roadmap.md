@@ -139,3 +139,77 @@
     > 둘의 공통점: **wireless, shared**
 
     <img src="CS_roadmap.assets/image-20220315001024136.png" alt="image-20220315001024136" style="zoom: 50%;" />
+
+​       
+
+* 키워드 정리
+
+>Head End(HE): 여러 전송에서 최초로 모아지는 끝단
+>
+>BandWidth: 전송폭
+
+### 지난 시간 요약
+
+> 요약 그림 불러오기
+
+>Hosts(End Systems)
+>
+>Router / Switch
+>
+>Links
+>
+>* Home Network: Access Network
+>  * 내부: Access Point / D? - Router - Modem
+>    * 종류: DSL / HFC(Cable)
+>* 기업/학교
+>  * Ethernet Switch: Desktop이나 Access Point(노트북, 핸드폰) - Router - ISP
+
+​        
+
+## Host
+
+> Sends packets of data
+
+<img src="CS_roadmap.assets/image-20220316170942264.png" alt="image-20220316170942264" style="zoom: 50%;" />
+
+* 시간 계산: 비트의 길이 L / R(비트당 전송 시간)
+
+<img src="CS_roadmap.assets/image-20220316171059948.png" alt="image-20220316171059948" style="zoom:50%;" />
+
+* Guided Media: 물리적인 wire 사용
+
+  * copper: Ethernet
+  * coax, fiber: HFC(Cable: Hybrid fiber coax)
+    * Coax < Fiber의 bandWidth 크기를 가진다
+  * fiber optic cable
+    * glass fiber: light pulses를 전달
+    * error 율도 낮고 속도도 빠름
+
+  <img src="CS_roadmap.assets/image-20220316171651000.png" alt="image-20220316171651000" style="zoom:67%;" />
+
+* Unguided Media: 물리적인 wire 사용X
+
+  * Ex) Radio
+
+    * 단점
+
+      >1. reflection
+      >2. obstruction by objects
+      >
+      >3. interference
+
+  * Radio link types
+
+    * terrestrial microwave
+    * LAN (ex. WIFI)
+    * Wide-area
+    * Satellite: coverage가 더 넓음
+      * Geostationary 면적 > LEO(low-earth-orbiting) 면적
+
+* TP(Twisted pair) = copper
+
+  * 2 insulated Copper wires = 이더넷을 지원하는데 사용 (Category가 높으면 전송량이 많다)
+
+​              
+
+​              

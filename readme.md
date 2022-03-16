@@ -21,7 +21,8 @@
      1) [파일 할당/빈 영역 관리/폴더 관리/캐시](/CS/CS_filesys2.md)
   8) [입출력시스템](/CS/CS_IO.md)
 * 네트워크
-  1. [네트워크 로드맵](/CS/NTW/CS_roadmap.md)
+  1. [네트워크 로드맵](/CS/NTW/ntw_roadmap.md)
+  1. [네트워크 로드맵](/CS/NTW/ntw_roadmap2.md)
 
 ​       
 
@@ -129,7 +130,15 @@
   1. [백트래킹](/Algorithm/algo_backtrack.md)
   1. [문자열 패턴-라빈-카프,보이어무어,KMP](/Algorithm/algo_textPattern.md)
 
-​          
+​         
+
+### MySQL
+
+1. [기초](/DB/mysql/mysql_basic.md)
+   1. [DDL](/DB/mysql/mysql_basic.md)
+   2. [DML](/DB/mysql/mysql_basic.md)
+
+​         
 
 ### Spring [inflearn]
 
