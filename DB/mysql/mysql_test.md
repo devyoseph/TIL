@@ -2,7 +2,7 @@
 
 > MySQL을 써야하는 이유 중 하나: LIMIT = paging이 쉽다는 점
 
-### 대소문자 구분
+### 1. 대소문자 구분
 
 * MySQL은 where절에서 검색할 때 대소문자를 구분하지 않고 검색하기 때문에 BINARY키워드를 사용한다
 
@@ -16,7 +16,17 @@ select * from employees where binary(first_name) = 'steven';
 
 ​        
 
-### 테이블 생성
+### 2. 문자열 비교
+
+* 두 문자열을 비교하기 위해 `binary`키워드를 활용해 비교한다
+
+```sql
+where binary upper(city) = upper('seattle')
+```
+
+​          
+
+### 3. 테이블 생성
 
 * 세부 옵션은 **그냥 띄어쓰기**로 넣어주면 된다.
 

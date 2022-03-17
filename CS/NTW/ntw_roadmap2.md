@@ -2,7 +2,7 @@
 
 > 키워드: Circuit-Switching, Packet-Switching, Call, Resource Reservation, Store and forward, queueing delay 
 >
-> ISP, IXP(EXCHANGE) , Peering(Settlement free, cost 하락 목적), Multi-home, CPN(Content Provider Network)
+> ISP, IXP(EXCHANGE), Peering(Settlement free, cost 하락 목적), Multi-home, CPN(Content Provider Network)
 
 # Network Core
 
@@ -104,3 +104,4 @@
     * 자기들의 Own Network 설치함으로 비용절감
     * 이를 통해 부분적으로 ISP와 연결함
     * 자신들만의 서비스를 더 손쉽게 제어가능 
+

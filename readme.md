@@ -140,6 +140,8 @@
    2. [DML](/DB/mysql/mysql_basic.md)
    3. [TCL & 함수](/DB/mysql/db_function_pre.md)
 3. [GROUP BY & 제약조건 & VIEW](/DB/mysql/db_function_pre2.md)
+3. [JOIN](/DB/mysql/mysql_join.md)
+3. [SubQuery](/DB/mysql/mysql_mysql.md)
 
 ​         
 
