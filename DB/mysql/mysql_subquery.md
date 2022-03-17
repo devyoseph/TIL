@@ -149,11 +149,13 @@ from dual;
 
 ​                         
 
+​         
+
 ## 서브쿼리의 활용
 
 >  서브쿼리를 이용한 CREATE, INSERT, UPDATE, DELETE
 
-## CREATE
+### CREATE
 
 * 데이터 모두 복사해서 가져오기
 
