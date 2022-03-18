@@ -41,7 +41,7 @@ CREATE TABLE table_name(
 
 ​         
 
-### INSERT INTO a VALUES b
+### 4. INSERT INTO a VALUES b
 
 * 테이블에 row 전체에 값을 넣는 방법
 
@@ -110,3 +110,32 @@ order BY department_id desc
 limit 1,3;
 ```
 
+​         
+
+### E-R Diagram
+
+> Entity-Relationship Diagram
+>
+> * Entity: 개체, 사용자와 관계가 있는 주요 객체, 데이터로 관리되어야할 정보들
+>   * Entity 찾는법
+>     * 영속적으로 존재하는 것
+>     * 새로 식별이 가능한 데이터 요소를 가짐
+>     * Entity는 반드시 속성(칼럼명이 될 값)을 가진다
+>     * 명사적 표현
+>   * Ex) 학생, 직원 등
+>
+> 개념적 데이터베이스 모델링에서 사용하는 다이어그램으로 기호의 의미를 파악한다.
+>
+> * 네모: 개체
+> * 동그라미: 속성
+> * 마름모: 관계
+
+​        
+
+### 데이터베이스 모델링의 산출물
+
+> 요구사항 분석: 요구사항 분석서
+>
+> 개념적 설계: ERD
+>
+> 논리적 설계: 

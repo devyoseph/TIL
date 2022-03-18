@@ -142,6 +142,7 @@
 3. [GROUP BY & 제약조건 & VIEW](/DB/mysql/db_function_pre2.md)
 3. [JOIN](/DB/mysql/mysql_join.md)
 3. [SubQuery](/DB/mysql/mysql_subquery.md)
+3. [데이터베이스 모델링](/DB/db_modeling.md)
 
 ​         
 
