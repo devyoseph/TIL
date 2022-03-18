@@ -144,6 +144,10 @@
 3. [SubQuery](/DB/mysql/mysql_subquery.md)
 3. [데이터베이스 모델링](/DB/db_modeling.md)
 
+​     
+
+### [JDBC](JDBC/jdbc_basic.md)         
+
 ​         
 
 ### Spring [inflearn]
