@@ -154,4 +154,11 @@ login.style.display = 'none';
   });
   ```
 
-  
+* jQuery의 .each(function(i,e){ })
+
+  ```javascript
+  $("h2").each(function (index, item) {
+  			// item 대신 this 사용 가능
+  			$(item).addClass("high-light-" + index);
+  		});
+  ```

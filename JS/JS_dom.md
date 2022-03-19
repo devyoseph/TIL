@@ -169,18 +169,24 @@ html.textHTML = '<h2>ddd<h2>' //인식을 못하고 전체를 텍스트로 인�
 
 ### 7. 문서의 객체 가져오기 
 
-| 함수명                             | 설명                                                 |
-| ---------------------------------- | ---------------------------------------------------- |
-| getElementById('id')               | id와 일치하는 객체 얻기                              |
-| getElementByClassName('classname') | class와 일치하는 모든 요소 배열 얻기                 |
-| getElementByTagName('tagname')     | tag(ex:h2)와 일치하는 모든 요소 배열 얻기            |
-| getElementByName(name)             | 태그의 name 속성이 name과 일치하는 element 배열 얻기 |
-| querySelector(selector)            | selector에 일치하는 첫번째 element 객체 얻기         |
-| querySelectorAll(selector)         | selector에 일치하는 모든 element 배열 얻기           |
+| 함수명                              | 설명                                                 |
+| ----------------------------------- | ---------------------------------------------------- |
+| getElementById('id')                | id와 일치하는 객체 얻기                              |
+| getElementsByClassName('classname') | class와 일치하는 모든 요소 배열 얻기                 |
+| getElementsByTagName('tagname')     | tag(ex:h2)와 일치하는 모든 요소 배열 얻기            |
+| getElementsByName(name)             | 태그의 name 속성이 name과 일치하는 element 배열 얻기 |
+| querySelector(selector)             | selector에 일치하는 첫번째 element 객체 얻기         |
+| querySelectorAll(selector)          | selector에 일치하는 모든 element 배열 얻기           |
 
 ​       
 
 ### 8. 객체 제거
+
+> 부모 위치에서 자식을 지워주는 것이기 때문에 document.body에서 지워주거나
+>
+> 부모까지 Import한 다음 
+>
+> `parent.removeChild('child');` 를 통해 지워야한다. 
 
 * removeChild('childnode');
 
