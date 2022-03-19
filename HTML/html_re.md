@@ -128,22 +128,22 @@
 
   * 화면에는 동일하게 출력되지만 의미가 다르다
 
-  | tag명          | 설명                                         |
-  | -------------- | -------------------------------------------- |
-  | <abbr>         | 생략된 약어 표시(Title 속성 함께 사용)       |
-  | <address>      | 연락처 정보 표시                             |
-  | <blockquote>   | **긴 인용문구, 좌우 들여쓰기**               |
-  | <q>            | 짧은 인용문구, 좌우 따옴표 붙음              |
-  | <cite>         | 웹 문서나 포스트에서 참고 내용 표시          |
-  | <pre>          | **공백, 줄바꿈등 입력된 그대로 화면에 표시** |
-  | <code>         | 컴퓨터 인식을 위한 소스 코드                 |
-  | <mark>         | 특정 문자열 강조                             |
-  | <hr>           | **구분선**                                   |
-  | <b>, <strong>  | 굵은 글씨                                    |
-  | <i>, <em>      | 이탤릭                                       |
-  | <big>, <small> | 큰 글자, 작은 글자                           |
-  | <sup>, <sub>   | **위 첨자, 아래 첨자**                       |
-  | <s>, <u>       | **취소선, 밑줄(underline)**                  |
+  | tag명            | 설명                                         |
+  | ---------------- | -------------------------------------------- |
+  | `<abbr>`         | 생략된 약어 표시(Title 속성 함께 사용)       |
+  | `<address>`      | 연락처 정보 표시                             |
+  | `<blockquote>`   | **긴 인용문구, 좌우 들여쓰기**               |
+  | `<q>`            | 짧은 인용문구, 좌우 따옴표 붙음              |
+  | `<cite>`         | 웹 문서나 포스트에서 참고 내용 표시          |
+  | `<pre>`          | **공백, 줄바꿈등 입력된 그대로 화면에 표시** |
+  | `<code>`         | 컴퓨터 인식을 위한 소스 코드                 |
+  | `<mark>`         | 특정 문자열 강조                             |
+  | `<hr>`           | **구분선**                                   |
+  | `<b>, <strong>`  | 굵은 글씨                                    |
+  | `<i>, <em>`      | 이탤릭                                       |
+  | `<big>, <small>` | 큰 글자, 작은 글자                           |
+  | `<sup>, <sub>`   | **위 첨자, 아래 첨자**                       |
+  | `<s>, <u>`       | **취소선, 밑줄(underline)**                  |
 
   ```html
   	<pre>
@@ -159,14 +159,14 @@
 
 * **목록형 요소** : 하나 이상의 하위 tag를 포함한다
 
-  | tag명 | 설명                      | 속성     | 속성값 | 설명            |
-  | ----- | ------------------------- | -------- | ------ | --------------- |
-  | <ul>  | 번호 없는 목록            | type     | 1      | 숫자(기본값)    |
-  | <ol>  | 번호 있는 목록            | type     | a      | 영문 소문자     |
-  | <li>  | 목록 항목의 하위 태그     | type     | A      | 영문 대문자     |
-  | <dl>  | 용어 정의와 설명을 목록화 | type     | i, l   | 로마숫자(소/대) |
-  | <dt>  | 용어 목록의 정의 부분     | start    | 숫자   | 시작 번호       |
-  | <dd>  | 용어 목록의 설명부분      | reversed |        | 역순 표시       |
+  | tag명  | 설명                      | 속성     | 속성값 | 설명            |
+  | ------ | ------------------------- | -------- | ------ | --------------- |
+  | `<ul>` | 번호 없는 목록            | type     | 1      | 숫자(기본값)    |
+  | `<ol>` | 번호 있는 목록            | type     | a      | 영문 소문자     |
+  | `<li>` | 목록 항목의 하위 태그     | type     | A      | 영문 대문자     |
+  | `<dl>` | 용어 정의와 설명을 목록화 | type     | i, l   | 로마숫자(소/대) |
+  | `<dt>` | 용어 목록의 정의 부분     | start    | 숫자   | 시작 번호       |
+  | `<dd>` | 용어 목록의 설명부분      | reversed |        | 역순 표시       |
 
   ```html
   <ol type="i" start="100">
@@ -229,14 +229,14 @@
   </table>
   ```
 
-  * 제목: <caption>
-  * 행 그룹 요소: <thead>, <tbody>, <tfoot>
-  * 열 그룹 요소: <colgroup>
-  * 열 태그: <col> , span 타입 = 열 개수 지정 
-  * 행 표시: <tr>
-  * 강조 표시: <th>
-  * 내용 표시: <td>
-  * 그룹: <colgroup>, <rowspan>
+  * 제목: `<caption>`
+  * 행 그룹 요소: `<thead>`,` <tbody>`,` <tfoot>`
+  * 열 그룹 요소: `<colgroup>`
+  * 열 태그: `<col>` , span 타입 = 열 개수 지정 
+  * 행 표시: `<tr>`
+  * 강조 표시: `<th>`
+  * 내용 표시: `<td>`
+  * 그룹: `<colgroup>`,` <rowspan>`
   * 속성: HTML5부터는 지원X, CSS로 적용한다.
     * frame : 특정 선을 보여줄지 결정
     * rules : 셀과 셀 사이 줄을 보여줄지 결정
@@ -296,9 +296,9 @@
   </p>
   ```
 
-* **<map>  :  하나의 이미지 안에 여러 개의 link**
+* **`<map>`  :  하나의 이미지 안에 여러 개의 link**
 
-  * <area> : <a> 태그 대신 사용, href, target, shape 속성
+  * `<area>` : `<a>` 태그 대신 사용, href, target, shape 속성
 
     * shape 속성의 값 = default, rect, circle, poly
 
@@ -343,27 +343,27 @@
 | method="get"  | 주소 표시줄에 사용자가 입력한 내용 표시. 256~2048bytes의 데이터만 전송 |
 | method="post" | HTTP 메세지의 Body에 담아서 전송하기 때문에 전송 내용 길이 제한X<br />사용자가 입력한 내용이 표시X |
 | name          | form의 이름 지정                                             |
-| action        | <form> 태그 안 내용을 처리해줄 서버상 프로그램 지정(URL)     |
-| target        | <action> 태그에서 지정한 스크립트 파일을 현재 창이 아닌 다른 위치에 열도록 지정 |
+| action        | `<form>` 태그 안 내용을 처리해줄 서버상 프로그램 지정(URL)   |
+| target        | `<action>` 태그에서 지정한 스크립트 파일을 현재 창이 아닌 다른 위치에 열도록 지정 |
 | autocomplete  | 자동완성 기능, 기본값 on                                     |
 
 ​        
 
 * **form 컨트롤 요소**
 
-| tag명                               | 설명                                                         |
-| ----------------------------------- | ------------------------------------------------------------ |
-| <form>                              | 사용자에게 입력 받을 항목 정의, 여러 개 control 요소 포함    |
-| <input>                             | 텍스트 box, 체크 box, 라디오 버튼 등 사용자가 데이터를 입력할 수 있도록 함 |
-| <textarea>                          | 여러 줄의 문자 입력, cols / rows 속성으로 박스 크기 조정, disabled 속성으로 수정불가 내용 표시 |
-| <button>                            | 버튼을 표시                                                  |
-| <select><br /><option value="내용"> | select 태그 : 셀렉트 박스, size(dropdown 항목 개수 지정) / multiple(ctrl 키를 누른 상태로 여러 항목 선택) <br />option 태그 : selected(화면에 표시될 때 기본으로 선택되어 있는 옵션), value(전송할 값)<br /><optgroup label="그룹명"> option을 그룹으로 보여주기 위한 태그 |
-| <optgroup>                          | select box의 각 항목 그룹화                                  |
-| <option>                            | select box의 각 항목 정의                                    |
-| <label>                             | for 속성을 이용해 다른 control 요소와 텍스트 연결            |
-| <fieldset>                          | 입력 항목들을 그룹화                                         |
-| <legend>                            | <fieldset>의 제목 지정                                       |
-| <progress><br /><meter>             | 작업의 진행 상태 표시, value, max<br />progress와 비슷, low / high / optimum : 낮은 높은 최적 값을 지정(그에 따라 색이 달라짐) |
+| tag명                                 | 설명                                                         |
+| ------------------------------------- | ------------------------------------------------------------ |
+| `<form>`                              | 사용자에게 입력 받을 항목 정의, 여러 개 control 요소 포함    |
+| `<input>`                             | 텍스트 box, 체크 box, 라디오 버튼 등 사용자가 데이터를 입력할 수 있도록 함 |
+| `<textarea>`                          | 여러 줄의 문자 입력, cols / rows 속성으로 박스 크기 조정, disabled 속성으로 수정불가 내용 표시 |
+| `<button>`                            | 버튼을 표시                                                  |
+| `<select><br /><option value="내용">` | select 태그 : 셀렉트 박스, size(dropdown 항목 개수 지정) / multiple(ctrl 키를 누른 상태로 여러 항목 선택) <br />option 태그 : selected(화면에 표시될 때 기본으로 선택되어 있는 옵션), value(전송할 값)<br /><optgroup label="그룹명"> option을 그룹으로 보여주기 위한 태그 |
+| `<optgroup>`                          | select box의 각 항목 그룹화                                  |
+| `<option>`                            | select box의 각 항목 정의                                    |
+| `<label>`                             | for 속성을 이용해 다른 control 요소와 텍스트 연결            |
+| `<fieldset>`                          | 입력 항목들을 그룹화                                         |
+| `<legend>`                            | `<fieldset>`의 제목 지정                                     |
+| `<progress><br /><meter>`             | 작업의 진행 상태 표시, value, max<br />progress와 비슷, low / high / optimum : 낮은 높은 최적 값을 지정(그에 따라 색이 달라짐) |
 
 ```html
 	<h2>form control - label</h2>
@@ -417,20 +417,20 @@
 <input type="button" value="버튼" onclick="alert('일반 버튼입니다')">
 ```
 
-​       
+​            
 
 * 사용자 입력을 위한 input
 
 | 속성                     | 설명                                                         |
 | ------------------------ | ------------------------------------------------------------ |
-| autofocus                | 페이지 로딩 후 마우스 커서 표시                              |
-| placeholder              | 텍스트 입력시 적당한 힌트 표시                               |
-| readonly                 | =true, 등으로 지정                                           |
+| autofocus                | 페이지 로딩 후 마우스 커서 표시 (값 없이 그냥 autofocus)     |
+| placeholder=""           | 텍스트 입력시 적당한 힌트 표시                               |
+| readonly=true            | =true, 등으로 지정                                           |
 | required                 | submit 하기 전에 필수적으로 입력해야 하는 부분 체크          |
 | min,max,step             |                                                              |
 | size,minlength,maxlength |                                                              |
 | Height,width             |                                                              |
-| list                     | <datalist> 에 미리 정의해 놓은 옵션 값을 <input> 안에 나열해 보여줌 |
+| list                     | `<datalist>` 에 미리 정의해 놓은 옵션 값을`<input>` 안에 나열해 보여줌 |
 | multiple                 | type이 `email`이나 `file` 등 두 개 이상일 때 두 개 이상 값을 입력 |
 
 ```html
