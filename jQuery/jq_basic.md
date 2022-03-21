@@ -125,17 +125,29 @@ $("h1").css("color","blue"); // $은 jquery 문법을 나타냄
 
 ### 속성 선택자(Attribute Selector)
 
+```javascript
+$(document).ready(function(){
+  $('h2[class=na]').on("click",function(){
+    if($('h2[class=na]').css("color")=="rgb(255, 0, 0)"){
+      $('h2[class=na]').css("color","black");
+    }else{
+      $('h2[class=na]').css("color","red");
+    }
+  })
+})
+```
+
 * 대괄호 `[]`를 사용해 해당 속성을 포함해 검색
 
-| 선택자 형식                | 요약                                                      |
-| -------------------------- | --------------------------------------------------------- |
-| `$selector[attr]`          | attr을 속성으로 가지는 객체                               |
-| `$selector[attr="value"]`  | attr을 속성으로 가지고 값이 value와 같은 객체             |
-| `$selector[attr!="value"]` | attr을 속성으로 가지고 값이 value와 같지 않은 객체        |
-| `$selector[attr~="value"]` | attr을 속성값이 value로 **공백과 함께 포함**하는 문서객체 |
-| `$selector[attr^="value"]` | attr을 속성값이 value로 **시작**하는 문서객체             |
-| `$selector[attr$="value"]` | attr을 속성값이 value로 **끝나는** 문서객체               |
-| `$selector[attr*="value"]` | attr을 속성값이 value로 **포함**하는 문서객체             |
+| 선택자 형식                  | 요약                                                      |
+| ---------------------------- | --------------------------------------------------------- |
+| `$("selector[attr]`")        | attr을 속성으로 가지는 객체                               |
+| `$("selector[attr=value]`")  | attr을 속성으로 가지고 값이 value와 같은 객체             |
+| `$("selector[attr!=value]`") | attr을 속성으로 가지고 값이 value와 같지 않은 객체        |
+| `$("selector[attr~=value]`") | attr을 속성값이 value로 **공백과 함께 포함**하는 문서객체 |
+| `$("selector[attr^=value]`") | attr을 속성값이 value로 **시작**하는 문서객체             |
+| `$("selector[attr$=value]`") | attr을 속성값이 value로 **끝나는** 문서객체               |
+| `$("selector[attr*=value]`") | attr을 속성값이 value로 **포함**하는 문서객체             |
 
 ​            
 
@@ -149,29 +161,48 @@ $("h1").css("color","blue"); // $은 jquery 문법을 나타냄
 
 ### 위치기반 필터선택자
 
-| 필터 선택자    | 요약                       |
-| -------------- | -------------------------- |
-| `:first`       | 첫 번째 요소 선택          |
-| `:last`        | 마지막 요소 선택           |
-| `:first-child` | 첫 번째 자식 요소          |
-| `:last-child`  | 마지막 자식 요소           |
-| `:only-child`  | 형제가 없는 모든 요소 선택 |
-| `:even`        | 짝수 번째                  |
-| `:odd`         | 홀수 번째                  |
+```javascript
+$('h2:last').on("click",function(){
+console.log("마지막");
+})
+```
+
+| 필터 선택자    | 요약                           |
+| -------------- | ------------------------------ |
+| `:first`       | 첫 번째 요소 선택              |
+| `:last`        | 마지막 요소 선택               |
+| `:first-child` | 첫 번째 자식 요소              |
+| `:last-child`  | 마지막 자식 요소               |
+| `:only-child`  | **형제가 없는** 모든 요소 선택 |
+| `:even`        | 짝수 번째                      |
+| `:odd`         | 홀수 번째                      |
 
 ​        
 
 ### 함수기반 필터선택자
 
-| 필터 선택자      | 요약                                                         |
-| ---------------- | ------------------------------------------------------------ |
-| `:not(filter)`   | 주어진 선택자와 일치하지 않는 요소 선택                      |
-| `:contains(str)` | 텍스트 str을 포함하는 요소 선택                              |
-| `:nth-child(n)`  | n번째 자식 요소 선택                                         |
-| `:eq(n)`         | n번째로 일치하는 요소 선택                                   |
-| `:gt(n)`         | n번째(포함 X) 이후 요소 선택                                 |
-| `:lt(n)`         | n번째 이전 요소 선택                                         |
-| `:has(f)`        | 주어진 선택자와 일치하거나 하나 이상의 요소를 포함하는 요소 선택 |
+```javascript
+$('h2:not("h2[id=ma]")').on("click",function(){
+	console.log(23);
+})
+```
+
+```javascript
+// 안에 ""를 써도 되고 안써도 된다.
+$('h2:not(h2[id=ma])').on("click",function(){
+	console.log(23);
+})
+```
+
+| 필터 선택자         | 요약                                                         |
+| ------------------- | ------------------------------------------------------------ |
+| `:not(selector[ ])` | 주어진 선택자와 일치하지 않는 요소 선택                      |
+| `:contains(str)`    | 텍스트 str을 포함하는 요소 선택                              |
+| `:nth-child(n)`     | n번째 자식 요소 선택                                         |
+| `:eq(n)`            | n번째로 일치하는 요소 선택                                   |
+| `:gt(n)`            | n번째(포함 X) 이후 요소 선택                                 |
+| `:lt(n)`            | n번째 이전 요소 선택                                         |
+| `:has(f)`           | 주어진 선택자와 일치하거나 하나 이상의 요소를 포함하는 요소 선택 |
 
 ​           
 
@@ -179,13 +210,13 @@ $("h1").css("color","blue"); // $은 jquery 문법을 나타냄
 
 | 메소드                                                       | 반환 값       | 요약                                                         |
 | ------------------------------------------------------------ | ------------- | ------------------------------------------------------------ |
-| `size()`                                                     | 요소 개수     | 래퍼세트의 요소 개수 반환                                    |
+| `size()`, .length                                            | 요소 개수     | 래퍼세트의 요소 개수 반환                                    |
 | `get(index)`                                                 | DOM 요소      | 래터세트에서 인덱스 번호 위치하는 DOM 객체 반환              |
 | `index(element)`                                             | 인덱스 번호   | 래퍼세트에서 해당 요소의 인덱스 번호 반환                    |
 | `add(expr)`                                                  | 래퍼세트      | expr로 명시한 요소를 래퍼세트에 **추가**                     |
 | `not(expr)`                                                  | 래퍼세트      | expr로 명시한 요소를 래터세트에서 **제거**                   |
 | `each(function(index, element))`<br />`$.each(array, function(index, item) {});` | 이전 래퍼세트 | **래퍼세트 각 요소마다 function 수행**<br />단독 사용도 가능 |
-| `filter(expr)`                                               | 래퍼세트      | expr에 명시한 요소를 필터링                                  |
+| `filter(expr)`<br />.filter(function(index, selector){   내용    }) | 래퍼세트      | expr에 명시한 요소를 필터링                                  |
 | `slice(begin, end)`                                          | 래퍼세트      | 현재 래퍼세트의 **일부분으로 래퍼세트를 생성해 반환**        |
 | `end()`                                                      | 래퍼세트      | 이전래퍼세트 상태로 돌아감                                   |
 | `is(selector)`                                               | boolean       | 비교해 true나 false 반환                                     |
