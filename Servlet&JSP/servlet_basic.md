@@ -28,7 +28,7 @@
   1. client의 data(parameter)를 받는다.
   2. Application은 data를 바탕으로 Logic을 처리해준다.
      1. Bussiness Logic
-     2. Database Logic
+     2. Persistence Logic
      3. 응답: data(HTML)
 
 <img src="/Users/yang-yoseb/Library/Application Support/typora-user-images/image-20220322090925919.png" alt="image-20220322090925919" style="zoom:80%;" />
