@@ -171,6 +171,8 @@ public class HelloServlet extends HttpServlet {
 
 ### Servlet's Life-Cycle
 
+> Container가 인스턴스의 Life Cycle을 관리한다. (Web/WAS => Tomcat)
+
 * servlet class는 javaSE에서 SE와 다르게 main method가 없다. 즉 객체의 생성부터 사용(method call)의 주체가 사용자가 아닌 Servlet Container에게 있다.
 * Client가 요청(request)을 하게 되면 Servlet Container는 Servlet 객체를 생성(**한번만**)하고 초기화(**한번**)하며 요청에 대한 처리(요청마다 반복)를 하게된다. 또한 Servlet 객체가 필요없게되면 **제거까지** Container가 담당한다.
 
@@ -184,18 +186,37 @@ public class HelloServlet extends HttpServlet {
 | `service()` | 모든 요청은 service()를 통해서 doXXX()메소드로 이동 |
 | `destroy()` | 서블릿이 메모리에서 해제되면 호출                   |
 
-​         
+*  순서: init() => service() => doGet() / doPost() => destroy()
+* 동시 접속: service 메서드가 여러개 호출되어 thread 로 관리 = **servlet의 멤버 변수가 공유**
 
-​         
+​                
 
 ## Servlet Parameter
+
+> 공백 뒤는 버리므로 공백이 없도록 주의한다.
 
 ```
 http://www.google.com/good.jsp?parameter1=value1&parameter2=value2
 ```
 
+* http: 프로토콜 + `:` 구분자
+* `//`: 원격
 * www.google.com: URL
-* ?: Query String Begin
+* ?: **Query String** Begin
 * parameter1:  파라미터 이름
 * value1: 파라미터 값
 * &: Query String Separator(구분자)
+* `/ abc / dsad`: semantic url (?대신 사용) 
+
+​        
+
+### 한글 깨짐 방지
+
+```java
+// 클라이언트에서 넘어오는 한글깨짐 방지 => POST에서만 설정하면 된다.
+request.setCharacterEncoding("utf-f");
+
+// 보낼 때 html 데이터임을 알려주고 글자 형식이 UTF-8임을 명시한다.
+response.setContentType("text/html;charset=utf-8");
+```
+
