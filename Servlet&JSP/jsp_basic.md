@@ -44,7 +44,22 @@
 
 * 잘 실행된다면 위 JSP 파일이 Servlet으로 컴파일되는 파일 경로도 한 번 찾아보도록 한다.
 
+  * project 우클릭 `Properties` - `Resources` 로 파일 위치를 찾고 `.metadata`를 따라 쭉 들어감
+
+    * `파일명.class` 로 생성된 파일 발견 = jsp 디버깅할 때 열수도 있다.
+    * **class 파일을 수정한다고 원문이 변경되는 것은 아니므로** 무조건 jsp 안에서 오류를 다시 찾아낸다.
+
+    ```java
+    // Servlet Life Cycle의 JSP에서의 형태
+    _jspInit()
+    _jspService()
+    _jspDestroy()
+    ```
+
+    
+
   * 결론: Servlet 문법 = JSP 문법
+
   * JSP는 내부적으로 **기본 객체**를 포함하고 있어서 불러낼 수 있다.
 
 ​         
@@ -241,4 +256,21 @@ for문 등 사용
 | 객체         | 기존의 request와 response가 그대로 전달                      | 기존의 request와 response는 소멸<br />새로운 request와 response가 생성 |
 | 속도         | 비교적 빠름                                                  | forward()에 비해 느림                                        |
 | 데이터 유지  | request의 setAttribute(name, value)를 통해 전달              | request로는 data 저장 불가능<br />session이나 cookie를 이용  |
+
+​          
+
+​           
+
+## JSP 설정 파일
+
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" session = "false" isErrorPage = "false" %>
+
+<!--
+	1. meta charset 이랑 contentType은 중복으로 적용된다.
+	2. pageEncoding은 Servlet 으로 변환할 때 한글파일이 깨지지 않도록 설정하는 것이다.
+	3. session = "true"가 default 이다.
+-->
+```
 
