@@ -188,12 +188,14 @@ public class HelloServlet extends HttpServlet {
 
 *  순서: init() => service() => doGet() / doPost() => destroy()
 * 동시 접속: service 메서드가 여러개 호출되어 thread 로 관리 = **servlet의 멤버 변수가 공유**
+  * Thread safe 는 문서상으로만 있고 실제로는 존재하지 않는다.
 
 ​                
 
 ## Servlet Parameter
 
 > 공백 뒤는 버리므로 공백이 없도록 주의한다.
+> 무조건 **null 검사를 진행**한다.
 
 ```
 http://www.google.com/good.jsp?parameter1=value1&parameter2=value2
