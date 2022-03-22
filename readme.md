@@ -145,6 +145,12 @@
 3. [SubQuery](/DB/mysql/mysql_subquery.md)
 3. [데이터베이스 모델링](/DB/db_modeling.md)
 
+​          
+
+### Servlet / JSP
+
+1. [Servlet](/Servlet&JSP/servlet_basic.md)
+
 ​     
 
 ### [JDBC](JDBC/jdbc_basic.md)         
