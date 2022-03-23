@@ -136,27 +136,178 @@
       >5. 전송 후 Server는 TCP Connection을 close
       >6. HTTP client는 response message를 바탕으로 html 파일을 구성해 보여준다.
 
+      * RTT(definition): time for a small packet to travel from client server and back
+    
+      * HTTP response time: one RTT to HTTP request and first few bytes of HTTP responses to return
+    
+        * HTTP response time = 2RTT + file transmission time
+    
+          * 하나는 TCP 연결을 시작하고 하나는 file을 요청한다.
+          * 각각의 TCP 연결에서 OS 오버헤드가 존재한다.
+    
+          <img src="ntw_keywords.assets/image-20220323172931867.png" alt="image-20220323172931867" style="zoom:67%;" />
+    
     * persistent HTTP: 여러 object를 보내기 위한 접속 유지
+    
+      > 1. 만약 5개를 요구한다면 1번의 연결 RTT에 의해 5개의 socket이 동시에 열린다.
+      >
+      > 2. 각 Object마다 2RTT 이상의 시간이 필요하며 연결마다 오버헤드가 발생한다.
+      >
+      > 3. 또한 버퍼도 각 socket마다 할당해야한다.
+    
+      * 다 보낸 이후에 server와의 연결 해제
 
-| 키워드       | 단원           | 설명                                                         | 관련 키워드                        |
-| ------------ | -------------- | ------------------------------------------------------------ | ---------------------------------- |
-| packet delay | 1. RoadMap     | **d**node = <br />**d**process + **d**queue + **d**trans + **d**prop | loss                               |
-| Packet loss  | 1. RoadMap     | packet 양이 queue 크기의 한계를 초과하면 packet이 소실된다   | delay                              |
-| Throughput   | 1. RoadMap     | packet은 하나씩 전달되지만 연속적으로 전송하기 때문에 단위 시간으로 묶는 경우 전송 속도를 나타낼 수 있습니다. |                                    |
-| protocol     | 1. RoadMap     | protocol 은 layer system으로 구성되어 있다.                  |                                    |
-| 5 계층       | 1. RoadMap     | application, transport, network, link, physical              |                                    |
-| malware      | 1. RoadMap     | virus: executing시 활성화<br />warm: receiving시 자동 실행   |                                    |
-| Dos          | 1. RoadMap     | Denial of Service의 약자<br />Host 주변을 malware을 통해 감염시킨뒤 botnet으로 만들어 garbage traffic을 계속 생성해 처리량을 넘는 traffic 발생 |                                    |
-| sniffing     | 1. RoadMap     | Broadcasting(WIFI, shared ethernet) 환경에서 promiscuous(관리자) 모드로 전송되는 데이터를 조사 | NIC                                |
-| IP spoofing  | 1. RoadMap     | 자신의 IP 주소를 속여 데이터를 받는 방식                     |                                    |
-| process      | 2. Application | host에서 실행되는 프로그램                                   | client-process<br />server process |
-| socket       | 2. Application | 계층 간 정보 이동은 socket을 통해 이루어진다.<br />TCP 통신에서 양쪽에 TCP connection socket이 생긴다 | TCP                                |
-|              |                |                                                              |                                    |
-|              |                |                                                              |                                    |
-|              |                |                                                              |                                    |
-|              |                |                                                              |                                    |
-|              |                |                                                              |                                    |
-|              |                |                                                              |                                    |
-|              |                |                                                              |                                    |
-|              |                |                                                              |                                    |
+​       
+
+### HTTP request message
+
+* 2 종류의 메시지 존재: request, response
+
+  * ASCII: 사람이 읽을 수 있는 형식
+
+  >첫번째 줄(request line): GET, POST / HEAD commands: URL / HTTP 버전
+  >
+  >* POST: form input으로 타이핑하는 내용을 `entity body`에 담는다.
+  >* GET(URL): request line URL 부분에 `?`로 변수를 표기
+  >* HEAD: **request를 보내지 않아도 된다는 뜻**, 주로 테스트용으로 사용(파일 주고 받기X)
+  >* PUT, DELETE: HTTP/1.1에 추가된 Method
+  >
+  >그 이후: 한 개 이상의 header lines
+  >
+  >* Host: http 서버 주소
+  >* language
+  >* Connection 방식 (persistent 등)
+  >
+  >헤더 끝 표기: `\r\n`
+  >
+  >추가사항: entity body가 뒤에 있을 수도 있고 없을 수도 있다.
+
+​         
+
+### HTTP response message
+
+> 첫번째 줄(status line): version / 200(서버상태)
+>
+> * 200 ok / 301 Moved Permanently / 400 Bad Request / 404 Not Found / 505 HTTP Version Not Supported
+>
+> 그 이후: 한 개 이상의 header lines
+>
+> * Date
+> * Server: Apache
+> * Content-length
+> * Connection
+> * **Content-Type**
+>
+> 헤더 끝 표기: `\r\n`
+>
+> Data requested HTML file: request의 entity body 처럼 긴 HTML 파일이 전송     
+
+​      
+
+### User-server state: Cookies
+
+> HTTP는 stateless 해서 연결을 요청시에만 하지만 cookie를 통해 그 정보들을 유지하도록 한다.
+>
+> 쿠키의 4가지 구성요소
+>
+> 1. HTTP response 메세지에 cookie header line을 집어넣는다.
+> 2. 한 번 response를 받은 이후부터 request에도 cookie **header line**(두번째줄 이상)을 포함해서 보낸다.
+> 3. 브라우저는 cookie 파일을 유지한다.
+> 4. 서버측에서는 back-end database에 유지한다.
+
+*  cookie-specific action: 서버는 이미 부여한 쿠키 번호에 대해 특정해서 동작한다.
+
+​        
+
+### Cookie의 역할
+
+1. authorization
+
+2. shopping carts
+
+3. recommendations
+
+4. User session state (Web e-mail): 세션 유지, 이메일을 보내고 나서도 로그인이 유지되도록 한다.
+
+   ​      
+
+### Web caches (proxy server)
+
+> 목적: 본 서버가 아닌 proxy server에서 저장된 request를 전송하는 것
+>
+> 기본 세팅: 웹 캐쉬를 통해서 먼저 접근하도록 한다.
+>
+> * 브라우저는 HTTP request에서 cache로 모두 받으려고 한다.
+
+* Web Cache는 클라이언트인가 서버인가?
+  * 두 역할 모두 가능해야한다. 본 서버를 기준으로는 클라이언트며 실제 클라이언트 기준으로 서버처럼 동작한다. 
+* 웹 캐시를 사용하는 이유
+  * 응답 시간이 짧아진다.
+  * ISP에 정기적으로 돈을 내야하는데 웹 캐시를 사용하면 그 비용을 줄일 수 있다.
+  * P2P나 poor content provider에게 유리
+  * cache hit rate에 따라서 응답 시간이나 비용이 달라진다.
+* 웹 페이지가 업데이트 된 경우를 파악해야한다.
+  * Conditional GET
+    * header line: `If-modified-since` 에 이전에 업데이트했던 시각을 보내고 서버는 그 이후에 업데이트가 있었는지 파악
+      * 304 Not Modified: 업데이트가 되지 않았다는 신호
+      * 200 OK: 업데이트가 되었다는 신호
+    * delay를 두어서 업데이 확인 주기를 결정
+
+​       
+
+### Electronic mail
+
+> commands(ASCII text) 와 response(status code and phrase)로 이루어진다.
+
+<img src="ntw_keywords.assets/image-20220323193331732.png" alt="image-20220323193331732" style="zoom:50%;" />
+
+> SMTP: simple mail transfer protocol
+>
+> User Agent가 보내고 User Agent가 수신한다.
+>
+> 이동마다 TCP 통신을 통해 socket을 만들고 메일 내용을 전송한다. **포트번호 25**
+>
+> 중간 중간 mail server를 지나가면서 message queue에 대기한 후 발송을 반복한다.
+>
+> mail server가 클라이언트 역할도 하고 server 역할도 한다.
+
+* 메일 통신의 시작 부분
+
+<img src="ntw_keywords.assets/image-20220323193923226.png" alt="image-20220323193923226" style="zoom:80%;" />
+
+* User Agent
+  * mail reader
+* Mail Servers
+  * mail box: 메일을 보관하는 역할
+  * message queue: 메일 전송을 기다리는 곳 
+
+​           
+
+### HTTP 와 SMTP의 차이점
+
+* HTTP: pull 프로토콜 (받기 위함), response 하나 당 object 하나
+* SMTP: push 프로토콜 (보내기 위함), 메세지에 object 여러개
+
+| 키워드             | 단원           | 설명                                                         | 관련 키워드                                    |
+| ------------------ | -------------- | ------------------------------------------------------------ | ---------------------------------------------- |
+| packet delay       | 1. RoadMap     | **d**node = <br />**d**process + **d**queue + **d**trans + **d**prop | loss                                           |
+| Packet loss        | 1. RoadMap     | packet 양이 queue 크기의 한계를 초과하면 packet이 소실된다   | delay                                          |
+| Throughput         | 1. RoadMap     | packet은 하나씩 전달되지만 연속적으로 전송하기 때문에 단위 시간으로 묶는 경우 전송 속도를 나타낼 수 있습니다. |                                                |
+| protocol           | 1. RoadMap     | protocol 은 layer system으로 구성되어 있다.                  |                                                |
+| 5 계층             | 1. RoadMap     | application, transport, network, link, physical              |                                                |
+| malware            | 1. RoadMap     | virus: executing시 활성화<br />warm: receiving시 자동 실행   |                                                |
+| Dos                | 1. RoadMap     | Denial of Service의 약자<br />Host 주변을 malware을 통해 감염시킨뒤 botnet으로 만들어 garbage traffic을 계속 생성해 처리량을 넘는 traffic 발생 |                                                |
+| sniffing           | 1. RoadMap     | Broadcasting(WIFI, shared ethernet) 환경에서 promiscuous(관리자) 모드로 전송되는 데이터를 조사 | NIC                                            |
+| IP spoofing        | 1. RoadMap     | 자신의 IP 주소를 속여 데이터를 받는 방식                     |                                                |
+| process            | 2. Application | host에서 실행되는 프로그램                                   | client-process<br />server process             |
+| socket             | 2. Application | 계층 간 정보 이동은 socket을 통해 이루어진다.<br />TCP 통신에서 양쪽에 TCP connection socket이 생긴다 | TCP                                            |
+| RTT                | 2. Application | Round Trip Time,<br />client 에서 출발한 패킷 하나가 server에 도달하고 다시 되돌아 오는 시간 | HTTP response time                             |
+| HTTP response time | 2. Application | RTT가 TCP 연결 요청을 시도해서 request(요청)을 받기까지 걸리는 시간<br />2 RTT (TCP + File) + file Transmission | RTT                                            |
+| GET                | 2. Application | URL method, HTTP request line에 있는 URL에서 `?`를 통해 값을 전달하는 방식 | POST<br />HEAD                                 |
+| POST               | 2. Application | HTTP Headlines 뒤에 entity body 부분에 저장해 내용을 전달하는 방식 | GET<br />HEAD                                  |
+| HEAD               | 2. Application | response를 받지 않아도 된다는 method로 file transmission이 발생하지 않는다. 주로 TEST 목적으로 사용 | GET<br />POST                                  |
+| PUT                | 2. Application | Server URL에 client가 파일을 업로드한다. 보통 서버를 관리하는 client 에 부여한다. | DELELTE                                        |
+| DELETE             | 2. Application | Server URL에 있는 파일의 삭제를 요청한다.                    | PUT                                            |
+| Cookie             | 2. Application | HTTP 통신에서 stateless한 연결방식을 보완하기 위해 client-server가 서로 유지하는 정보 |                                                |
+| SMTP               | 2. Application | Simple mail transfer protocol                                | User Agent<br />Mail servers<br />Mail port 25 |
 
