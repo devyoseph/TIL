@@ -253,3 +253,66 @@
   ```
 
 * 이 때 session을 사용하는 1번, 2번 페이지 모두 `session=true`여야 한다.
+
+​          
+
+### 10.  include
+
+> 1. include는 Directive 에서 사용할 수 있다.
+> 2. include 내부에서 선언된 변수가 부모 문서에서 변수로 연결되어 영향을 준다.
+
+* `header.jsp`
+
+  ```jsp
+  <%@ page language="java" contentType="text/html; charset=UTF-8"
+      pageEncoding="UTF-8"%>
+  이 부분은 모든 파일마다 항상 같이 출력됩니다.
+  
+  <%!
+    String s = ""; // s라는 이름의 변수 설정
+  %>
+  ```
+
+* `include`를 통해 가져온 다음 변수 선언
+
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<%!
+    String s = "123"; // s를 다시 외부에서 선언하면 500 오류 발생
+%>
+
+<%@ include file="footer.jsp" %>
+</body>
+</html>
+```
+
+* 해결: include를 닫아서 문서 내에서만 사용하는 변수로 한정해준다.
+
+​          
+
+### 11. 실행순서
+
+> JSP 에 의해 Java 코드가 먼저 실행되고 Javascript가 실행되므로 오류가 발생할 수 있다.
+
+* 오류 예시
+
+  ```java
+  <% String name = "홍길동"; %> // 변수를 미리 선언
+  
+  <script type="text/javascript">
+      let num = prompt("숫자를 입력하세요");
+      let name = <%= name %>;
+  // 여기서 name은 java 코드이므로 javascript가 실행되지 않은 상태에서 실행되어 변수가 저장되지 않음
+  
+      if(num > 20){
+          alert(name + "님은 어른입니다. "+num);
+      }else{
+          alert(name + "님은 어립니다. "+num);
+      }
+  
+  </script>
+  ```
+
+  
