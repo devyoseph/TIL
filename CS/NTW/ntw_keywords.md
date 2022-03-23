@@ -147,7 +147,7 @@
     
           <img src="ntw_keywords.assets/image-20220323172931867.png" alt="image-20220323172931867" style="zoom:67%;" />
     
-    * persistent HTTP: 여러 object를 보내기 위한 접속 유지
+    * non-persistent HTTP: 여러 object를 보내기 위한 접속 유지
     
       > 1. 만약 5개를 요구한다면 1번의 연결 RTT에 의해 5개의 socket이 동시에 열린다.
       >
