@@ -216,7 +216,7 @@ http://www.google.com/good.jsp?parameter1=value1&parameter2=value2
 
 ```java
 // 클라이언트에서 넘어오는 한글깨짐 방지 => POST에서만 설정하면 된다.
-request.setCharacterEncoding("utf-f");
+request.setCharacterEncoding("utf-8");
 
 // 보낼 때 html 데이터임을 알려주고 글자 형식이 UTF-8임을 명시한다.
 response.setContentType("text/html;charset=utf-8");

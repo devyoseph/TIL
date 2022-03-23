@@ -117,7 +117,10 @@ for문 등 사용
 
 ```jsp
 안녕 <%= name %>!!!
-<!-- <% out.print(name); %> -->
+<!--
+<% out.print(name); %> 
+<% out.write(name); %>
+-->
 ```
 
 ​            
@@ -181,7 +184,7 @@ for문 등 사용
 | isThreadsafe | true                          | 현재 JSP 페이지가 멀티 쓰레드로 동작해도 안전한지 여부 설정<br />false인 경우 싱글 쓰레드로 서비스 |
 | extends      | javax.servlet.jsp.HttpJspPage | 현재 JSP 페이지를 기본적인 클래스가 아닌 다른 클래스로부터 상속하도록 변경 |
 
-​             
+​                     
 
 ### 2. Include Directive
 
@@ -224,6 +227,14 @@ for문 등 사용
 
 ### JSP 기본객체의 영역(scope)
 
+> 범위: application > session > request > pageContext
+>
+> * application은 생성시 전체에서 하나 만들어진다. request가 생성될 때 이미 application은 생성되므로 새로 생성하는 것이 아니라 request를 통해 불러오는 것이다.
+>
+>   ```java
+>   ServletContext context = request.getServletContext();
+>   ```
+
 | 기본객체    | 설명                                                         |
 | ----------- | ------------------------------------------------------------ |
 | pageContext | 하나의 JSP 페이지를 처리할 때 사용되는 영역<br />한번의 클라이언트 요청에 대해 하나의 JSP페이지가 호출<br />이때 단 한 개의 page 객체만 대응<br />페이지 영역에 저장한 값은 페이지를 벗어나면 사라진다.<br />* 커스텀 태그에서 새로운 변수를 추가할 때 사용한다. |
@@ -236,6 +247,7 @@ for문 등 사용
 ### JSP 기본객체의 영역 - 공통 method
 
 * servlet 과 jsp 페이지 간 특정 정보를 주고 받거나 공유하기 위한 메서드 지원
+* 공통 메서드이므로 `request` 뿐 아니라 `session`,` application`, `pageContext`에서도 메서드를 사용할 수 있다.
 
 | method                                          | 설명                                                         |
 | ----------------------------------------------- | ------------------------------------------------------------ |
@@ -244,7 +256,84 @@ for문 등 사용
 | `Enumeration getAttributeNames()`               | 현재 객체에 저장된 속성들의 이름들을 Enumeration 형태로 가져온다. |
 | `void removeAttribute(String name)`             | 문자열 name에 해당하는 속성을 삭제한다.                      |
 
-​            
+#### - request
+
+* 보내는 쪽: `setAttribute()`를 통해  `request`에 특정 값을 `Object`로 포장해서 묶어 보낸다.
+
+  ```java
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // 서블릿에서 jsp로 포워딩하기
+      // 서블릿에서 직접 출력하는 구문은 없어야 한다.
+      String path="d.jsp";
+      String sam = "setAttribute 값";
+      request.setAttribute("algo", sam);
+      RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+      dispatcher.forward(request, response);
+  }
+  ```
+
+* 받는 쪽: 받은 `request` 안에 묶여있는 값을 `getAttribute()`로 빼주고 `Object`로 포장된 값을 형변환해서 가져온다.
+
+  ```jsp
+  <%@ page language="java" contentType="text/html; charset=UTF-8"
+      pageEncoding="UTF-8"%>
+  
+  <%
+      String sam = null;
+  
+      if(request.getAttribute("algo") instanceof String){
+          sam = (String) request.getAttribute("algo");
+      }
+  %>
+  <!DOCTYPE html>
+  
+  <html>
+  <head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+  </head>
+  <body>
+  서블릿에서 forward되어 보이는 페이지
+  <%= sam %>
+  </body>
+  </html>
+  ```
+
+  ​       
+
+#### - application
+
+* 어느 페이지에서 저장
+
+  ```java
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // 서블릿에서 jsp로 포워딩하기
+      // 서블릿에서 직접 출력하는 구문은 없어야 한다.
+      String path="d.jsp";
+      
+      ServletContext context = request.getServletContext();
+      context.setAttribute("app_var", "어플리케이션 변수");
+      RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+      dispatcher.forward(request, response);
+  }
+  ```
+
+* 여러 페이지에서 꺼내어 사용 가능
+
+  ```jsp
+  <%
+      String app_var = null;
+      if(application.getAttribute("app_var") instanceof String){
+          app_var = (String) application.getAttribute("app_var");
+      }
+  %>
+  ```
+
+  
+
+
+
+​                     
 
 ### WEB Page 이동
 
@@ -257,9 +346,43 @@ for문 등 사용
 | 속도         | 비교적 빠름                                                  | forward()에 비해 느림                                        |
 | 데이터 유지  | request의 setAttribute(name, value)를 통해 전달              | request로는 data 저장 불가능<br />session이나 cookie를 이용  |
 
-​          
+* sendRedirect( 상대경로 ): `b.jsp`와 `c.jsp`를 만들고 `b.jsp`에서 다음을 작성한다.
 
-​           
+  ```jsp
+  <%
+  	//sendRedirect();
+  	response.sendRedirect("c.jsp"); //상대주소
+  %>      
+  ```
+
+* sendRedirect( 타 서버 )
+
+  ```jsp
+  <%
+  	//sendRedirect();
+  	response.sendRedirect("https://www.google.com"); //URL, https를 붙이지 않으면 작동X
+  %>      
+  ```
+
+* forward(request, response) + setAttribute()
+
+  * **내 URL을 유지**한채 이동한다. 즉 이동한 페이지에서 parameter를 또 사용할 수 있다. 
+
+  ```java
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // 서블릿에서 jsp로 포워딩하기
+      // 서블릿에서 직접 출력하는 구문은 없어야 한다.
+      String path="d.jsp";
+      RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+      dispatcher.forward(request, response);
+  }
+  ```
+
+  
+
+
+
+​          
 
 ## JSP 설정 파일
 
@@ -274,3 +397,35 @@ for문 등 사용
 -->
 ```
 
+​          
+
+​          
+
+## Session
+
+* 프론트엔드의 sessionStorage와 다른 서버의 객체인 것을 명심한다.
+
+* Directive에서 `<%@ session=true %>` 설정이 되어있어야 session 객체를 사용할 수 있으며 default는 true이다.
+
+  ```jsp
+  <%@ page language="java" contentType="text/html; charset=UTF-8"
+      pageEncoding="UTF-8" session="true" %>
+  ```
+
+* 1번 페이지에서 `session` 내부에 `setAttribute()`를 이용해 값을 넣을 수 있다.
+
+  ```jsp
+  <%
+      String data = request.getParameter("share");
+  
+      session.setAttribute("data", data); // Directive에서 session이 true이기에 사용할 수 있다.
+  %>  
+  ```
+
+* 2번 페이지에서 session은 유지되며 내부 속성값 또한 유지된다.
+
+  ```jsp
+  <%= (String) session.getAttribute("data") %>
+  ```
+
+* 이 때 session을 사용하는 1번, 2번 페이지 모두 `session=true`여야 한다.
