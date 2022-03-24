@@ -153,6 +153,7 @@
 2. [JSP](/Servlet&JSP/jsp_basic.md)
    * [핵심](/Servlet&JSP/jsp_brief.md)
    * [MVC Pattern](/Servlet&JSP/jsp_mvc.md)
+   * [Session & Cookie](/Servlet&JSP/jsp_sc.md)
 
 ​     
 

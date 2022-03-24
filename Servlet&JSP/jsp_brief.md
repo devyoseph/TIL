@@ -315,4 +315,153 @@
   </script>
   ```
 
+
+​       
+
+### 12. 보안 페이지
+
+* Web-INF 폴더는 Client에서 접근이 불가능한 폴더이다. 그래서 이 안에 문서를 넣고 server 측에서 실행하면 URL이 아닌 서버를 통해 이동할 수 있다.
+
+<img src="jsp_brief.assets/image-20220324131229584.png" alt="image-20220324131229584" style="zoom:50%;" />
+
+*  또는 로그인 상태를 확인할 수 있는 속성값을 가져와 검사해 if문을 통해 나타낼 수 있다.
+
+  ```jsp
+  <% 
+  MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+  if(memberDto == null){
+  %>
+  	<script>
+  		alert("로그인 사용자만 볼 수 있는 페이지 입니다.");
+      location.herf("<%= root %>/user?act=mvlogin");
+  	</script>
+  <%
+  }	else{
+  %>  
+    <!-- 게시판 내용 -->
+  }
+  ```
+
   
+
+​         
+
+### 13. Front-Control 디자인 패턴
+
+```java
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+    String action = request.getParameter("action");
+		
+    // hidden으로 숨겨진 input 의 값을 통해 분기해서 메서드로 처리
+		switch(action) {
+      case "mvmember": //회원가입하는 페이지
+        doMvmember(request,response);
+        break;
+      case "insert": //회원가입하는 페이지
+        doMemberInsert(request,response);
+        break;
+      }
+		}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("uft-8");
+		doGet(request, response);
+	}
+```
+
+​        
+
+### 14. 세션 시간 설정
+
+* `Servers`-`Tomcat`-`web.xml`문서에 있는 `<session-timeout>`태그를 설정
+
+​       
+
+### 15. 404 페이지 꾸미기
+
+* `WebContent`-`error`-`404.jsp` 파일을 만든다.
+
+* `Servers`-`Tomcat`-`web.xml`문서에
+
+  ```xml
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/error/404.jsp</location>
+  </error-page>
+  ```
+
+  ​      
+
+### 16. 로그인 성공시 아이디 저장 기능 구현
+
+> 쿠키를 확인하는 법: 크롬 - 개발자 도구 - Application - Storage - Cookies
+
+* Servlet 에서 처리
+
+```java
+if("saveok".equals(idsv)){
+// Cookie Setting: 만약 라디오 박스를 체크해서 위 if문을 통과한다면...
+
+  	Cookie cookie = new Cookie("loginid", id);
+  	cookie.setMaxAge(60*60*24*365*20);
+		cookie.setPath(request.getContextPath());
+		
+  	// 쿠키를 만들고 Cookie를 붙여서 response로 던져준다.
+  	response.addCookie(cookie);
+} else { //아이디 저장 체크X
+  	Cookie[] cookies = request.getCookies();
+
+  	if(cookies != null){
+      for(int i=0; i < cookies.length; i++){
+        if(cookies[i].getName().equals("loginid")){
+           	cookies[i].setMaxAge(0); // 쿠키의 수명을 0으로 만들어 지운다.
+          	response.addCookie(cookies[i]); // 변경사항을 꼭 response에 묶어준다.
+        }
+      }
+    }
+}
+```
+
+* JSP에서 처리
+  * 서버에서 request에 묶어서 보내준 쿠키들을 불러와야한다.
+
+```jsp
+<%
+	Cookie[] cookies = request.getCookies(); // 모든 쿠키를 배열로 받는다.
+	
+//변수를 만들어 관리
+	String svid = ""; //save id
+	String ckid - "";
+
+	if(cookies != null){
+		for(int i=0; i < cookies.length; i++){
+      if(cookies[i].getName().equals("loginid")){
+					svid = cookies[i].getValue();
+        	ckid = "checked"; // 다음 번 로그인에도 계속 체크박스가 체크되도록 하는 변수
+      }
+    }
+  }
+%>
+```
+
+​        
+
+### 17. 로그인 이후 회원 정보창을 계속 띄워놓기
+
+* include로 가져와서 나타낸다.
+
+```jsp
+<%@ include file="" %> 
+```
+
+​      
+
+### 18. 클라이언트가 제목에 HTML 태그 쓰는 것을 방지
+
+* < 태그를 문자열로 바꿔준다.
+
+```java
+guestBookDto.setSubject(rs.getString("subject").replace("<", "&lt;"));
+```
+
