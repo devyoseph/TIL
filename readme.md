@@ -151,7 +151,8 @@
 
 1. [Servlet](/Servlet&JSP/servlet_basic.md)
 2. [JSP](/Servlet&JSP/jsp_basic.md)
-   * [요약/예제](/Servlet&JSP/jsp_brief.md)
+   * [핵심](/Servlet&JSP/jsp_brief.md)
+   * [MVC Pattern](/Servlet&JSP/jsp_mvc.md)
 
 ​     
 
