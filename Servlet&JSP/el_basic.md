@@ -117,4 +117,74 @@ ${userindo.zipDto.address}
   ${requestScope["sofia.user"].name}
   ```
 
-  
+* EL에서 쿠키 접근
+
+  ```java
+  ${cookie.id.value}
+  ```
+
+  1. Cookie가 null이라면 null return
+  2. null이 아니라면 id 검사 후 null이라면 null return
+  3. null이 아니라면 value 값 검사
+     * EL은 값이 null이라도 null을 출력하지 않는다. (공백)
+
+  * 스크립틀릿을 통한 쿠키 출력
+
+  ```java
+  Cookie[] cookies = request.getCookies();
+  for(Cookie cookie : cookies){
+  	if(cookie.getName().equals("userId")){
+  		out.println(cookie.getValue());
+  	}
+  }
+  ```
+
+  * EL 내장객체를 통한 쿠키 값 출력
+
+  ```java
+  ${cookie.userId.value}
+  ```
+
+* EL에서 객체 method 호출
+
+  ```jsp
+  <%
+  List<MemberDto> list = dao.getMembers();
+  request.setAttribute("users", list);
+  %>
+  ```
+
+  * 회원 수: `${requestScope.users.size()}`, `${users.size()}`
+  * 주의: `${user.size}` == `<%= request.getAttribute("users").getSize() %>`
+    * 그냥 `.size`를 입력하면 `getSize`가 되므로 **주의**한다.
+
+
+
+​                  
+
+### EL Operator(연산자)
+
+* 대부분 java와 동일
+
+| 종류       | description          |
+| ---------- | -------------------- |
+| 산술       | +,-,*,/,%            |
+| 관계형     | ==, !=, <, >, <=, >= |
+| 3항 연산   | 조건 ? 값1 : 값2     |
+| 논리       | &&, \|\|, !          |
+| 타당성검사 | empty                |
+
+* **empty 연산자에서 true를 return하는 경우** >> `${empty var}`
+
+  1. 값이 nulld이면 true
+  2. 값이 빈 문자열("")이면 true
+  3. 길이가 0인 배열([])이면 true
+  4. 빈 Map 객체는 true
+  5. 빈 Collection 객체이면 true
+
+* ```jsp
+  ${empty cookie.id.value}
+  ${empty session.loginUser}
+  ```
+
+  * null 검사 등으로 이용한다.

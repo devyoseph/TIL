@@ -154,6 +154,8 @@
    * [핵심](/Servlet&JSP/jsp_brief.md)
    * [MVC Pattern](/Servlet&JSP/jsp_mvc.md)
    * [Session & Cookie](/Servlet&JSP/jsp_sc.md)
+   * [EL](/Servlet&JSP/el_basic.md)
+3. [JSTL](/Servlet&JSP/jstl_basic.md)
 
 ​     
 

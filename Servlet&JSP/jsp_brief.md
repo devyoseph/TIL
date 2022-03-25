@@ -465,3 +465,18 @@ if("saveok".equals(idsv)){
 guestBookDto.setSubject(rs.getString("subject").replace("<", "&lt;"));
 ```
 
+​       
+
+### 19. 지시자 3개
+
+* <%@ %>
+* include, page, taglib
+
+​       
+
+### 20. 배열로 annotation
+
+```java
+@WebServlet({"/list", "/sss"})
+```
+

@@ -1,5 +1,7 @@
 ## Servlet / JSP for Test
 
+> getContextPath? 
+
 ​       
 
 ### 1. Servlet 을 구현하는 방식 3가지
