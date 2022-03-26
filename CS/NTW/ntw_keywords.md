@@ -281,6 +281,30 @@
   * mail box: 메일을 보관하는 역할
   * message queue: 메일 전송을 기다리는 곳 
 
+​          
+
+### SMTP 종류
+
+* **POP3**: Post Office Protocol[RFC 1939] , 인증, 다운로드
+
+  > 작동 순서: Authorization >> transaction
+  >
+  > 여러가지 방식: download and delete / download-and-keep
+
+  * Authorizartion phase: 일단 인증을 받아야 메일 확인 가능
+    * server response: + OK / - ERR
+  * Transaction: 리스트를 받아오고 읽고 삭제하고를 반복
+    * list / retr / dele / quit
+
+* **IMAP**: Internet Mail Access Protocol [RFC 1730]: 메시지 서버에 보관 등 많은 특징
+
+  * 서버에서 모든 메시지를 한 곳에 보관
+  * 사용자의 ID과 보관된 폴더 이름과 매핑해서 가져오는 방식
+  * POP3방식보다 복잡
+    * Mail box를 정렬하기 위한 메서드가 필요하다.
+
+* HTTP: gmail, hotmail, Yahoo!
+
 ​           
 
 ### HTTP 와 SMTP의 차이점
@@ -288,26 +312,110 @@
 * HTTP: pull 프로토콜 (받기 위함), response 하나 당 object 하나
 * SMTP: push 프로토콜 (보내기 위함), 메세지에 object 여러개
 
-| 키워드             | 단원           | 설명                                                         | 관련 키워드                                    |
-| ------------------ | -------------- | ------------------------------------------------------------ | ---------------------------------------------- |
-| packet delay       | 1. RoadMap     | **d**node = <br />**d**process + **d**queue + **d**trans + **d**prop | loss                                           |
-| Packet loss        | 1. RoadMap     | packet 양이 queue 크기의 한계를 초과하면 packet이 소실된다   | delay                                          |
-| Throughput         | 1. RoadMap     | packet은 하나씩 전달되지만 연속적으로 전송하기 때문에 단위 시간으로 묶는 경우 전송 속도를 나타낼 수 있습니다. |                                                |
-| protocol           | 1. RoadMap     | protocol 은 layer system으로 구성되어 있다.                  |                                                |
-| 5 계층             | 1. RoadMap     | application, transport, network, link, physical              |                                                |
-| malware            | 1. RoadMap     | virus: executing시 활성화<br />warm: receiving시 자동 실행   |                                                |
-| Dos                | 1. RoadMap     | Denial of Service의 약자<br />Host 주변을 malware을 통해 감염시킨뒤 botnet으로 만들어 garbage traffic을 계속 생성해 처리량을 넘는 traffic 발생 |                                                |
-| sniffing           | 1. RoadMap     | Broadcasting(WIFI, shared ethernet) 환경에서 promiscuous(관리자) 모드로 전송되는 데이터를 조사 | NIC                                            |
-| IP spoofing        | 1. RoadMap     | 자신의 IP 주소를 속여 데이터를 받는 방식                     |                                                |
-| process            | 2. Application | host에서 실행되는 프로그램                                   | client-process<br />server process             |
-| socket             | 2. Application | 계층 간 정보 이동은 socket을 통해 이루어진다.<br />TCP 통신에서 양쪽에 TCP connection socket이 생긴다 | TCP                                            |
-| RTT                | 2. Application | Round Trip Time,<br />client 에서 출발한 패킷 하나가 server에 도달하고 다시 되돌아 오는 시간 | HTTP response time                             |
-| HTTP response time | 2. Application | RTT가 TCP 연결 요청을 시도해서 request(요청)을 받기까지 걸리는 시간<br />2 RTT (TCP + File) + file Transmission | RTT                                            |
-| GET                | 2. Application | URL method, HTTP request line에 있는 URL에서 `?`를 통해 값을 전달하는 방식 | POST<br />HEAD                                 |
-| POST               | 2. Application | HTTP Headlines 뒤에 entity body 부분에 저장해 내용을 전달하는 방식 | GET<br />HEAD                                  |
-| HEAD               | 2. Application | response를 받지 않아도 된다는 method로 file transmission이 발생하지 않는다. 주로 TEST 목적으로 사용 | GET<br />POST                                  |
-| PUT                | 2. Application | Server URL에 client가 파일을 업로드한다. 보통 서버를 관리하는 client 에 부여한다. | DELELTE                                        |
-| DELETE             | 2. Application | Server URL에 있는 파일의 삭제를 요청한다.                    | PUT                                            |
-| Cookie             | 2. Application | HTTP 통신에서 stateless한 연결방식을 보완하기 위해 client-server가 서로 유지하는 정보 |                                                |
-| SMTP               | 2. Application | Simple mail transfer protocol                                | User Agent<br />Mail servers<br />Mail port 25 |
+​          
+
+### DNS: Domain name System
+
+> 사람의 입장에서 많은 구분자가 존재한다: SSN, name, passport #
+>
+> IP 주소를 호스트와 매핑해주는 작업: IP 주소는 32비트
+>
+> Distributed database: name server에 계층적으로 존재
+
+* DNS Service
+
+  * Host Name to IP address translation
+  * host Aliasing
+    * canonical
+    * alias names
+  * mail server: 학교 등에서 사용하는 메일 서버를 알려준다.
+  * load distribution: 복제본들을 여러개 가지고 있으며 계층적으로 정보들을 저장한다.
+    * replicated Web server: 많은 IP 주소가 하나의 이름에 일치한다.
+    * 계층적 구조(hierarchical database)
+      * Root DNS 아래 com / org / edu DNS Servers 존재 (TLD: TOP LEVEL DNS SERVERS)
+
+* DNS가 중앙화(centralize) 할 수 없는 이유
+
+  * 트래픽 크기
+  * 위험성: 고장나면 모두 마비
+  * 거리
+  * 유지보수
+
+* Local DNS name Server (=default name server, proxy)
+
+  * 각각의 ISP 가 가지고 있다.
+  * 그래서 DNS를 검색하기 위해 먼저 local로 접근하며 쿼리가 존재하면 반환한다.
+
+* TLD, authoritative servers
+
+  > Top-level domain(TLD) servers: 관리하는 기관들이 각각 존재, authoritative servers 를 저장하고 있다.
+  > authoritative servers: 각 기관이 자기 자신 이름을 가지는 DNS 서버 매핑관리 
+
+  ​        
+
+* ### DNS 의 단계는 3단계
+
+  > 계층적으로는 = root - TLD / local - authoritative DNS Server >> requestiong server
+
+  #### - 방식 2가지
+
+  1. Iterated query
+     * **iterated query**: 접속한 서버가 다른 서버에게 묻는 구문
+     * **사용자 입장에서는 local에게 요청한다**
+       * local은 자신이 모르면  root에게 묻는다.
+         *  root는 해당하는 TLD서버 주소를 알려준다
+       * local은 받은 TLD주소로 다시 요청한다
+         * TLD는 authoritative의 주소를 알려준다
+       * aithorative를 통해 해당 주소를 얻어낸다.
+  2. recursive:  어떻게든 구해서 반환하는 방식
+     * recursive: 자기가 직접 찾아내는 방식
+       * local에 방문 - root DNS 방문 - TLD 방문 - authoritative DNS 서버 방문
+
+  ​         
+
+  ### DNS Caching, updating records
+
+  * 한번 방문한 웹 서버를 저장: local에 TLD 서버를 기록 = **root 방문X**
+  * 캐싱에서 out-of-date 문제가 발생할 수 있다.
+
+  ​          
+
+  ### DNS protocol, message
+
+  * query and reply message, both with same message format
+    * Msg header: identification[16비트의 쿼리], flags[ 내용들: query/reply, recursion desired, available, reply is authoritative]
+
+  
+
+   
+
+| 키워드             | 단원           | 설명                                                         | 관련 키워드                                                  |
+| ------------------ | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| packet delay       | 1. RoadMap     | **d**node = <br />**d**process + **d**queue + **d**trans + **d**prop | loss                                                         |
+| Packet loss        | 1. RoadMap     | packet 양이 queue 크기의 한계를 초과하면 packet이 소실된다   | delay                                                        |
+| Throughput         | 1. RoadMap     | packet은 하나씩 전달되지만 연속적으로 전송하기 때문에 단위 시간으로 묶는 경우 전송 속도를 나타낼 수 있습니다. |                                                              |
+| protocol           | 1. RoadMap     | protocol 은 layer system으로 구성되어 있다.                  |                                                              |
+| 5 계층             | 1. RoadMap     | application, transport, network, link, physical              |                                                              |
+| malware            | 1. RoadMap     | virus: executing시 활성화<br />warm: receiving시 자동 실행   |                                                              |
+| Dos                | 1. RoadMap     | Denial of Service의 약자<br />Host 주변을 malware을 통해 감염시킨뒤 botnet으로 만들어 garbage traffic을 계속 생성해 처리량을 넘는 traffic 발생 |                                                              |
+| sniffing           | 1. RoadMap     | Broadcasting(WIFI, shared ethernet) 환경에서 promiscuous(관리자) 모드로 전송되는 데이터를 조사 | NIC                                                          |
+| IP spoofing        | 1. RoadMap     | 자신의 IP 주소를 속여 데이터를 받는 방식                     |                                                              |
+| process            | 2. Application | host에서 실행되는 프로그램                                   | client-process<br />server process                           |
+| socket             | 2. Application | 계층 간 정보 이동은 socket을 통해 이루어진다.<br />TCP 통신에서 양쪽에 TCP connection socket이 생긴다 | TCP                                                          |
+| RTT                | 2. Application | Round Trip Time,<br />client 에서 출발한 패킷 하나가 server에 도달하고 다시 되돌아 오는 시간 | HTTP response time                                           |
+| HTTP response time | 2. Application | RTT가 TCP 연결 요청을 시도해서 request(요청)을 받기까지 걸리는 시간<br />2 RTT (TCP + File) + file Transmission | RTT                                                          |
+| GET                | 2. Application | URL method, HTTP request line에 있는 URL에서 `?`를 통해 값을 전달하는 방식 | POST<br />HEAD                                               |
+| POST               | 2. Application | HTTP Headlines 뒤에 entity body 부분에 저장해 내용을 전달하는 방식 | GET<br />HEAD                                                |
+| HEAD               | 2. Application | response를 받지 않아도 된다는 method로 file transmission이 발생하지 않는다. 주로 TEST 목적으로 사용 | GET<br />POST                                                |
+| PUT                | 2. Application | Server URL에 client가 파일을 업로드한다. 보통 서버를 관리하는 client 에 부여한다. | DELELTE                                                      |
+| DELETE             | 2. Application | Server URL에 있는 파일의 삭제를 요청한다.                    | PUT                                                          |
+| Cookie             | 2. Application | HTTP 통신에서 stateless한 연결방식을 보완하기 위해 client-server가 서로 유지하는 정보 |                                                              |
+| SMTP               | 2. Application | Simple mail transfer protocol                                | User Agent<br />Mail servers<br />Mail port 25<br />POP3<br />IMAP |
+| POP3               | 2. Application | Post Office Protocol,<br />Authorization 과 Transaction 의 순서대로 메일을 읽어오는 방식 | SMTP<br />IMAP                                               |
+| IMAP               | 2. Application | Internet Mail Access Protocol,<br />메일 서버에 모두 저장되고 사용자의 ID와 폴더이름을 매핑해서 불러오는 방식 | SMTP<br />POP3                                               |
+| DNS                | 2. Application | Domain Name system,<br />hostname 을 IP주소로 매핑하고 그 정보를 분산해서(distributed) 데이터베이스에 계층적으로 저장해 검색하는 시스템 |                                                              |
+| TLD                | 2. Application | Top-level domain servers,<br />authoritative servers 의 주소들을 저장하고 있다. | local DNS servers<br />root name servers는 13개              |
+| iterative query    | DNS            | 내가 주소를 요청한 서버가 다른 서버들에 요청해 다시 나에게 반환하는 방식 | recursive query                                              |
+| recursive query    | DNS            | 내가 직접 local서버부터 찾아서 host 주소를 알아내는 방식     | iterative query                                              |
+|                    |                |                                                              |                                                              |
 
