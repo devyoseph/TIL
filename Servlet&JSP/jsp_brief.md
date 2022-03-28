@@ -480,3 +480,8 @@ guestBookDto.setSubject(rs.getString("subject").replace("<", "&lt;"));
 @WebServlet({"/list", "/sss"})
 ```
 
+​         
+
+### 21. Redirect, forward
+
+* 삭제나 수정처럼 중복했을 때 문제가 발생할 수 있는 것 = Redirect인 것을 주의

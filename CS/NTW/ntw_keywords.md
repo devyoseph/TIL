@@ -411,8 +411,8 @@
 | DELETE             | 2. Application | Server URL에 있는 파일의 삭제를 요청한다.                    | PUT                                                          |
 | Cookie             | 2. Application | HTTP 통신에서 stateless한 연결방식을 보완하기 위해 client-server가 서로 유지하는 정보 |                                                              |
 | SMTP               | 2. Application | Simple mail transfer protocol                                | User Agent<br />Mail servers<br />Mail port 25<br />POP3<br />IMAP |
-| POP3               | 2. Application | Post Office Protocol,<br />Authorization 과 Transaction 의 순서대로 메일을 읽어오는 방식 | SMTP<br />IMAP                                               |
-| IMAP               | 2. Application | Internet Mail Access Protocol,<br />메일 서버에 모두 저장되고 사용자의 ID와 폴더이름을 매핑해서 불러오는 방식 | SMTP<br />POP3                                               |
+| POP3               | 2. Application | Post Office Protocol,<br />Authorization 과 Transaction 의 순서대로 메일을 읽어오는 방식<br />서버 입장에서 단방향으로 보내고 메시지를 삭제하거나 keep을 결정 | SMTP<br />IMAP                                               |
+| IMAP               | 2. Application | Internet Mail Access Protocol,<br />메일 서버에 모두 저장되고 사용자의 ID와 폴더이름을 매핑해서 불러오는 방식<br />서버와 사용자간의 양방향 통신으로 매핑을 한다. | SMTP<br />POP3                                               |
 | DNS                | 2. Application | Domain Name system,<br />hostname 을 IP주소로 매핑하고 그 정보를 분산해서(distributed) 데이터베이스에 계층적으로 저장해 검색하는 시스템 |                                                              |
 | TLD                | 2. Application | Top-level domain servers,<br />authoritative servers 의 주소들을 저장하고 있다. | local DNS servers<br />root name servers는 13개              |
 | iterative query    | DNS            | 내가 주소를 요청한 서버가 다른 서버들에 요청해 다시 나에게 반환하는 방식 | recursive query                                              |
