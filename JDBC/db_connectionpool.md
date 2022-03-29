@@ -85,6 +85,8 @@ public class DBUtil {
 }
 ```
 
+​        
+
 ### 로그인 정보의 보관
 
 * Webcontent 내부 META-INF에서 보관
@@ -92,3 +94,35 @@ public class DBUtil {
 <img src="db_connectionpool.assets/image-20220328144747264.png" alt="image-20220328144747264" style="zoom:50%;" />
 
 * 비밀번호등 정보를 수정한다.
+
+​       
+
+### META-INF
+
+* 백엔드쪽 설정 파일들이 담겨있다. 프론트 엔드 설정은 WEB-INF에 존재한다.
+
+​          
+
+#### context.xml
+
+> 톰캣 내부에 자원을 넣어둔다(Resource). <Context> 태그 내부에 작성한다.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource name="jdbc/ssafy" auth="Container" type="javax.sql.DataSource" 
+			maxTotal="100" maxIdle="30" maxWaitMillis="10000" 
+			username="sofia" password="sofia1234" driverClassName="com.mysql.cj.jdbc.Driver" 	
+			url="jdbc:mysql://localhost:3306/sofiadb?serverTimezone=UTC&amp;useUniCode=yes&amp;characterEncoding=UTF-8"/> 
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+</Context>
+```
+
+* **주의할 점**
+
+```java
+url="jdbc:mysql://localhost:3306/sofiadb?serverTimezone=UTC&amp;useUniCode=yes&amp;characterEncoding=UTF-8"
+```
+
+> XML 파일이기 때문에 &로 바로 값을 끼워넣을 때 그냥 &이후에 쓰는 것이 아니라
+> `&amp;`를 이용해 연결해야한다.
