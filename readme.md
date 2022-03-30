@@ -158,6 +158,7 @@
 3. [JSTL](/Servlet&JSP/jstl_basic.md)
 4. [추가 사항](/Servlet&JSP/han.md)
    * [프론트 컨트롤러 패턴](/Servlet&JSP/design_pattern.md)
+   * [서블렛 주소 메서드](/Servlet&JSP/servlet_addr.md)
 
 ​       
 

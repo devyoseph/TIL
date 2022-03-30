@@ -10,7 +10,10 @@
 
 ### 프론트 컨트롤 디자인 패턴
 
-> GET 방식으로 파라미터를 넘겨주          
+> 스프링 내부에서 작동하는 패턴 방식
+> 면접: 프론트/프론트 컨트롤/프론트 커맨드 디자인 패턴을 설명해보시오
+> 구현: dispatcher 클래스 내부에 Map을 이용해 컨트롤러들을 보관하고
+> 키워드를 Map에서 검색해 해당 컨트롤러를 꺼내 path 를 얻어내는 방식
 
 * Web Dynamic Project 생성시 맨 마지막에 XML 생성에 check 한다.
 
@@ -109,3 +112,104 @@ http://localhost:8080/ft/servlet/com.sofia.front.controller.DispatcherServlet
   </servlet-mapping>
   ```
 
+​              
+
+#### 세부주소 가져오기
+
+* 만약 `http://localhost:8080/ft/sam/article/login.do`로 입력한다면 마지막에 접속하고자하는 주소만 가져올 수 있다.
+  * `/login.do`를 최종적으로 가져온다.
+  * 뒤에 `?age=30`등 파라미터가 들어가도 상관없다.
+
+```java
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      String uri = request.getRequestURI();
+      int start = uri.lastIndexOf("/");
+      String path = uri.substring(start); //request에 저장된 URI를 가져와 substring으로 잘라냄
+      System.out.println("path : "+ path);
+	}
+```
+
+​          
+
+### HandlerMapping 클래스 생성
+
+* 커맨드 디자인 패턴처럼 `act`의 값에 따라 메서드를 분류해주는 작업을 해야한다.
+
+  * **클래스**를 생성해 작업한다. (Servlet 아님)
+
+* **Controller 인터페이스**를 만들어 관리하고 구현한 class를 HandlerMapping 내부 Map에 넣는다.
+
+  ```java
+  public interface Controller {
+  	String process(HttpServletRequest request, HttpServletResponse response)
+  			throws ServletException, IOException;
+  }
+  ```
+
+* Controller 를 구현한 클래스
+
+  ```java
+  import javax.servlet.http.HttpServletRequest;
+  import javax.servlet.http.HttpServletResponse;
+  
+  public class HelloController implements Controller {
+  
+  	@Override
+  	public String process(HttpServletRequest request, HttpServletResponse response) {
+  	String path = "/hello.jsp";
+  	String name = request.getParameter("name");
+  	//서비스 구현
+  	request.setAttribute("msg",name);
+  	return path;
+  	}
+  
+  }
+  ```
+
+* **HandlerMapping class**를 구현
+
+```java
+package com.ssafy.guestbook.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class HandlerMapping {
+	static Map<String, Controller> mapping = new HashMap<String, Controller>();
+	static {
+		mapping.put("/hello.do", new HelloController());
+	}
+	public static Controller getController(String path) {
+     //Map을 이용한 값 기록: 각 컨트롤러는 내부에서 작업 후 주소를 던져준다
+		return mapping.get(path);
+	}
+}
+
+```
+
+​         
+
+* Servlet 내부에서 세부주소 가져오는 방법을 통해 호출
+
+```java
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+      String uri = request.getRequestURI();
+      int start = uri.lastIndexOf("/");
+      String path = uri.substring(start); //request에 저장된 URI를 가져와 substring으로 잘라냄
+      System.out.println("path : "+ path); // dispatcher가 helloe.do를 뽑아낸다.
+    
+    Controller controller = HandlerMapping.getController(path);
+    if(controller == null){
+			//만약 null이면 기본주소 반환
+    }
+		String returnURL = "/WEB-INF"+ controller.process(request, response);
+    //view Resolver: 클라이언트가 URL로 접근하지 못하게 하기 위해 WEB-INF에 hello.jsp를 넣어서 관리
+		request.getRequestDispatcher(returnURL).forward(request, response);
+	}
+```
+
+* `/WEB-INF` 에 문서를 넣어 관리
+
+<img src="design_pattern.assets/image-20220330140004153.png" alt="image-20220330140004153" style="zoom:50%;" />
