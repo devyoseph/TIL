@@ -31,7 +31,7 @@
 >
 >   #### K[i, w]재귀적으로 정리하면
 >
->   <img src="/Users/yang-yoseb/Library/Application Support/typora-user-images/image-20220331144418957.png" alt="image-20220331144418957" style="zoom: 67%;" />
+>   <img src="algo_dp_knapsack.assets/image-20220331145345053.png" alt="image-20220331145345053" style="zoom:67%;" />
 >
 >   * 1번째: 0일 때는 (더 이상 넣을 수 없다면) 당연히 가치도 0이다.
 >   * 2번째: 현재 wi를 포함하지 않는 경우
