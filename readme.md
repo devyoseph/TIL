@@ -130,7 +130,7 @@
      1. [최소신장트리 - Dijkstra](/Algorithm/algo_MST2.md)
   1. [백트래킹](/Algorithm/algo_backtrack.md)
   1. [문자열 패턴-라빈-카프,보이어무어,KMP](/Algorithm/algo_textPattern.md)
-  1. [동적계획법](/Algorithm/dp_basic.md)
+  1. [동적계획법](/Algorithm/algo_dp.md)
 
 ​         
 
