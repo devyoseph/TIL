@@ -455,8 +455,162 @@
     * Dest port,IP, Source Port, IP 필요
 * TCP의 고정헤더: 5개 (각 32bits = 4bytes = 4x5 = 20bytes)
 
+​           
+
+### TCP round trip time, timeout
+
+* 과거의 round trip time을 이용해 다음번의 round trip time을 구한다.
+* **timeout interval**
+* 순서:
+  * segment를 생성함과 동시에 checksum + seq # 를 생성 = 보낸다
+  * timer가 켜져있지 않았다면 timer를 킨다.(**내보낸지 제일 오래된 segment에 타이머를 붙인다.**)
+  * timeout 발생: 가장 오래된 segment가 ack 을 안보내는 경우에 발생
+  * Ack #  번호가 왔음 = 그 번호까지 잘 전송된 것 = 정보를 업데이트하고 segment가 모두 전송되었다면 새로운 timer를 다시 세팅해서 뒤 segment를 보내고 기다린다.
+
+​        
+
+### reliable data를 위한 TCP의 요소
+
+1. checksum
+2. ack #
+3. pipelining
+4. Sequence #
+5. Timer : single retransmission timer (하나의 타이머를 사용한다.)
+
+​        
+
+### TCP sender 정리
+
+* Next Sequence Number와 SendBase에 의존
+  * NextSeq #: 다음번 내보낼 segment의 시퀀스 번호 = 현재 NextSeqNum + length(data)
+  * SendBase: 다음번 Ack을 기다리고 있는 sequence 번호
+* Start Timer: 내보낸 segment 중 가장 오래된 segment
+* ACK received
+  * ACK이 좀 느리게 오면 데이터를 잘 받았더라도 timeout이 발생해서 데이터를 다시 보낸다.
+
+<img src="ntw_keywords.assets/image-20220402181941778.png" alt="image-20220402181941778" style="zoom:50%;" />
+
+​         
+
+### TCP receiver
+
+* sender가 보낸 data 신호가 Network 계층에서 TCP(Receiver)로 올라온다.
+
+* **ACK을 모두 다 보내고 초기화 상태일 때 segment를 받는다면 바로 socket을 열지 않고 일단 기다린다.**
+
+  * 왜냐하면 sender가 보낸 신호가 여러 개일 수 있기 때문에 cumulative 를 이용해 한꺼번에 보낼 수 있기 때문이다.(500ms)
+  * 기다리다 하나 더 들어오면 즉시 single cumulative ACK를 보낸다.
+
+  <img src="ntw_keywords.assets/image-20220402182603480.png" alt="image-20220402182603480" style="zoom:50%;" />
+
+  * 만약 더 오지 않으면 바로 ACK을 보낸다.
+  * 순서대로 오지않고 따로따로 왔다면(out of order) 빠진 부분을 받기 위해 **duplicate ACK**를 보낸다.
+
+​         
+
+### TCP fast retransmit
+
+> timeout이 발생하기 전에 duplicate ACKs 를 토대로 data를 재송신하는 방법
+
+* Time-out 시간은 상대적으로 길다(relatively long)
+* **duplicate ACK**를 통해 lost segments들을 파악한다.
+  * 누락된 data 이후에 ACK #는 모두 duplicate로 대체된다.
+    * 3번이상 duplicate ACK를 받으면 timeout이 발생하기 전에 재송신한다.
+
+<img src="ntw_keywords.assets/image-20220402183628959.png" alt="image-20220402183628959" style="zoom:50%;" />
+
+​         
+
+### TCP flow control
+
+<img src="ntw_keywords.assets/image-20220402183943286.png" alt="image-20220402183943286" style="zoom:50%;" />
+
+* TCP socket receiver buffers: application으로 바로 보내는 것이 아니라 buffer에 넣고 전송한다.
+  * 만약 아래에서 송신하는 data가 더 많으면 buffer가 찬다.
+  * 이런 일이 발생하지 않도록 **flow control**을 한다.
+* 남은 buffer의 공간(길이)를 rwnd로 나타내고 data를 내볼 때 이 rwnd 값을 같이 보낸다.
+
+​          
+
+### TCP 3-way hanshake
+
+> 먼저 **ESTAB** 되는 쪽이 Client인 이유: timeout 등으로 서버가 닫히면 Failure 발생하기 때문이다.
+
+* 2단계로 나누었을 때 발생하는 문제
+
+  * client가 연결 요청을 보낸다. (SYN msg = Synchronzing msg)
+  * 서버가 동의(SYN ACK)하고 동의한 내용을 client가 뒤늦게 확인한다 (서버는 이미 Established)
+    * 근데 client가 보내는 자료가 너무 늦으면 서버가 닫히고 이후 데이터에 대해서 서버는 다시 새로운 신호로 받아들여 라인이 새로 만들어진다. = 낭비
+
+  <img src="ntw_keywords.assets/image-20220402185435257.png" alt="image-20220402185435257" style="zoom:33%;" />
+
+* 3 단계
+
+  * client가 seq #을 보내고 server가 받는다.
+  * server가 동의하고 client에게 ACK # 를 보내면 client가 먼저 ESTABLISH 하고
+  * 다시 client는 server에게 ACK를 보내는데 이것을 받으면 서버가 ESTAB된다.
+
+<img src="ntw_keywords.assets/image-20220402190002935.png" alt="image-20220402190002935" style="zoom: 50%;" />          
+
+​        
+
+### TCP: closing connection
+
+<img src="ntw_keywords.assets/image-20220402190337764.png" alt="image-20220402190337764" style="zoom:50%;" />
+
+* Finally bit = 1 / seq = x 을 보내면 이에 대해 ACK #를 보내준다.
+* client 쪽에서 보내는 신호이다.
+* 서버는 이것을 받고 ACKbit = 1 와 ACKnum = x+1을 보내준다.
+* 다시 서버는 ACKbit = 1, ACKnum = y+1을 보낸다.
+  * 이를 받고 서버측에서 CLOSED 한다.
+  * 보낸 client는 바로 close하지 않고 2*max segment lifetime 만큼 기다린다.
+    * ACK가 server에 전달되지 않는 경우가 있는데 그러는 경우 server가 닫히지 않기 때문임
+
+​          
+
+### Congestion
+
+> 데이터가 지체되거나 소실될 수 있는 문제 발생
+
+* congestion이 발생하면 **retransmission** 가능성이 높아진다.
+  * 너무 느린 나머지 불필요한 retransmit이 발생가능
+  * 필수적인 일을 못하는 경우가 발생
+* 해결책 2가지
+
+​     <img src="ntw_keywords.assets/image-20220402190807918.png" alt="image-20220402190807918" style="zoom:50%;" />
+
+* approach: sender increase transmission rate
+* TCP의 sending rate(전송속도) 조절:
+  * rate = cwnd/RTT bytes.sec
+* cwnd 의 크기 조절: 1 MSS 로 시작해서 매 RTT마다 2배씩 늘린다
+  * 처음 연결에는 **Slow start**지만 2배씩 늘어나므로 금방 증가한다.
+  * Congestion Avoidance: 충분히 크다면 조심해야한다.
+    * ssthresh: cwnd가 속도를 줄이는 default value 값
+    * ssthresh를 도달한 이후에는 RTT마다 1개씩 증가시킨다. 
+
+​        
+
+### TCP: data detecting / loss 감지 요약
+
+* timeout: loss 발생시
+  * cwnd: 1로 초기화
+* TCP RENO:
+  * 3duplicate ACKs 발생시 현재 cwnd를 반으로 줄인다.
+* TCP Tahoe: timeout이나 3 duplicate ACKs 발생시: cwnd = 1로 초기화
+
+​        
+
+### TCP performance : throughput / Fairness
+
+* throughput: high speed level의 전송에서는 loss가 매우 적어져야한다.
+* Fairness: 거리가 비슷한 host로 부터 데이터들이 송신될 때 라우터에서 엇갈린다.
+  * 두 connection이 거리가 비슷한 경우 unfair하게 시작해도 TCP 구조상 속도 증감을 반복하며 결국 같아진다.
+
+
+
 | 키워드                        | 단원           | 설명                                                         | 관련 키워드                                                  |
 | ----------------------------- | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| RTT                           | 1. RoadMap     |                                                              |                                                              |
 | packet delay                  | 1. RoadMap     | **d**node = <br />**d**process + **d**queue + **d**trans + **d**prop | loss                                                         |
 | Packet loss                   | 1. RoadMap     | packet 양이 queue 크기의 한계를 초과하면 packet이 소실된다   | delay                                                        |
 | Throughput                    | 1. RoadMap     | packet은 하나씩 전달되지만 연속적으로 전송하기 때문에 단위 시간으로 묶는 경우 전송 속도를 나타낼 수 있습니다. |                                                              |
@@ -493,15 +647,16 @@
 | UDP checksum                  | 3. Transport   | UDP 전송에서 segment의 header를 이용해 error를 찾아내는 방식<br />무결성 검사<br /> | IPv4 Pseudo Header                                           |
 | Sequence number               | 3. Transport   | Byte stream "number" of first byte in segment's data<br />segment에 실려있는 데이터 첫 부분의 number<br />ackowledgements: 난수인 ISN(Initial Sequence Number)가 결정되고 해당 번호부터 순서가 시작되어 Sequence Number(raw)가 된다.(해킹 방지) | TCP<br />ACK number                                          |
 | ACK number                    | 3. Transport   | ackowledgements:                                             | Cumulative ACK                                               |
-|                               |                |                                                              |                                                              |
-| Flow Control (흐름제어)       | 3. Transport   | 송신측과 수신측의 데이터 처리 속도 차이를 해결하기 위한 기법 | stop and wait <br />sliding window<br />TCP                  |
-| Congestion Control (혼잡제어) |                | 송신측의 데이터 전달과 네트워크의 데이터 처리 속도 차이를 해결하기 위한 기법 | TCP                                                          |
-|                               |                |                                                              |                                                              |
-|                               |                |                                                              |                                                              |
-|                               |                |                                                              |                                                              |
-|                               |                |                                                              |                                                              |
-|                               |                |                                                              |                                                              |
-|                               |                |                                                              |                                                              |
+| duplicate ACKs                | 3. Transport   | TCP data 가 out of order 로 도착했을 때 보내는 ACK 번호      | TCP fast retransmit                                          |
+| negotiate                     | 3. Transport   | TCP가 data를 송신할 때 sequence number을 결정하는 것<br />Receiving Buffer의 길이(rwnd) 등을 고려해 데이터 흐름 제어 결정 | Flow Control                                                 |
+| Flow Control (흐름제어)       | 3. Transport   | 송신측과 수신측의 데이터 처리 속도 차이를 해결하기 위한 기법<br />Receiving Buffer에 쌓이는 데이터를 조절한다.<br />끊임없이 증가하고 감소하는 것을 반복한다. | stop and wait <br />sliding window<br />TCP                  |
+| Congestion Control (혼잡제어) | 3. Transport   | 송신측의 데이터 전달과 네트워크의 데이터 처리 속도 차이를 해결하기 위한 기법 | TCP                                                          |
+| TCP fast retransmit           | 3. Transport   | timeout이 발생하기 전에 duplicate ACKs 를 토대로 data를 재송신하는 방법 | triple duplicate ACKs                                        |
+| AIMD                          | 3. Transport   | Additive increase multiplicative decrease                    | TCP congestion control                                       |
+| rwnd / cwnd                   | 3. Transport   | rwnd: flow control<br />cwnd: congestion control (1 MSS, 1 maximun segment size) | ssthresh                                                     |
+| ssthresh                      | 3. Transport   | cwnd가 속도를 줄이는 default value 값<br />loss가 발생한 cwnd 값의 절반으로 재설정한다. | congestion avoidance                                         |
+| TCP RENO<br />TCP Tahoe       | 3. Transport   | timeout이나 3 duplicate  발생시 cwnd 를 줄이는 방식<br />TCP RENO: 절반으로 줄임<br />TCP Tahoe: 1로 초기화 | ssthresh                                                     |
+| window size                   |                | Loss 가 발생하는 window size                                 |                                                              |
 |                               |                |                                                              |                                                              |
 |                               |                |                                                              |                                                              |
 |                               |                |                                                              |                                                              |
