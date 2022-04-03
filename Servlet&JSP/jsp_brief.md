@@ -7,7 +7,7 @@
 1. `,`로 나열하는 방법: 세미콜론을 사용하지 않음에 주의한다.
 
    ```jsp
-   <% page import = "java.util.*, java.sql.*" %>
+   <%@ page import = "java.util.*, java.sql.*" %>
    ```
 
 2. 각각 import가 가능하다
@@ -15,8 +15,8 @@
    * `<% 실행문 %>` 내부에서 클래스명을 자동완성 클릭하면 자동으로 import 해준다. 
 
    ```jsp
-   <% page import = "java.util.*" %>
-   <% page import = "java.sql.*" %>
+   <%@ page import = "java.util.*" %>
+   <%@ page import = "java.sql.*" %>
    ```
 
 3. 실행문 내부에서 패키지 풀네임으로 import가 가능하다

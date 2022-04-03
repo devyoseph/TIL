@@ -182,4 +182,289 @@
 
 ​         
 
-#### 12. 
+#### 12. Web Application Architecture
+
+* Model1: client 요청에 대해 JSP가 Logic 처리와 response page 처리 모두 기능
+  * Client: request - Server(JSP: Controller + view + model)
+* Model2: response page에 대한 처리만 기능(=MVC: Model-View-Controller)
+  * client 의 요청: Servlet = Controller
+    * Client의 요청을 분석해 Logic 처리를 위한 Model 단을 호출한다.
+    * return 받은 결과 data를 필요에 따라 request, session에 저장하고
+    * redirect 나 forward 방식으로 jsp 페이지를 이용해 출력한다.
+  * logic 처리: java class(Service, Dao, Dto) = Model
+    * Logic을 처리하는 모든 것
+    * controller에 넘어온 data를 이용해 이를 수행하고 그에 대한 결과를 controller에 리턴한다.
+  * Response page: JSP = View
+    * 모든 화면 처리를 담당, Client의 요청에 대한 결과 뿐 아니라 controller에 요청을 보내는 화면단도 jsp에서 처리
+    * Logic 처리를 위한 java code는 사라지고 결과 출력만을 위한 code 존재
+
+​         
+
+#### 13. Http Protocol
+
+* Client의 request를 Server 가 response
+* 요청할 때만 연결하는 stateless 한 성질
+* HTTP protocol의 단점을 보완하기 위해 Cookie와 Session을 사용한다.
+
+​       
+
+#### 14. Cookie
+
+> 자동 전송이 default
+> 요청시 서버가 먼저 만들고 client에게 그 내용을 전달한다.
+
+* 서버에서 사용자의 컴퓨터에 저장하는 정보파일
+* 사용자가 별도로 요청하지 않아도 브라우저는 request시 Request Header를 넣어 자동으로 서버에 전송
+* key와 value로 구성 & **String** 형태
+* Browser마다 저장되는 쿠키는 다르다.
+
+**목적**
+
+* 세션관리: 사용자의 아이디, 접속시간, 장바구니 등의 서버가 알아야 할 정보 저장
+* 개인화: 개인마다 그 사람에 적절한 페이지 구현
+* 트래킹: 사용자의 행동과 패턴을 분석하고 기록
+
+#### 구성요소
+
+* 이름, 값, 유효기간, 도메인(쿠키를 전송할 도메인), 경로(path: 쿠키를 전송할 요청 경로)
+
+#### 동작순서
+
+1. client가 페이지 요청
+2. WAS가 cookie 생성
+3. HTTP Header에 Cookie를 넣어 응답(response의 header)
+4. Browser는 넘겨받은 Cookie를 PC에 저장하고 WAS가 요청할 때 Cookie 전송
+5. Browser가 종료되어도 유효기간이 남아있다면 Client는 계속 보관
+6. 동일 사이트 재방문시 PC에 client가 있다면 request Header에 Cookie를 같이 전송
+
+#### Cookie의 특징
+
+* 이름, 값, 유효기간, 도메인, path로 구성되어있다.
+* 클라이언트에 300개의 쿠키를 저장 가능
+* 하나의 도메인 당 20개의 쿠키 가능
+* 하나의 쿠키 = 4KB(4096byte)까지 저장 가능
+
+#### Cookie 메서드
+
+* 생성
+
+  ```java
+  Cookie cookie = new Cookie(String name, String value);
+  ```
+
+* 값/도메인/범위 변경
+
+  ```java
+  cookie.setValue(String value);
+  cookie.setDomain(String domain);
+  cookie.setPath(String path);
+  
+  cookie.getValue();
+  cookie.getDomain();
+  cookie.getPath();
+  ```
+
+* 유효기간 설정
+
+  ```java
+  cookie.setMaxAge(60*60*24); //초단위
+  cookie.setMaxAge(0); //쿠키 삭제
+  ```
+
+* client에 전송
+
+  ```java
+  response.addCookie(cookie);
+  ```
+
+* client에서 쿠키 얻기
+
+  ```java
+  Cookie cookies[] = request.getCookies();
+  ```
+
+​         
+
+#### 15. Session
+
+* 방문자가 서버에 접속해 있는 상태를 하나의 단위로 보고 그것을 세션이라고 한다.
+* WAS memory에 Object 형태로 저장
+* memory가 허용하는 용량까지 제한 없이 사용가능
+
+#### 동작 순서
+
+* 클라이언트가 페이지 요청
+* 서버는 접근한 클라이언트의 Reqeust-Header의 Cookie를 확인해 클라이언트가 session-id를 보냈는지 확인
+* 만약 session-id가 없다면 서버는 새로 생성해서 클라이언트에게 돌려준다.
+* 서버에서 클라이언트로 돌려준 session-id를 쿠키를 이용해 서버에 저장한다. (톰캣: 쿠키 이름 JSESSIONID)
+* 클라이언트는 재접속시 이 쿠키(JSESSIONID)를 이용해 session-id를 서버로 전달한다.
+
+#### session의 특징
+
+* 웹 서버에 웹 컨테이너 상태를 유지하기 위한 정보 저장
+* 웹 서버에 저장되는 쿠키(=세션 쿠키)
+* 브라우저를 닫거나 서버에서 세션을 삭제했을 때 삭제가 되므로 쿠키보다 보안이 좋다.
+* 저장 데이터 제한이 없다.
+* 각 클라이언트 고유 Session ID 부여한다.
+* Session ID로 클라이언트를 분류하여 각 요구에 맞는 서비스를 제공한다.
+
+#### HttpSession의 주요 기능
+
+| 기능             | method                                                       |
+| ---------------- | ------------------------------------------------------------ |
+| 생성             | HttpSession session = request.getSession();<br />HttpSession session = request.getSession(false); // 없으면 굳이 생성하지 않는 것 |
+| 저장             | session.setAttribute(String name, Object value)              |
+| 얻기             | session.getAttribute(String name)                            |
+| 제거             | session.removeAttribute(String name);<br />session.invalidate(); |
+| 생성시간         | session.getCreationTime();                                   |
+| 마지막 접근 시간 | session.getLastAccessedTime();                               |
+
+​          
+
+#### 16. Session & Cookie
+
+|           | Session                                                      | Cookie                             |
+| --------- | ------------------------------------------------------------ | ---------------------------------- |
+| Type      | javax.servlet.http.HttpSession (interface)                   | javax.servlet.http.Cookie (Class)  |
+| 저장 위치 | 서버 memory에 오브젝트로 저장                                | Client 각 PC에 file로 저장         |
+| 저장 형식 | Objects 모두 가능                                            | file에 저장되기 때문에 String      |
+| 사용 예   | 로그인, 장바구니                                             | 아이디 저장, 오늘은 그만 열기 등   |
+| 용량제한  | 없음(메모리가 허락하는한 가능)                               | 4KB(4096bytes), 도메인당 20개      |
+| 만료시점  | Web.xml 서버측의 설정에 따라 결정                            | 쿠키 저장시 설정된 만료기간에 따라 |
+| 공통      | 프로젝트 내 모든 JSP에서 사용 가능<br />Map 형식으로 관리하기 때문에 key값의 중복X |                                    |
+
+​            
+
+#### 16. Expression Language
+
+> dot 표기법(.)과 [ ] 연산자 표기법이 존재한다.
+
+* 왼쪽: Java.util.Map 객체 또는 Java Bean 객체
+
+* 오른쪽: 맵의 키 또는 Bean의 프로퍼티
+
+  ```jsp
+  ${Map.Map의 키}
+  ${Java Bean.Bean 프로퍼티}
+  ```
+
+* [] 표기법
+
+  ```java
+  ${userinfo["name"]} // [ ] 표기법
+  ```
+
+  ```java
+  ${userinfo.name} // dot
+  ```
+
+​         
+
+#### 17. EL 내장객체
+
+> JSP의 pageContext의 반환값 Java Bean을 제외하고 모두 리턴 값은 Map이다.
+
+* scope
+
+  * 같은 저장된 객체가 겹칠 수 있으므로 해당 스코프 내의 객체를 딱 가져올 수 있다.
+    * pageScope / requestScope / sessionScope / applicationScope
+
+* param / paramValues
+
+  ```jsp
+  ${param.id}
+  ${paramValues.id[0]}
+  ${paramValues.id[1]}
+  ```
+
+* cookie = HttpServletRequest.getCookies()의 줄임으로 **배열을 리턴**함에 주의한다.
+
+  * 오히려 이를 활용해 원하는 cookie 만 꺼내올 수 있다.
+
+    ```java
+    ${cookie.userId.value} // request.getCookies() + getName() + getValue()
+    ```
+
+    
+
+​       
+
+#### 18. EL 이름만 사용
+
+* 이름만 사용하는 경우 자동으로 pageScope -> requestScope -> sessionScope -> applicationScope를 찾는다.
+
+* 이름이 특이하면 []표현식 사용
+
+  ```jsp
+  ${requestScope["ssafy.user"].name}
+  ```
+
+​       
+
+### 19. EL operator
+
+* 산술: + - / %
+
+* 관계형: ==(eq) !=(ne) <(lt) >(gt) <=(le) >=(ge)
+
+* 3항 연산: 조건? 값1: 값2
+
+* 논리: || && !
+
+* 타당성 검사 empty
+
+  * 비어있다는 판단
+
+    * "", 빈 배열, null, 빈 Map, 빈 Collection
+
+     
+
+#### 20. JSTL (Java Standard Tag Library)
+
+* Custom tag 중 많이 사용되는 것들을 모아서 JSTL 규약을 만들었다.
+* c / x / fmt / sql
+
+​         
+
+#### 21. Core tag
+
+* set: 변수 설정 = jsp 페이지에서 사용할 변수
+
+  * value(내부 body태그 안에 값을 그냥 넣을 수도 있다.)
+    * var - scope - value
+    * property - target - value
+  * var은 변수 이름 설정이고 property는 프로퍼티 이름 설정이므로 둘 중 하나만 설정해주어야 한다.
+  * target은 property와 같이 지정되어야 하며 어느 객체에 설정한 프로퍼티인지 적어주는 곳이다.
+    * EL문 등 사용
+
+* if = 조건에 따른 코드 실행: **var** = test의 결과값을 담을 변수명
+
+  ```jsp
+  <c:if test="${}" var="accessible">
+  </c:if>
+  ```
+
+* choose, when, otherwise
+
+  ```jsp
+  <c:choose>
+  	<c:when test=" "> </c:when>
+    <c:when test=" "> </c:when>
+    <c:otherwise> </c:otherwise>
+  </c:choose>
+  ```
+
+* forEach: var / items
+
+* catch: var로 오류를 받아준다
+
+  ```jsp
+  <c:catch var = "ex">
+  </c:catch>
+  
+  <c:if test="${ex != null}">
+  	예외가 발생했습니다. ${ex.message}
+  </c:if>
+  ```
+
+  
