@@ -16,6 +16,7 @@
 
 2. 다익스트라(Dijkstra)의 최단 경로 알고리즘
    * 시간 복잡도: O(n^3), n은 정점의 수
+   * 가중치가 양의 정수일 때만 사용가능
 3. 플로이드-워샬 알고리즘(Floyd-Warshall)
    * Warshall: transitive closure(그래프 모든 쌍의 존재 여부)를 찾아내는 동적 계획 알고리즘을 제안
    * Floyd: 이를 변형해 모든 쌍 최단 경로를 찾는 알고리즘 고안
@@ -48,12 +49,13 @@
 D[i][j] = 정점i에서 정점 j로의 최소비용
 
 AllpairsShortest(D[][])
-	FOR k in 1 ~ n #	추가되는 node
-		FOR i in 1 ~ n  # (단, i != k )
-			FOR j in 1 ~ n # (단, j != k, j != i)
+	FOR k in 1 ~ n #	추가되는 node : 경유지
+		FOR i in 1 ~ n  # (단, i != k ) : 출발지
+			FOR j in 1 ~ n # (단, j != k, j != i) : 도착지
 				D[i][j] = min(D[i][k] + D[k][j], D[i][j])
 ```
 
 * k: 경유 가능한 정점을 1부터 n까지 확장하는 작업
 * 각 쌍을 고려하기 위해 i, j를 사용
 * 정점 k를 고려해 다시 최단 경로의 거리를 갱신한다.
+* **경출도 = 경찰과 도둑**으로 외워라
