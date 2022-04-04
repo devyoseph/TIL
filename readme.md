@@ -132,6 +132,8 @@
   1. [문자열 패턴-라빈-카프,보이어무어,KMP](/Algorithm/algo_textPattern.md)
   1. [동적계획법](/Algorithm/algo_dp.md)
      1. [Knapsack](/Algorithm/algo_dp_knapsack.md)
+     1. [LIS](/Algorithm/algo_dp_LIS.md)
+     1. [최단 경로](/Algorithm/algo_dp_minPath.md)
 
 
 ​         
