@@ -606,7 +606,80 @@
 * Fairness: 거리가 비슷한 host로 부터 데이터들이 송신될 때 라우터에서 엇갈린다.
   * 두 connection이 거리가 비슷한 경우 unfair하게 시작해도 TCP 구조상 속도 증감을 반복하며 결국 같아진다.
 
+​                 
 
+​           
+
+## network 계층
+
+> Transport 계층의 segment 를 sending host에서 receiving host로 전송
+>
+> 보내는 입장: segment을 datagram으로 encapsulate
+>
+> 받는 입장: segment를 transport layer로 전달
+>
+> router : IP datagrams의 header를 보고 어디로 보낼지 결정
+
+* 가장 큰 기능 2가지
+
+  * Routing: 목적지를 계산하는 것
+    * routing algorithm: end-end-path를 계산
+  * forward: router의 input 과 output이 있는데 input으로 들어가면 적절한 output으로 옮겨주는 역할
+    * forwarding table이 존재해서 header에 번호에 맞추어 outputlink가 저장되어있다.
+
+* 서비스 모델
+
+  * 각 데이터그램
+    * delivery 보장
+    * 40msec delay 안에서 delivery qㅗ장
+  * flow of 데이터그램
+
+* Connection / connection-less
+
+  > TCP/UDP: 프로세스 to 프로세스
+  >
+  > Datagram: 호스트 to 호스트
+
+  * datagram: connection-less
+
+  * Virtual-circuit: connection-oriented
+
+    * call setup, teardown: 데이터를 보내기 전에 매번 수행
+
+      * call setup: 다음 이동할 라우터에다 그 다음 callsetup 을 위한 VC 넘버를 새로 갱신
+
+      <img src="ntw_keywords.assets/image-20220405230220300.png" alt="image-20220405230220300" style="zoom:50%;" />
+
+    * VC 번호 할당, path, forwarding table에 저장
+
+      * 패킷은 VC number를 목적지 path가 아닌 VC number 를 가지고 찾아간다.
+      * 매 link마다 VC number가 바뀔 수 있다.
+        * 만약 같은 VC넘버를 사용하는 경우: 더 긴 VC번호가 필요하다. (전체에서 VC link별로 unique 해야하므로)
+
+* signalling protocols
+
+  * VC 의 매 통신마다 call setup을 하기 때문에 protocol 이 필요하다.
+
+    * 실 사용 예) ATM, frame-relay, X.25
+
+  * Datagram: call setup 이 전혀 없다
+
+    * Forwarding table만 사용한다.
+
+      * 4billions IP 주소가 필요하기 때문에 목적지를 묶은 범위로 점점 세부적으로 찾도록 구성한다.
+
+        <img src="ntw_keywords.assets/image-20220405232101257.png" alt="image-20220405232101257" style="zoom:50%;" />
+
+        ​       
+
+​            
+
+### Datagram 과 VC network 비교
+
+<img src="ntw_keywords.assets/image-20220405232235725.png" alt="image-20220405232235725" style="zoom:67%;" />
+
+* Datagram: smart end Systems: 개속적으로 발전한다.
+* ATM: dumb end systems
 
 | 키워드                        | 단원           | 설명                                                         | 관련 키워드                                                  |
 | ----------------------------- | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -656,11 +729,11 @@
 | rwnd / cwnd                   | 3. Transport   | rwnd: flow control<br />cwnd: congestion control (1 MSS, 1 maximun segment size) | ssthresh                                                     |
 | ssthresh                      | 3. Transport   | cwnd가 속도를 줄이는 default value 값<br />loss가 발생한 cwnd 값의 절반으로 재설정한다. | congestion avoidance                                         |
 | TCP RENO<br />TCP Tahoe       | 3. Transport   | timeout이나 3 duplicate  발생시 cwnd 를 줄이는 방식<br />TCP RENO: 절반으로 줄임<br />TCP Tahoe: 1로 초기화 | ssthresh                                                     |
-| window size                   |                | Loss 가 발생하는 window size                                 |                                                              |
-|                               |                |                                                              |                                                              |
-|                               |                |                                                              |                                                              |
-|                               |                |                                                              |                                                              |
-|                               |                |                                                              |                                                              |
+| window size                   | 3. Transport   | Loss 가 발생하는 window size                                 |                                                              |
+| datagram                      | 4. Newwork     | segment에 header를 붙여 Network 계층으로 이동하는 데이터(?)  |                                                              |
+| Routing                       | 4. Newwork     | Routing algorithm을 통해 end 에서 end까지의 path를 계산      | forwarding                                                   |
+| forwarding                    | 4. Newwork     | forwarding table을 이용해 router에 input으로 들어온 패킷을 적절한 output으로 이동시킨다 | routing                                                      |
+| Virtual circuit               | 4. Newwork     | Connection-oriented,<br />데이터를 보내기 전 call setup과 teardown을 반복합니다.<br />call setup: 패킷 입장에서 다음 라우터에게 VC 넘버를 새로 받아내는 것 | call setup                                                   |
 |                               |                |                                                              |                                                              |
 |                               |                |                                                              |                                                              |
 |                               |                |                                                              |                                                              |
