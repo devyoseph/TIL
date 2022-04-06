@@ -681,6 +681,78 @@
 * Datagram: smart end Systems: 개속적으로 발전한다.
 * ATM: dumb end systems
 
+​           
+
+### Router Architecture
+
+> Routing, forwarding 이 핵심이다.
+
+* Routing: management control plane, software에서 작업
+
+* Forwarding: data plane, hardware에서 작업
+
+  * input port
+
+    * Line termination [물리 계층]: 전송은 물리계층으로하므로 일단 물리계층에서 받고 점차 올려준다.
+    * Link layer protocol [링크 계층]
+    * Lookup: forwarding table을 참고해 output port를 찾는다. [네트워크 계층]
+      * 버퍼에 넣는 이유: lookup 시간보다 더 빨리 datagram이 오는 경우 고려
+
+    <img src="ntw_keywords.assets/image-20220406130803048.png" alt="image-20220406130803048" style="zoom:50%;" />
+
+    * <img src="ntw_keywords.assets/image-20220406130928247.png" alt="image-20220406130928247" style="zoom: 50%;" />
+
+  * Switching fabrics
+
+    * input buffer에서 output buffer로 packet을 이동시킴 
+      * Switching via Memory: 이동시킬 때 바로 버퍼간 이동하는 것이 아니라 메모리를 거쳐서 메모리에 저장한 후에 다시 버퍼로 이동
+        * 단점: 메모리의 bandwidth에 제한, bus(선 이동)을 두 번 거친다.
+      * Switching via a Bus: 공유되어진 bus를 통해 datagram을 전달.
+        * 단점: 버스의 bandwidth에 제한
+        * 장점: 기업이 사용하기에 충분한 속도와 접근성
+      * Switching via interconnection network: overcome bus bandwidth limitations
+        * datagram을 고정길이의 cell로 나누어 사용하면 프로세싱이 유리
+
+  * output ports
+
+    <img src="ntw_keywords.assets/image-20220406132235945.png" alt="image-20220406132235945" style="zoom:50%;" />
+
+    * datagram buffer : [네트워크 계층] : 아래 transmission rate 를 추월할 수 있기 때문에 대기하도록 한다.
+
+      * FirstCome First Served가 아니라 더 복잡한 알고리즘을 통해 내보내는 순서를 정할 수 있다.
+
+        <img src="ntw_keywords.assets/image-20220406132928313.png" alt="image-20220406132928313" style="zoom:33%;" />
+
+        * 버퍼의 크기 계산도 중요한 엔지리어링 기술이다.
+
+    * Link layer protocol : [링크 계층]
+
+    * Line termination: [물리 계층] - 전송하기 전에 물리 계층으로 내려주어야 한다.
+
+​           
+
+### network layer의 Internet protocol
+
+<img src="ntw_keywords.assets/image-20220406133141573.png" alt="image-20220406133141573" style="zoom:50%;" />
+
+* IP protocol : data plane (hardware)
+
+  * IP fragmentation
+
+    * MTU(max.transfer size): largest possible link-level fram
+    * large IP datagram devide within net
+      * 나뉘어서 종착지에서 모두 모인다.
+      * 나누는 것마다 다시 헤더를 붙여주어야 한다.
+
+  * IP address: 32 bit
+
+    * host와 router interface의 identifier
+    * Interface: connection between host/router and physical link
+
+  * Subnets
+
+    <img src="ntw_keywords.assets/image-20220406135246491.png" alt="image-20220406135246491" style="zoom:50%;" />
+
 | 키워드                        | 단원           | 설명                                                         | 관련 키워드                                                  |
 | ----------------------------- | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | RTT                           | 1. RoadMap     |                                                              |                                                              |
@@ -734,7 +806,16 @@
 | Routing                       | 4. Newwork     | Routing algorithm을 통해 end 에서 end까지의 path를 계산      | forwarding                                                   |
 | forwarding                    | 4. Newwork     | forwarding table을 이용해 router에 input으로 들어온 패킷을 적절한 output으로 이동시킨다 | routing                                                      |
 | Virtual circuit               | 4. Newwork     | Connection-oriented,<br />데이터를 보내기 전 call setup과 teardown을 반복합니다.<br />call setup: 패킷 입장에서 다음 라우터에게 VC 넘버를 새로 받아내는 것 | call setup                                                   |
+| IP protocol(인터넷 프로토콜)  | 4. Newwork     | 송신 호스트와 수신 호스트가 패킷 교환 네트워크(패킷 스위칭 네트워크, Packet Switching Network)에서 정보를 주고받는 데 사용하는 정보 위주의 규약(프로토콜, Protocol) | Data plane<br />IP fragmentation, reassembly<br />MTU        |
+| interface                     | 4. Newwork     | connection between host/router and physical link<br />라우터와 호스트 물리적 링크 간 연결관계<br />(host는 보통 1~2개의 interface를 가진다: wired Ethernet, wireless) | IP address                                                   |
+| subnet                        | 4. Newwork     | **적절한 단위로 네트워크를 분할해야할 필요성**이 생기게 된다. 이러한 이유로 인해서 서브넷의 개념이 탄생하게 된다.<br />**서브넷(Subnet)이라는 것은 하나의 네트워크가 분할되어 나눠진 작은 네트워크**이다.<br />IP 주소에서 같은 서브넷 부분으로 이루어진 device interfaces | interface                                                    |
+| CIDR(사이더)                  | 4. Newwork     | Classless InterDomain Routing,<br />클래스 없는 도메인 간 라우팅 기법으로 1993 도입되기 시작한, 최신의 IP 주소 할당 방법이다.<br />사이더는 기존의 IP 주소 할당 방식이었던 네트워크 클래스를 대체하였다.<br />사이더는 IP 주소의 영역을 여러 네트워크 영역으로 나눌 때 기존방식에 비해 유연성을 더해준다. | IP addressing<br />부족해지는 IPv4 주소 효율적 사용<br />접두어를 이용한 주소 지정 방식(광역 라우팅 부담 저하) |
 |                               |                |                                                              |                                                              |
 |                               |                |                                                              |                                                              |
 |                               |                |                                                              |                                                              |
+|                               |                |                                                              |                                                              |
+
+
+
+
 
