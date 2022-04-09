@@ -753,6 +753,61 @@
 
     <img src="ntw_keywords.assets/image-20220406135246491.png" alt="image-20220406135246491" style="zoom:50%;" />
 
+​         
+
+### DHCP
+
+* 동적으로 IP 주소 할당
+  * discover - offer - request - ack
+* IP 주소보다 더 많은 정보를 포함
+  * first - hop router for client
+  * DNS 서버의 name 과 IP 주소
+  * network mask 
+
+​        
+
+### Subnetting
+
+* provider ISP의 주소 공간을 할당받는다.
+
+  <img src="ntw_keywords.assets/image-20220409235827130.png" alt="image-20220409235827130" style="zoom:50%;" />
+
+* 본래 서브넷 주소 = `/20`이런식으로 나타낸다면 `/23`이런 표현을 통해 3비트를 더 써서 2^3 총 8개의 주소를 더 표현할 수 있다.
+
+<img src="ntw_keywords.assets/image-20220410000351311.png" alt="image-20220410000351311" style="zoom:50%;" />
+
+​           
+
+### NAT
+
+* Network address translation
+* 외부로 datagram을 보낼 때 source(사설) IP 주소와 port # 를 NAT IP와 새로운 포트 번호로 변환
+  * 이를 위해 NAT에 테이블로 모든 주소를 저장
+* 내부로 datagram을 받을 때 테이블을 이용해 source IP로 변환
+* 한계점: router 3계층의 한계성 = end-to-end 위반, 서버 서브네팅 문WP
+  * 해결1: 서버 statically (정적으로) 구성해서 host의 연결을 받는다.
+  * 해결2: UPnP: Universal Plug and Play
+
+​         
+
+### ICMP Traceroute
+
+* source는 인련의 UDP segments를 목적지로 보낸다.
+* TTL = 1부터 n까지 증가시키며 라우터로 보내고 라우터는 datagram을 받고 버린다음 새로 source에게 ICMP 메시지 보냄
+  * 즉, 주고 받고를 n번 반복하면서 이동하는 것임
+  * router의 이름, IP 주소
+  * 이를 통해 RTT 확인 가능
+
+​         
+
+### IPv6
+
+* 본래 32 비트 주소는 고갈되고 있다.
+
+* IPv6 의 주소를 IPv4 주소로 Encapsulation 해서 IPv6끼리 통신한다.
+
+  <img src="ntw_keywords.assets/image-20220410010751637.png" alt="image-20220410010751637" style="zoom:80%;" />
+
 | 키워드                        | 단원           | 설명                                                         | 관련 키워드                                                  |
 | ----------------------------- | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | RTT                           | 1. RoadMap     |                                                              |                                                              |
@@ -784,7 +839,7 @@
 | recursive query               | DNS            | 내가 직접 local서버부터 찾아서 host 주소를 알아내는 방식     | iterative query                                              |
 | UDP                           | 3. Transport   | User Datagram Protocol<br />Client & Server 사이에 연결(Connection)이 존재하지 않음<br />unreliable datagram<br />(=no handshaking) UDP segment 개별 전송(순서 고려X) | `.bind` & `listen`<br />IP address & port number<br />client port #  표기X |
 | TCP                           | 3. Transport   | Client & Server 별도의 socket을 열고 연결하는 방식<br />reliable, bytes stream-oriented, in-order, pipelined, full duplex data(client도 수신 가능) | `.bind` & `listen`<br />IP address & port #<br />고정헤더    |
-| network layer                 | 2. Application | logical communication between hosts                          |                                                              |
+| network layer                 | 2. Application | logical communication between hosts                          | IP<br />ICMP<br />Router                                     |
 | Transport layer               | 3. Transport   | Process to Process, logical communication between processes  | UDP<br />TCP                                                 |
 | Multiflexing                  | 3. Transport   | Transport layer 에서 핵심적인 system<br />process(application, sender)가 transport header를 붙이고 서버는 이 header를 이용해 source port와 dest port를 인식한다. | segment<br />demultiflexing                                  |
 | demultiflexing                | 3. Transport   | host(server) 가 segment의 destination port # 를 확인한다.<br />그 port에 해당하는 socket으로 전달한다. |                                                              |
@@ -810,10 +865,12 @@
 | interface                     | 4. Newwork     | connection between host/router and physical link<br />라우터와 호스트 물리적 링크 간 연결관계<br />(host는 보통 1~2개의 interface를 가진다: wired Ethernet, wireless) | IP address                                                   |
 | subnet                        | 4. Newwork     | **적절한 단위로 네트워크를 분할해야할 필요성**이 생기게 된다. 이러한 이유로 인해서 서브넷의 개념이 탄생하게 된다.<br />**서브넷(Subnet)이라는 것은 하나의 네트워크가 분할되어 나눠진 작은 네트워크**이다.<br />IP 주소에서 같은 서브넷 부분으로 이루어진 device interfaces | interface                                                    |
 | CIDR(사이더)                  | 4. Newwork     | Classless InterDomain Routing,<br />클래스 없는 도메인 간 라우팅 기법으로 1993 도입되기 시작한, 최신의 IP 주소 할당 방법이다.<br />사이더는 기존의 IP 주소 할당 방식이었던 네트워크 클래스를 대체하였다.<br />사이더는 IP 주소의 영역을 여러 네트워크 영역으로 나눌 때 기존방식에 비해 유연성을 더해준다. | IP addressing<br />부족해지는 IPv4 주소 효율적 사용<br />접두어를 이용한 주소 지정 방식(광역 라우팅 부담 저하) |
-|                               |                |                                                              |                                                              |
-|                               |                |                                                              |                                                              |
-|                               |                |                                                              |                                                              |
-|                               |                |                                                              |                                                              |
+| DHCP                          | 4. Newwork     | Dynamic Host Configuration Protocol<br />네트워크 서버에 접속할 때 서버로부터 동적으로 IP 주소를 할당<br />discover(host) - offer(server) - request(host) - ack(server) | Mobile users<br />network mask<br />ICANN(ISP의 입장)        |
+| Subnetting                    | 4. Newwork     | 하나의 네트워크를 여러개 ip 다수 네트워크 ip로 분할하는 작업 |                                                              |
+| **LMX**                       | 4. Newwork     | Longest Prefix Matching,<br />목적지 주소와 일치하는 주소 중 가장 긴 주소를 사용한다. |                                                              |
+| NAT                           | 4. Newwork     | network address translation,<br />라우터가 담당: Subnet 주소를 하나로 할당<br />local network 에서의 주소는 독립적이며 자유로운 변경 가능 | IP주소 효율적 사용<br />CIDR (classless)<br />DHCP<br />source IP address<br />UPnP |
+| ICMP                          | 4. Newwork     | Internet control message protocol,<br />hosts & routers to communicate network level | Traceroute<br />UDP segments                                 |
+| IPv6                          | 4. Newwork     |                                                              |                                                              |
 
 
 
