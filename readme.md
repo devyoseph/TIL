@@ -1,4 +1,4 @@
-# 🌱 TIL (Today I Learned)
+# 🌱 TIL 2022 (Today I Learned)
 
 ***
 
