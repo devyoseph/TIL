@@ -137,6 +137,7 @@
      1. [최단 경로](/Algorithm/algo_dp_minPath.md)
   1. [수학]
       1. [명제, 페르마의 소정리, 유클리드 호제, 에라토스테네스의 체, 군, 그라함 스캔](/Algorithm/computational.md)
+      1. [순열과 조합, 재귀와 점화식](/Algorithm/computational2.md)
 
 
 ​         
