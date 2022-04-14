@@ -58,7 +58,7 @@
 
 ### Spring 삼각형
 
-<img src="1_Spring&개발환경.assets/image-20220414094554236.png" alt="image-20220414094554236" style="zoom:80%;" />
+<img src="1_Spring&environment.assets/image-20220414130427084.png" alt="image-20220414130427084" style="zoom: 67%;" />
 
 * Enterprise Application 개발 시 복잡함을 해결하는 Spring의 핵심
   1. POJO: Plain Old Java Object
@@ -110,4 +110,4 @@
 
 ### SpringFramework Module
 
-<img src="1_Spring&개발환경.assets/image-20220414100755395.png" alt="image-20220414100755395" style="zoom:80%;" />
+<img src="1_Spring&environment.assets/image-20220414130437387.png" alt="image-20220414130437387" style="zoom:80%;" />
