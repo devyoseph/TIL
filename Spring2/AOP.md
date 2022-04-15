@@ -219,17 +219,26 @@ public class AOPAspect {
 
 * 인자값으로 **JoinPoint가 먼저**왔다는 가정하에 반환값을 검색할 수도 있다.
 
+```xml
+	<bean id="logAdvice" class="com.sofia.model.aop.AOPAspect"></bean>
+	<aop:config>
+		<aop:pointcut expression="execution(* com.ssafy.model.service.GuestBookServiceImpl.*Article(..))" id="pt1"/>
+		<aop:aspect id="log1" ref="logAdvice">
+			<aop:after-returning returning="aaaa" pointcut-ref="pt1" method="printA"/>
+		</aop:aspect>
+	</aop:config>
+```
+
 ```java
 package com.sofia.model.aop;
 
 import org.aspectj.lang.JoinPoint;
 
-//횡단 클래스(부가적인 기능을 가지고 있는 클래스)
 public class AOPAspect {
-	// 메서드 리턴값이 존재해야하는 등 제약이 존재한다.
-	public void printA(JoinPoint jpoint, Object returnValue) {
-		System.out.println("부가기능 호출" + jpoint.getSignature().getName());
-		System.out.println("반환값: "+returnValue);
+		
+	public void printA(JoinPoint jpoint, Object aaaa) throws Throwable {
+		//부가 기능
+		System.out.println("부가 기능 호출 "+ jpoint.getSignature().getName());
 	}
 }
 ```
