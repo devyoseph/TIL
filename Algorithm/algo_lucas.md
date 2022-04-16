@@ -73,3 +73,56 @@ public class Solution {
 }
 ```
 
+​            
+
+백준 11402: 뤼카의 정리 + 최적화
+
+```java
+import java.util.Scanner;
+
+public class Main {
+	static int p;
+	
+  //제곱에 대한 메서드만 만든다.
+	static long power(long a, long b) {
+		if(b==1)return a%p;
+		
+		long half = power(a, b/2)%p;
+		
+		if(b%2==0)return half*half%p;
+		else return (half*half%p)*a%p;
+	}
+	public static void main(String[] args) {
+			Scanner sc=new  Scanner(System.in);
+			//Lucas Theorem
+			long n = sc.nextLong();
+			long r = sc.nextLong();
+			p = sc.nextInt();
+			long[] F;
+			long res;
+			
+			if(n%p < r%p) res = 0;
+			else if(n==r || r==0) res = 1; //같을 때 1출력
+			else if(r==1 || r==n-1) res = n%p; //1개 차이날 떄 n%p 출력 : 중요!
+			else { // 그 외는 뤼카의 정리를 이용
+				res = 1;
+				F = new long[(int)p];
+				F[0] = 1;
+				for(int i=1; i<p; i++) {
+					F[i] = F[i-1]*i%p; //팩토리얼을 재계산하지 않기위한 배열 생성
+				}
+				while(n>0 || r>0) {
+					res = res*F[(int) (n%p)]%p;
+					res = res*power(F[(int) (r%p)]*F[(int) ((n-r)%p)]%p, p-2)%p;
+					n /= p;
+					r /= p;
+				}
+			}
+				
+			System.out.println(res);
+	}
+}
+```
+
+
+
