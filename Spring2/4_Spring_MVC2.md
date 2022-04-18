@@ -185,4 +185,23 @@ public class HomeController {   // extends 로 Servlet을 상속할 필요가 �
 
 ​                                 
 
-##  
+### 파라미터 전달
+
+* JSP 의 form 에서 name="userid" 등으로 파라미터 여러 개를 전달했을 때 메소드를 만들어 name과 같은 이름으로 인자를 받아주면 그 값을 캐치해서 인자로 넣어준다.
+
+  * String인데 int로 받아도 알아서 형변환해준다.
+
+* 만약 서로 주고 받는 이름이 다르다면? `@ReqeustParam`으로 수동 설정
+
+  ```java
+  public String methodTest(@RequestParam("userid") String id){
+  }
+  ```
+
+* Dto 내부 변수에 대해 set 설정을 계속 해준다음 넣어줬지만 spring이 그것도 자동으로 해준다.
+
+  * 내부에 `setX`(대문자 시작) 메서드가 있을 때 주어지는 파라미터 이름이 x(소문자 시작)라면 자동으로 등록된다.
+    * 즉 변수들에 대해 set 메소드 매칭을 알아서 해준다.
+    * 이전 getParameterValues는 배열 안에만 가능했는데 더 개선되어 자동으로 ArrayList 등에 넣어준다.
+      *  만약 동일한 name(예를 들어 name="fruit")이 여러개인 상황이라면
+      * Dto 내부에 `private List<String> fruite`으로 변수가 선언되었다면 이 fruit리스트에 알아서 추가해준다.
