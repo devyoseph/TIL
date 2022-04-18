@@ -187,7 +187,7 @@
    * [Dependency Injection](/Spring2/3_Dependency_Injection.md)
 3. [AOP](/Spring2/AOP.md)
 4. [Spring MVC](/Spring2/4_Spring_MVC.md)
-   * [MVC 구현](/Spring2/4_Spring_MVC2.md)
+   * [ MVC 초기설정 / 실행순서 / 구현 ](/Spring2/4_Spring_MVC2.md)
 
 ###          
 
