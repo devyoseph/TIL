@@ -111,20 +111,106 @@
 ### 관용 표현들
 
 1. 짝수 2n (간혹 4n, 4n+2)
+
 2. 홀수 2n + 1 (간혹 4n+1, 4n+3)
+
 3. 정사각형 마방진 = 짝수 마방진 + 홀수 마방진 = 짝수(4n 마방진 + 4n+2 마방진) + 2n+1 ghftn akqkdwls
+
 4. n(n+1)(n+2) 또는 (n-1)n(n+1), 연속인 세 수는 6의 배수이다.
+
 5. [n] 가우스 n을 넘지 않는 최대 정수
+
 6. 9%2 = 9-[9/2]*2 = 1
+
 7. [log n] 자릿수 구할 때: [log 123] = 2
+
 8. [9/2] → 9/2 프로그래밍 정수 연산, (int) 캐스팅 연산 (int) 루트 n
+
+   ```java
+   import java.util.Scanner;
+   
+   public class Solution {
+   	public static void main(String[] args) {
+   		Scanner sc=new  Scanner(System.in);
+   		int T = sc.nextInt();
+   		for(int t=1; t<=T; t++) {
+   	
+   			long n = sc.nextLong();
+   			long k = 0;
+   			while(n!=2) {
+           
+           //이게 핵심 
+   				if(Math.abs(Math.sqrt(n) - (long)Math.sqrt(n)) < 0.0000001) {
+   					n = (long) Math.sqrt(n);
+   					k++;
+   				}else {
+   					k += (long) Math.pow((long)Math.sqrt(n)+1,2) - n;
+   					n = (long) Math.pow((long)Math.sqrt(n)+1,2);
+   					
+   				}
+   				if(n==1) {
+   					k++;
+   					break;
+   				}
+   			}
+   				
+   			System.out.println("#"+t+" "+k);
+   		}
+   	}
+   }
+   ```
+
+   
+
 9. 완전수(자신을 제외한 약수의 합이 자신이 되는 수)
+
 10. 친화수(A 자신을 제외한 약수의 총합이 B가 되고, B자신을 제외한 약수의 총합이 A가 되는 수)
+
 11. 스미스 (각 자리의 합이 소인수 분해 했을 때의 각자리수의 합과 같은 수) : 22 = 2*11 → 2 + 2 = 2 + 1 + 1
+
 12. 약수 - sw8567
+
+    ```java
+    import java.util.Scanner;
+    
+    //소수와 비슷하게 풀이
+    public class Solution {
+    	public static void main(String[] args) {
+    		Scanner sc=new  Scanner(System.in);
+    		int[] dp = new int[100001];
+    		for(int i=2; i<50001; i++) {
+    			for(int j=1; i*j<100001; j++) {
+    				dp[i*j] ++;
+    			}
+    		}
+    		int max = 0;
+    		int idx = 1;
+    		int[] MAX = new int[100001];
+    		for(int i=1; i<100001; i++) {
+    			if(max < dp[i]) {
+    				max = dp[i];
+    				idx = i;
+    			}else if(max == dp[i]) {
+    				idx =  i;
+    			}
+    				MAX[i] = idx;
+    		}
+    		int T = sc.nextInt();
+    		for(int t=1; t<=T; t++) {
+    			System.out.print("#"+t+" "+MAX[sc.nextInt()]+"\n");
+    		}
+    	}
+    }
+    ```
+
+    
+
 13. 제곱
+
 14. 소수: 에라토스테네스의 체
+
 15. 배수, 진수 - 7193, 12369
+
 16. 소인수 분해 - sw12005 서로소 XOR
 
 ​          
