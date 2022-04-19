@@ -188,6 +188,7 @@
 3. [AOP](/Spring2/AOP.md)
 4. [Spring MVC](/Spring2/4_Spring_MVC.md)
    * [ MVC 초기설정 / 실행순서 / 구현 ](/Spring2/4_Spring_MVC2.md)
+   * [ 실행 순서 ](/Spring2/spring_operate.md)
 
 ###          
 

@@ -205,3 +205,72 @@ public class HomeController {   // extends 로 Servlet을 상속할 필요가 �
     * 이전 getParameterValues는 배열 안에만 가능했는데 더 개선되어 자동으로 ArrayList 등에 넣어준다.
       *  만약 동일한 name(예를 들어 name="fruit")이 여러개인 상황이라면
       * Dto 내부에 `private List<String> fruite`으로 변수가 선언되었다면 이 fruit리스트에 알아서 추가해준다.
+
+​                 
+
+### setCharacterEncoding
+
+* post 방식에서 넘길 때 한글이 깨지지 않도록 해야하는데 filter로 일괄적용해준다.
+
+```xml
+	<filter>
+	    <filter-name>encodingFilter</filter-name>
+	    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+	    <init-param>
+	      <param-name>encoding</param-name>
+	      <param-value>UTF-8</param-value>
+	    </init-param>
+	 </filter>
+```
+
+​         
+
+### 폴더 URL 경로 매핑
+
+* 사용자에게 정확한 주소를 주지않고 내부에서 mapping으로 처리할 수 있다.
+
+* Servlet-context.xml 설정
+
+  ```xml
+  	<resources mapping="/img/**" location="/resources/img/"/>
+  	<resources mapping="/css/**" location="/resources/css/"/>
+  ```
+
+* 주의: <%@ include ~> 는 WEB/INF부터 시작
+
+  ```jsp
+  <%@ include file="/WEB-INF/~"> 
+  ```
+
+  ​       
+
+### 경로매핑에 실패했을 때
+
+```xml
+<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<!-- DispatcherServlet이 해당 mapping을 찾지 못할 경우 NoHandlerFoundException를 throw하게 설정 -->
+		<init-param>
+			<param-name>throwExceptionIfNoHandlerFound</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+```
+
+* 원래 404 에러가 터져야하지만 이것을 Exception으로 감싸서 던져준다.
+
+​        
+
+### 오류 발생
+
+```java
+@ExceptionHandler(Exeption.class)
+```
+
+* 404는 원래 에러지만 xml에서 Exception으로 포장해서 던져주는 설정을 했기 때문에 예외로 받아준다.
