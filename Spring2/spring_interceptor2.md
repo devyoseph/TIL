@@ -172,19 +172,25 @@ public class AInterceptor implements HandlerInterceptor{
 
 <img src="spring_interceptor2.assets/image-20220420133922103.png" alt="image-20220420133922103" style="zoom:67%;" />
 
+* 실제 결과
+
+  <img src="spring_interceptor2.assets/image-20220420135627816.png" alt="image-20220420135627816" style="zoom: 33%;" />
+
 * xml 등록 예시
 
   ```xml
-  	<interceptors>
-  		<interceptor>
-  			<mapping path="/*"/>
-  			<beans:ref bean="ainterceptor"/>
-  		</interceptor>
-  		<interceptor>
-  			<mapping path="/*"/>
-  			<bean class="com.sofia.sample.BInterceptor"/>
-  		</interceptor>
-  	</interceptors>
+  <beans:bean id="ainterceptor" class="com.sofia.sample.AInterceptor" />	
+  
+  <interceptors>
+    <interceptor>
+      <mapping path="/*"/>
+      <beans:ref bean="ainterceptor"/>
+    </interceptor>
+    <interceptor>
+      <mapping path="/*"/>
+      <beans:bean class="com.sofia.sample.BInterceptor"/>
+    </interceptor>
+  </interceptors>
   ```
 
   
