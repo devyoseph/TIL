@@ -1,6 +1,8 @@
 # Listener와 Filter 사용하기
 
 > 면접용: Java 응용 프로그램은 Servlet, Listener, Filter가 있고 Filter를 Interceptor로 대체 가능하다.
+>
+> Filter: Client가 던진 파라미터를 서블릿으로 들어가기 전에 조정해주거나 등등의 작업을 할 수 있다.
 
 ​           
 
