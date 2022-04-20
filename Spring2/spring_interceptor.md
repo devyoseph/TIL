@@ -412,3 +412,39 @@ class MyRequestWrapper extends HttpServletRequestWrapper{
 
   
 
+​                
+
+### init-param 활용하기
+
+* xml 파일에서 서블릿 등록 단계에서 파라미터를 생성해줄 수 있다.
+
+  ```xml
+  <filter>
+  	<filter-name>bfilter</filter-name>
+  	<filter-class>com.sofia.hello.BFilter</filter-class>
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>utf-8</param-value>
+  	</init-param>
+  </filter>
+  ```
+
+* 적용 예시
+
+  ```java
+  	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+  		System.out.println("BFilter 사전작업");
+  		
+  //request에 미리 생성된 <init-param>의 파라미터를 가져와 세팅해준다.
+  ((HttpServletRequest)request).setCharacterEncoding(request.getParameter("encoding"));
+  //모든 서블릿에 한글 깨짐 방지 적용
+      
+      MyRequestWrapper requestWrapper = new MyRequestWrapper((HttpServletRequest) request);
+  		chain.doFilter(requestWrapper, response);
+  		System.out.println("BFilter 사후작업");
+  	}
+  ```
+
+  
+
+  
