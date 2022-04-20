@@ -11,7 +11,7 @@
 * eclipse - Dynamic Web Project로 생성
   * 생성시 xml 파일 생성에 check 표시
 
-​          
+​               
 
 ### web.xml
 
@@ -300,38 +300,38 @@ public class BFilter implements Filter {
 
   <img src="spring_interceptor.assets/image-20220420105923617.png" alt="image-20220420105923617" style="zoom:33%;" />
 
-  ​              
+  ​                   
 
-  ### Filter에 MRequestWrapper 클래스 추가
+### Filter에 MRequestWrapper 클래스 추가
 
-  * 다음과 같은 클래스를 Filter class main 안에 만들 수 있다.
+* 다음과 같은 클래스를 Filter class main 안에 만들 수 있다.
 
-  ```java
-  class MyRequestWrapper extends HttpServletRequestWrapper{
-  
-  		private HttpServletRequest request = null;
-  
-  		public MyRequestWrapper(HttpServletRequest request) {
-  			super(request);
-  			this.request  = request; //생성자 단계에서 부모 생성자 사용 및 인스턴스 초기화
-  		}
-  
-  		@Override   //getParameter를 재정의해서 특정 URL에 접근하기 전 파라미터 처리를 해줄 수 있음
-  		public String getParameter(String name) {
-        //만약 userid 파라미터가 비어있다면 기본값 설정해주는 작업이 가능
-  			if("userid".equals(name)) {
-  				String data = super.getParameter(name);
-  				if(data == null) {
-  					return "sofia";
-  				}else {
-  					return data;
-  				}
-  			}
-  			return super.getParameter(name);
-  		}
-  		
-  	}
-  ```
+```java
+class MyRequestWrapper extends HttpServletRequestWrapper{
+
+		private HttpServletRequest request = null;
+
+		public MyRequestWrapper(HttpServletRequest request) {
+			super(request);
+			this.request  = request; //생성자 단계에서 부모 생성자 사용 및 인스턴스 초기화
+		}
+
+		@Override   //getParameter를 재정의해서 특정 URL에 접근하기 전 파라미터 처리를 해줄 수 있음
+		public String getParameter(String name) {
+      //만약 userid 파라미터가 비어있다면 기본값 설정해주는 작업이 가능
+			if("userid".equals(name)) {
+				String data = super.getParameter(name);
+				if(data == null) {
+					return "sofia";
+				}else {
+					return data;
+				}
+			}
+			return super.getParameter(name);
+		}
+		
+	}
+```
 
 * 인스턴스로 생성
 
