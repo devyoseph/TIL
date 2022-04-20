@@ -106,7 +106,7 @@ public class BServlet extends HttpServlet {
 * Life Cycle, attributes에 대한 변화 등을 리스너로 관리할 수 있다.(예제는 Life Cycle만 다룬다.)
 
 ```java
-package com.ssafy.hello;
+package com.sofia.hello;
 
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
@@ -196,15 +196,16 @@ public class AFilter implements Filter {
 	//자세히보면 인자의 타입이 HttpServletRequest의 부모임을 알 수 있다.
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		System.out.println("AFilter 사전 작업");
-    //부모 타입이지만 다른 작업도 가능
 		HttpServletRequest req = (HttpServletRequest)request;
+		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession(false);
 		//getSession() 메서드를 적용할 때 default로 세션이 생성됨을 주의
 		
-    //xml 설정에서는 aaa에 매핑된 filter로 등록한다.
-    //aaa에 들어가기 전 session이 없다면 hello.jsp로 바로 보내는 기능도 할 수 있다.
+		// filter 단계에서 한글 깨짐을 방지할 수 있다.
+		res.setContentType("text/html; charset=UTF-8");
+		
 		if(session == null) {
-			HttpServletResponse res = (HttpServletResponse) response;
+			res = (HttpServletResponse) response;
 			res.sendRedirect("hello.jsp");
 			return;
 		}
@@ -238,5 +239,174 @@ public class AFilter implements Filter {
 </filter-mapping>
 ```
 
-​           
+​            
+
+### 필터 여러개 적용
+
+* Filter 를 하나 더 생성한다.
+
+```xml
+<filter>
+	<filter-name>bfilter</filter-name>
+	<filter-class>com.sofia.hello.BFilter</filter-class>
+</filter>
+
+<filter-mapping>
+	<filter-name>bfilter</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+```
+
+```java
+package com.sofia.hello;
+
+import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+
+//@WebFilter("/BFilter")
+public class BFilter implements Filter {
+
+	public void destroy() {
+	}
+
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		System.out.println("BFilter 사전작업");
+		chain.doFilter(request, response);
+		System.out.println("BFilter 사후작업");
+	}
+
+	public void init(FilterConfig fConfig) throws ServletException {
+	}
+
+}
+
+```
+
+* 결과
+
+  <img src="spring_interceptor.assets/image-20220420105743152.png" alt="image-20220420105743152" style="zoom:33%;" />
+
+* 서블릿 매핑 순서를 바꾸면 filter 동작 순서를 바꿀 수 있다.(서블릿 등록 순서는 상관X)
+
+  <img src="spring_interceptor.assets/image-20220420110028179.png" alt="image-20220420110028179" style="zoom: 33%;" />
+
+  <img src="spring_interceptor.assets/image-20220420105923617.png" alt="image-20220420105923617" style="zoom:33%;" />
+
+  ​              
+
+  ### Filter에 MRequestWrapper 클래스 추가
+
+  * 다음과 같은 클래스를 Filter class main 안에 만들 수 있다.
+
+  ```java
+  class MyRequestWrapper extends HttpServletRequestWrapper{
+  
+  		private HttpServletRequest request = null;
+  
+  		public MyRequestWrapper(HttpServletRequest request) {
+  			super(request);
+  			this.request  = request; //생성자 단계에서 부모 생성자 사용 및 인스턴스 초기화
+  		}
+  
+  		@Override   //getParameter를 재정의해서 특정 URL에 접근하기 전 파라미터 처리를 해줄 수 있음
+  		public String getParameter(String name) {
+        //만약 userid 파라미터가 비어있다면 기본값 설정해주는 작업이 가능
+  			if("userid".equals(name)) {
+  				String data = super.getParameter(name);
+  				if(data == null) {
+  					return "sofia";
+  				}else {
+  					return data;
+  				}
+  			}
+  			return super.getParameter(name);
+  		}
+  		
+  	}
+  ```
+
+* 인스턴스로 생성
+
+  ```java
+  	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+  		System.out.println("BFilter 사전작업");
+      
+      //MyRequestWrapper 클래스로 인스턴스 생성
+  		MyRequestWrapper requestWrapper = new MyRequestWrapper((HttpServletRequest) request);
+      
+      //filter에 집어넣음
+  		chain.doFilter(requestWrapper, response);
+  		System.out.println("BFilter 사후작업");
+  	}
+  ```
+
+* 전체코드
+
+  ```java
+  package com.sofia.hello;
+  
+  import java.io.IOException;
+  import javax.servlet.Filter;
+  import javax.servlet.FilterChain;
+  import javax.servlet.FilterConfig;
+  import javax.servlet.ServletException;
+  import javax.servlet.ServletRequest;
+  import javax.servlet.ServletResponse;
+  import javax.servlet.annotation.WebFilter;
+  import javax.servlet.http.HttpServletRequest;
+  import javax.servlet.http.HttpServletRequestWrapper;
+  
+  //@WebFilter("/BFilter")
+  public class BFilter implements Filter {
+  
+  	public void destroy() {
+  	}
+  
+  	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+  		System.out.println("BFilter 사전작업");
+  		MyRequestWrapper requestWrapper = new MyRequestWrapper((HttpServletRequest) request);
+  		chain.doFilter(requestWrapper, response);
+  		System.out.println("BFilter 사후작업");
+  	}
+  	
+  	
+  	class MyRequestWrapper extends HttpServletRequestWrapper{
+  
+  		private HttpServletRequest request = null;
+  
+  		public MyRequestWrapper(HttpServletRequest request) {
+  			super(request);
+  			this.request  = request;
+  		}
+  
+  		@Override
+  		public String getParameter(String name) {
+  			if("userid".equals(name)) {
+  				String data = super.getParameter(name);
+  				if(data == null) {
+  					return "sofia";
+  				}else {
+  					return data;
+  				}
+  			}
+  			return super.getParameter(name);
+  		}
+  		
+  	}
+  	
+  	
+  	public void init(FilterConfig fConfig) throws ServletException {
+  	}
+  
+  }
+  
+  ```
+
+  
 
