@@ -274,3 +274,13 @@ public class HomeController {   // extends 로 Servlet을 상속할 필요가 �
 ```
 
 * 404는 원래 에러지만 xml에서 Exception으로 포장해서 던져주는 설정을 했기 때문에 예외로 받아준다.
+
+​                
+
+### sendRedirect
+
+```java
+return "redirect:/hello"
+```
+
+* 이렇게 적으면 알아서 Root Context에 붙여서 보내준다. 
