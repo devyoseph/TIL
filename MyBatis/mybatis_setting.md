@@ -25,7 +25,7 @@
 
 ​            
 
-​              
+​                          
 
 ### 1. mybatis-config.xml
 
@@ -133,8 +133,6 @@ public class SqlMapConfig {
 
 ​               
 
-
-
 ### 5. mapping을 위한 xml 생성
 
 * 위 DOCTYPE이 mapper.dtd인 것을 가져와야 작동함을 주의한다.(config와 구분한다)
@@ -187,11 +185,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</typeAliases>
 ```
 
-​            
+​             
 
 ### 7. Alias를 사용한 매핑
 
 > 원래 prepareStatement에서의 ? 부분을 #{getter 메소드 이름 }으로 바로 넣어줄 수 있다.
+>
+> ${ } 와 #{ } 를 이용한 **동적 SQL문**을 사용할 수 있다.
 
 * Alias를 사용하지 않으면 다음과 같다.
 
@@ -231,7 +231,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	}
 ```
 
-​                  
+​                                  
 
 ### 9. SqlSession Select 문 사용하기
 
@@ -275,7 +275,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   ```
 
-​             
+​                               
 
 ### 10. resultType
 
@@ -288,6 +288,115 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where userid = #{userId} and userpwd = #{userPwd}
 </select>
 ```
+
+​                   
+
+### 11. resultMap
+
+> 데이터베이스를 조인해서 만들 때마다 Dto를 만들 수는 없다.
+> 이를 위해 xml 단계에서 \<resultMap>으로 만들 수 있다.
+
+```xml
+<resultMap type="guestbook" id="articleList">
+		<result column="articleno" property="articleNo"/>
+		<result column="userid" property="userId"/>
+		<result column="username" property="userName"/>
+		<result column="subject" property="subject"/>
+		<result column="content" property="content"/>
+		<result column="regtime" property="regTime"/>
+		<collection property="fileInfos" column="articleno=articleno" javaType="list" ofType="fileinfo" select="fileInfoList"/>
+	</resultMap>
+```
+
+* javaType: list 형식으로 저장할 수 있도록 한다.
+
+  ​               
+
+#### - join 문을 사용
+
+```xml
+<select id="listArticle" parameterType="map" resultMap="articleList">
+		select g.articleno, g.userid, g.subject, g.content, g.regtime, m.username
+		from guestbook g, ssafy_member m
+		where g.userid = m.userid
+		<include refid="search"></include>
+		order by g.articleno desc
+		limit #{start}, #{spp}
+	</select>
+```
+
+​              
+
+### 12. 똑같은 코드를 재활용
+
+* \<sql id=" ">로 지정
+
+```xml
+<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == subject">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != subject">
+				and ${key} = #{word}
+			</if>
+		</if>
+</sql>
+```
+
+* 활용: \<include refid=" ">
+  * API: \<sql> 내부문이 AND나 OR로 시작해도 \<where> 안에 집어넣으면 자동으로 사라지고 where을 붙여준다.
+
+```xml
+<select id="getTotalCount" parameterType="map" resultType="int">
+		select count(articleno)
+		from guestbook
+		<where>
+			<include refid="search"></include>
+		</where>
+</select>
+```
+
+​                
+
+### 13. ${  } 와 #{  }
+
+* #{ }: PreparedStatement 의 프로퍼티로 값을 세팅해주는 것
+* ${ }: 컬럼명들이 저장되어있는 곳
+
+```xml
+<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == subject"> <!-- key의 컬럼명이 subject 라면-->
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != subject"> <!-- key의 컬럼명이 subject 아니면: id거나 name-->
+				and ${key} = #{word}
+			</if>
+		</if>
+</sql>
+```
+
+​                 
+
+### 14. \<selectKey> 태그
+
+> insert를 진행하면 리턴값은 정수기 때문에 잘 들어갔는지 확인할 수 없고 그 들어간 값의 id 번호(auto_increment)를 알 수 없다. 그래서 \<insert> 태그 안에 다시 조회할 수 있는 \<selectKey> 태그를 사용한다.
+
+* \<insert>  문 안에서 사용할 수 있다.
+
+```xml
+	<insert id="registerArticle" parameterType="guestbook">
+		insert into guestbook (userid, subject, content, regtime)
+		values (#{userId}, #{subject}, #{content}, now())
+		<selectKey resultType="int" keyProperty="articleNo" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+```
+
+* order에 따라 before / after로 나뉜다
+* 조회한 내용을 반환하는 타입(**parameterType**)에 끼워넣어준다.
 
 
 
