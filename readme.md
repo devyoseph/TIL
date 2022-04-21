@@ -200,7 +200,7 @@
 
 1. [MyBatis 특징](/MyBatis/mybatis_basic.md)
 2. [MyBatis - Java 세팅](/MyBatis/mybatis_setting.md)
-3. [MyBatis - Spring 연동][MyBatis - Java 세팅](/MyBatis/mybatis_spring.md)
+3. [MyBatis - Spring 연동](/MyBatis/mybatis_spring.md)
 
 ​                
 
