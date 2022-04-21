@@ -409,5 +409,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 * order에 따라 before / after로 나뉜다
 * 조회한 내용을 반환하는 타입(**parameterType**)에 끼워넣어준다.
 
+​                   
 
+### 15. 아이디, 게시판 id 부여
+
+* AutoIncrement 를 사용하지 않는다
+  * 회원탈퇴한 회원이나 게시판 삭제된 것이 롤백 시 새로 생긴 것과 충돌이 생길 수 있다. 
+* 데이터를 생성하기 전(before)에 select 문으로 조회해서 최대번호에 1을 더한(max+1)값으로 생성한다.
 
