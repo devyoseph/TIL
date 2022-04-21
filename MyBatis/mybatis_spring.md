@@ -10,7 +10,7 @@
 * 이것을 Spring에 넘겨야 한다.
 
 ```java
-package com.ssafy.util;
+package com.sofia.util;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -56,7 +56,7 @@ public class SqlMapConfig {
 
 ```xml
 	<bean id="ds" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName" value="java:comp/env/jdbc/ssafy"></property>
+		<property name="jndiName" value="java:comp/env/jdbc/sofia"></property>
 	</bean>
 	
 	
@@ -64,7 +64,7 @@ public class SqlMapConfig {
 		<property name="dataSource" ref="ds"></property>
 		<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
 	<!-- <property name="configLocation" value="classpath:mybatis-config.xml"></property> -->
-		<property name="typeAliasesPackage" value="com.ssafy.guestbook.model"></property>
+		<property name="typeAliasesPackage" value="com.sofia.guestbook.model"></property>
 	</bean>
 ```
 
@@ -96,7 +96,7 @@ public class SqlMapConfig {
 
 ```xml
 	<bean id="ds" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName" value="java:comp/env/jdbc/ssafy"></property>
+		<property name="jndiName" value="java:comp/env/jdbc/sofia"></property>
 	</bean>
 	
 	
@@ -104,7 +104,7 @@ public class SqlMapConfig {
 		<property name="dataSource" ref="ds"></property>
 		<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
 <!-- <property name="configLocation" value="classpath:mybatis-config.xml"></property> -->
-		<property name="typeAliasesPackage" value="com.ssafy.guestbook.model"></property>
+		<property name="typeAliasesPackage" value="com.sofia.guestbook.model"></property>
 	</bean>
 	
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
