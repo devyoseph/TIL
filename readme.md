@@ -196,9 +196,12 @@
 
 ​                 
 
+### MyBatis
 
+1. [MyBatis 특징](/MyBatis/mybatis_basic.md)
+2. [MyBatis - Spring 연동](/MyBatis/mybatis_setting.md)
 
-###                                                 
+​                
 
 ### Spring [inflearn]
 

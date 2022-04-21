@@ -873,6 +873,11 @@
 | NAT                           | 4. Newwork     | network address translation,<br />라우터가 담당: Subnet 주소를 하나로 할당<br />local network 에서의 주소는 독립적이며 자유로운 변경 가능 | IP주소 효율적 사용<br />CIDR (classless)<br />DHCP<br />source IP address<br />UPnP |
 | ICMP                          | 4. Newwork     | Internet control message protocol,<br />hosts & routers to communicate network level | Traceroute<br />UDP segments                                 |
 | IPv6                          | 4. Newwork     |                                                              |                                                              |
+| ARP                           |                | Address Resolution Protocol, ARP(주소 결정 프로토콜)<br />네트워크 상에서 IP 주소를 물리적 네트워크 주소로 대응 시키기 위해 사용되는 프로토콜<br />MAC 주소를 이용해 대입한다.(모르는 경우 ARP broadcast: 다른 호스트가 일단 받아봄) | MMU(논리 - 물리 변환)<br />TLB(ARP cache랑 비슷)<br />RARP<br />FF:FF:FF:FF |
+| Ethernet Switching            |                | ARP를 이용해 같은 네트워크 내에서 broadcast 형식으로 MAC 주소를 찾아냄 | Switch는 MAC table은 가지지만 IP Table은 없다.               |
+| 스위치의 5가지 기능           |                | Learning: MAC 주소 학습, 저장, 모든 장치가 MAC table을 관리하기 때문에 기록된 그것들을 거슬러 올라가서 다시 찾을 수 있음<br />Flooding: 수신 링크 제외 나머지 링크로 복사 전송(broadcasting, 같은네트워크 내부만 전송)<br />Forwarding(목적지 맥주소를 알고 그대로 목적지 포트로 프레임 내보내기)<br />Filtering(나머지 포트는 필터링, 프레임 전송 X)<br />Aging: 맥주소에 저장된 주소 일정시간 지나면 삭제 |                                                              |
+| IP Routing                    |                | End point, host(시작)부터 스위치까지 도달<br />라우터: 라우팅 테이블 이용 |                                                              |
+|                               |                |                                                              |                                                              |
 
 
 

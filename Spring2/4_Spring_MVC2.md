@@ -279,8 +279,10 @@ public class HomeController {   // extends 로 Servlet을 상속할 필요가 �
 
 ### sendRedirect
 
+* forward와 달리 jsp 확장자를 붙여주어야한다.
+
 ```java
-return "redirect:/hello"
+return "redirect:/hello.jsp"
 ```
 
 * 이렇게 적으면 알아서 Root Context에 붙여서 보내준다. 
