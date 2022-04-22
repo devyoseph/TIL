@@ -1,6 +1,16 @@
 # Spring MVC Legacy Annotation 방식
 
-> xml 내부에서는 & 을 `&amp;` 로 표현함에 주의한다.             
+> * xml 내부에서는 & 을 `&amp;` 로 표현함에 주의한다.             
+>
+> 1. DB 관련 업무
+> 2. Web 설정
+>    * pom.xml: Dependencies
+>    * context.xml: 파일에 db 접속 정보관리
+>    * root-context.xml 파일
+>      * MyBatis 설정
+>    * servlet-context.xml 파일
+>    * Controller, Service, Mapper 클래스 생성
+>    * 응용 업무 구현
 
 ​                 
 
@@ -341,4 +351,10 @@
   
   ```
 
-  
+
+​                      
+
+​                          
+
+## 3. CRUD 구현하기
+

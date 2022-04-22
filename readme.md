@@ -194,6 +194,10 @@
    4. [Interceptor](/Spring2/spring_interceptor2.md)
       * [Listener / Filter](/Spring2/spring_interceptor.md)
    5. [Filter/Interceptor/AOP 차이점](/Spring2/spring_interceptor3.md)
+4. 나만의 정리
+   1. [로그인까지 구현](/Spring2/spring_lecacy_making.md)
+   2. [세팅부터 정리](/Spring2/spring_lecacy_making2.md)
+   
 
 ​                 
 
