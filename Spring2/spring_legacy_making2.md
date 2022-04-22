@@ -447,6 +447,73 @@
      </filter-mapping>
 ```
 
+​                  
+
+#### - Exception 으로 던져주기: @ControllerAdvice
+
+* 서블릿 단계에서 오류가 나면 에러로 처리해 던져준다.
+
+```xml
+	<!-- Processes application requests -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<!-- DispatcherServlet이 해당 mapping을 찾지 못할 경우 NoHandlerFoundException를 throw하게 설정 -->
+		<init-param>
+			<param-name>throwExceptionIfNoHandlerFound</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+```
+
+* 이를 위해 Controller 단계에서 예외들을 받아준다.
+
+```java
+package com.ssafy.guestbook.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
+
+@ControllerAdvice
+public class ExceptionControllerAdvice {
+
+	private Logger logger = LoggerFactory.getLogger(ExceptionControllerAdvice.class);
+	
+	@ExceptionHandler(Exception.class)
+	public String handleException(Exception ex, Model model) {
+		logger.error("Exception 발생 : {}", ex.getMessage());
+		model.addAttribute("msg", "처리중 에러 발생!!!");
+		return "error/error";
+	}
+	
+	@ExceptionHandler(NoHandlerFoundException.class)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public String handle404(NoHandlerFoundException ex, Model model) {
+		logger.error("404 발생 : {}", "404 page not found");
+		model.addAttribute("msg", "해당 페이지를 찾을 수 없습니다!!!");
+		return "error/error";
+	}
+	
+}
+
+
+```
+
+
+
+
+
 ​                                             
 
 ​             
@@ -483,7 +550,28 @@
 
   ​       
 
-   
+
+
+#### - file up/down load 넣어주기
+
+```xml
+		<!-- fileUpload -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="UTF-8"/>
+		<beans:property name="maxUploadSize" value="52428800"/> 
+		<beans:property name="maxInMemorySize" value="1048576"/> 
+	</beans:bean>
+
+	<!-- fileDownload -->
+	<beans:bean id="fileDownLoadView" class="com.ssafy.guestbook.view.FileDownLoadView"/>
+	<beans:bean id="fileViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0" />
+	</beans:bean> 
+```
+
+
+
+​               
 
 ​                 
 
@@ -527,4 +615,354 @@ public class MainController {
 ```
 
 ​                    
+
+#### - Logger 사용하기
+
+> 팩토리 디자인 형식을 사용
+
+* LoggerFactory 가 static으로 올라와 있으므로 new를 사용하지 않고 getLogger로 가져온다.
+
+```java
+private static final Logger Logger = LoggerFactory.getLogger(MainController.class);
+```
+
+​                 
+
+#### - @ReqeustMapping: 공통 URL 사용하기
+
+```java
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/user") // 내부 메서드는 모두 공통 URL로 /user를 갖는다.
+public class MemberController {
+
+}
+```
+
+​             
+
+#### - Mapping하기
+
+> Get 방식이나 Post 방식으로 매핑합니다.
+
+```java
+@Controller
+@RequestMapping("/user")
+public class MemberController {
+	
+	@GetMapping("/login")
+	public String login() {
+		return "user/login";
+	}
+	
+	@PostMapping("/login")
+	public String index(String userId, String userPw, Model model) {
+		return "user/login";
+	}
+}
+```
+
+​              
+
+#### - form 태그에서 보낸 파라미터 인자로 받아주기
+
+* 크게 3가지 방식이 있다.
+  * String으로 각각 받아주기: MyBatis에서 SqlSession으로 넘길 때 하나만 넘어갈 수 있기 때문에 사용을 지양한다. 
+  * Dto로 받아주기(Dto 내부 setter를 자동으로 사용함)
+  * Map<, > 으로 받아주기
+
+```java
+@PostMapping("/login")
+	//public String index(String userId, String userPw, Model model) {
+	//public String index(MemberDto dto, Model model) {
+	public String index(@RequestParam Map<String, String> map, Model model) {
+		return "user/login";
+	}
+```
+
+* Map으로 받아줄 때는 setter가 설정되어있지 않기 때문에 `@RequestParam`을 명시해주어야 그곳에 넣어준다.
+
+​               
+
+​                   
+
+### 7. Service 만들고 구현하기
+
+* MemberService
+
+```java
+import java.util.Map;
+
+import com.ssafy.guestbook.model.MemberDto;
+
+public interface MemberService {
+	MemberDto login(Map<String, String> map);
+}
+```
+
+* 구현체 MemberServiceImpl: @Repository 추가
+
+```java
+import java.util.Map;
+
+import com.ssafy.guestbook.model.MemberDto;
+
+@Repository
+public class MemberServiceImpl implements MemberService {
+
+	@Override
+	public MemberDto login(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
+```
+
+​                
+
+#### - Controller에 연결
+
+```java
+@Autowired
+	private MemberService service;
+```
+
+​              
+
+#### - root-context.xml 에 만든 SqlSession 사용
+
+* bean으로 생성한 SqlSession 을 넣어준다.
+
+  ```java
+  @Repository
+  public class MemberServiceImpl implements MemberService {
+  	
+  	@Autowired 
+  	private SqlSession sqlSession;
+  	
+  	@Override
+  	public MemberDto login(Map<String, String> map) {
+  		return sqlSession.getMapper(MemberMapper.class).login(map);
+  	}
+  
+  }
+  ```
+
+  * SqlSession 내부의 getMapper를 이용해 MemberMapper.class의 메서드를 불러온다.
+
+    * Mapper는 Dao형식으로 Service의 틀을 그대로 사용한다.
+
+    ```java
+    import java.util.Map;
+    
+    import com.ssafy.guestbook.model.MemberDto;
+    
+    public interface MemberMapper {
+    
+    	MemberDto login(Map<String, String> map);
+    	
+    }
+    
+    ```
+
+  * SQL문은 MyBatis를 활용해 작성한다.
+
+​            
+
+### 8. Mybatis 를 이용해 SQL문 작성
+
+* root-context의 설정에 의해 mapper는 다음 경로에서 찾아준다.
+
+```xml
+	<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+```
+
+<img src="spring_legacy_making2.assets/image-20220422135203818.png" alt="image-20220422135203818" style="zoom:50%;" />
+
+* xml 파일을 만들고 다음 mapper dtd를 넣어주어야한다.
+
+  ```xml
+  <?xml version="1.0" encoding="UTF-8" ?>
+  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  ```
+
+* mapper를 만들고 namespace를 입력해준다.
+
+  ```xml
+  <?xml version="1.0" encoding="UTF-8" ?>
+  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  	
+  <mapper namespace="com.ssafy.guestbook.model.mapper.MemberMapper">
+  
+  </mapper>
+  ```
+
+* \<mapper> 내부에 select 문인지 insert 문인지 등을 구분해서 태그를 만든다.
+
+  * id를 이용해 메서드 이름을 적어준다.
+
+  * parameterType 을 이용해 데이터를 받아줄 때의 타입을 적어준다.
+
+  * resultType 을 이용해 반환 값을 적어준다: 원래 full 경로를 써주어야하지만 **root-context**에서 type Alias로 검색해서 만들었다
+
+    ```xml
+    	<property name="typeAliasesPackage" value="com.ssafy.guestbook.model"></property>
+    ```
+
+            ```xml
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+            	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+            	
+            <mapper namespace="com.ssafy.guestbook.model.mapper.MemberMapper">
+            	<select id="login" parameterType="map" resultType="MemberDto">
+            		select userid, username, email
+            		from ssafyweb.ssafy_member
+            		where userid = #{userId} and userpwd = #{userPwd}
+            	</select>
+            	
+            	<insert id="registerMember" parameterType="MemberDto" >
+            		insert into ssafy_member (userid, username, userpwd, email, joindate)
+            		values (#{userId}, #{userName}, #{userPwd}, #{email}, now())
+            	</insert>
+            </mapper>
+            ```
+
+​                 
+
+​                       
+
+### 9. AOP: @Component, @Aspect
+
+* 3 depth.aop 에 넣어준다.
+
+```java
+package com.ssafy.guestbook.aop;
+
+import java.util.Arrays;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
+
+@Component
+@Aspect
+public class LoggingAspect {
+
+	private Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
+
+//	@Before(value = "execution(* com.ssafy.guestbook.model..GuestBook*.*(..))")
+//	public void loggin(JoinPoint joinPoint) {
+//		logger.debug("메서드 선언부 : {} 전달 파라미터 : {}", joinPoint.getSignature(), Arrays.toString(joinPoint.getArgs()));
+//	}
+//
+//	@Around(value = "execution(* com.ssafy.guestbook.model..GuestBook*.*(..))")
+//	public Object executionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+//		StopWatch stopWatch = new StopWatch();
+//		stopWatch.start();
+//		
+//		Object proceed = joinPoint.proceed();
+//		
+//		stopWatch.stop();
+//		
+//		logger.debug("summary : {}", stopWatch.shortSummary());
+//		logger.debug("totalTime : {}", stopWatch.getTotalTimeMillis());
+//		logger.debug("pretty : {}", stopWatch.prettyPrint());
+//		
+//		return proceed;
+//	}
+//
+//	@AfterReturning(value = "execution(* com.ssafy.guestbook.model..GuestBook*.list*(..))", returning = "obj")
+//	public void afterReturningMethod(JoinPoint joinPoint, Object obj) {
+//		logger.debug("afterReturning call method : {} ", joinPoint.getSignature());
+//		logger.debug("return value : {}", obj);
+//	}
+//
+//	@AfterThrowing(value = "execution(* com.ssafy.guestbook.model..GuestBook*.list*(..))", throwing = "exception")
+//	public void afterThrowingMethod(JoinPoint joinPoint, Exception exception) {
+//		logger.debug("afterThrowing call method : {}", joinPoint.getSignature());
+//		logger.debug("exception : {}", exception);
+//	}
+//
+//	@After(value = "execution(* com.ssafy.guestbook.model..GuestBook*.list*(..))")
+//	public void afterMethod(JoinPoint joinPoint) {
+//		logger.debug("after call method : {}", joinPoint.getSignature());
+//	}
+	
+}
+
+```
+
+​              
+
+​               
+
+### 10. Transaction 넣어주기
+
+> root-context.xml 에 다음 xml 내용을 넣어준다.
+
+```xml
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="ds"/>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+```
+
+​                 
+
+​                         
+
+### 11. interceptor
+
+* 3depth.interceptor 로 만들고 클래스를 생성한다.
+  * **HandlerInterceptorAdapter (tor아님) 를 상속해서 @Override해서 사용한다.
+
+```java
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+@SuppressWarnings("deprecation")
+public class ConfirmInterceptor extends HandlerInterceptorAdapter{
+	@Override
+	public boolean preHandle ....
+}
+
+```
+
+​                      
+
+* interceptor는 web 관련이므로 **servlet-context.xml**에 넣어준다.
+
+```xml
+<beans:bean id="confirm" class="com.ssafy.interceptor.ConfirmInterceptor"/>	
+
+<interceptors>
+		<interceptor>
+			<!-- <mapping path="/guestbook/*"/> -->
+			<mapping path="/guestbook/register"/>
+			<mapping path="/guestbook/modify"/>
+			<mapping path="/guestbook/delete"/>
+			<!-- <exclude-mapping path="/user/log*"/> -->
+			
+			<!-- <beans:bean class="com.ssafy.interceptor.ConfirmInterceptor"/> -->
+			<beans:ref bean="confirm"/>
+		</interceptor>
+	</interceptors>
+```
+
+
 
