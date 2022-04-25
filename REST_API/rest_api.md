@@ -57,12 +57,12 @@
 
 ​              
 
-| 작업               |      | 기존 방식                          |            | REST 방식        | 비고   |
-| ------------------ | ---- | ---------------------------------- | ---------- | ---------------- | ------ |
-| **C**reate(Insert) | POST | /write.do?id=troment               | POST       | /blog/troment    | 글쓰기 |
-| **R**ead(Select)   | GET  | /view.do?id=troment&articleno=25   | GET        | /blog/troment/25 | 글읽기 |
-| **U**pdata(Update) | POST | /modify.do?id=troment              | **PUT**    | /blog/troment    | 글수정 |
-| **D**elete         | GET  | /delete.do?id=troment&articleno=25 | **DELETE** | /blog/troment/25 | 글삭제 |
+| 작업               | 예전방식 | 기존 방식                          | REST방식   | REST 방식        | 비고   |
+| ------------------ | -------- | ---------------------------------- | ---------- | ---------------- | ------ |
+| **C**reate(Insert) | POST     | /write.do?id=troment               | POST       | /blog/troment    | 글쓰기 |
+| **R**ead(Select)   | GET      | /view.do?id=troment&articleno=25   | GET        | /blog/troment/25 | 글읽기 |
+| **U**pdata(Update) | POST     | /modify.do?id=troment              | **PUT**    | /blog/troment    | 글수정 |
+| **D**elete         | GET      | /delete.do?id=troment&articleno=25 | **DELETE** | /blog/troment/25 | 글삭제 |
 
 * 기존의 블로그 등은 GET과 POST만으로 자원에 대한 CRUD를 처리하며, URI는 액션을 나타냈다.
 * REST로 변경할 경우 4가지 method를 모두 사용하여 CRUD를 처리하며 URI는 제어하려는 자원을 나타낸다.
