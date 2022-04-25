@@ -114,4 +114,14 @@
 | @CrossOrigin    | Ajax의 크로스 도메인 문제를 해결                      |
 | @RequestBody    | JSON 데이터를 원하는 타입으로 바인딩                  |
 
-​                         
+* RestController: 하나의 컨트롤러 자체를 Rest 방식을 사용하는 것으로 명시
+
+* Request/Response Body: JSON 타입을 바인딩, 데이터 전달할 때 사용
+
+* PathVariable: URL 내 값을 추출할 수 있다
+
+  ```
+  @PathVariable("/blog/{id}")
+  ```
+
+* Cross Origin: 특정 Ajax만 접속할 수 있도록 한다
