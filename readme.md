@@ -199,6 +199,15 @@
    2. [세팅부터 정리](/Spring2/spring_legacy_making2.md)
    
 
+​            
+
+### Spring Boot
+
+1. [Spring Boot 시작](/Boot/boot_basic.md)
+2. [방명록 만들기](/Boot/boot_practice.md)
+
+​                    
+
 ​                 
 
 ### MyBatis
@@ -213,6 +222,11 @@
 
 1. [REST API](/REST_API/rest_api.md)
 2. [REST API 실습](/REST_API/rest_api2.md)
+2. [컨트롤러 실습예제](/REST_API/rest_api_controller.md)
+
+​              
+
+
 
 ### Spring [inflearn]
 
