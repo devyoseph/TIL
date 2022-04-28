@@ -56,7 +56,10 @@
 
 * SwaggerConfiguration.java
 
-  > http://localhost/swagger-ui/index.html 로 접속해 2 버전으로 접속할 수 있다.
+  > http://localhost/{context-path}/swagger-ui/index.html 로 접속해 3 버전으로 접속할 수 있다.
+  >
+  > (2 버전: https://localhost/{context-path}/swagger-ui.html )
+  > Context-path 부분이 없으면 생략
 
   ```java
   @Configuration
