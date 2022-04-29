@@ -174,24 +174,33 @@
 >
 > [ ant 문법 ]
 >
+> * **ant 문법에서 path는 regex**와 다르다. 
 > * 다음과 같이 쓰지 않도록 주의한다.(루트가 없어서 인식이 안되는 경우)
 >
 > ```
 > .paths(PathSelectors.ant("**"))
 > ```
 >
-> * 다음과 같이 쓰지 않도록 주의한다.(regex 문법 형식 사용X)
+> * 다음과 같이 쓰지 않도록 주의한다.(regex 문법 형식 중 `/*.` 사용X)
 >
 > ```
-> .paths(PathSelectors.ant("userapi/*."))
+> .paths(PathSelectors.ant("root/*.")) //안된다.
 > ```
+>
+> * 웬만하면 `**`을 사용하도록 한다.
+>
+> ```
+> .paths(PathSelectors.ant("root/**")) //된다.
+> ```
+>
+> ​              
 >
 > [regex 문법]
 >
 > * ant문법과 조금 다르기 때문에 잘 습득 후 사용한다.
 >
 > ```
-> .paths(regex("/.*")).build()
+> .paths(regex("/.*")).build()   //regex문법은 된다.
 > ```
 >
 > ​                
