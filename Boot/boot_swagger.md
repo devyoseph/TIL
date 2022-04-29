@@ -163,3 +163,45 @@
 
   <img src="boot_swagger.assets/image-20220428150411263.png" alt="image-20220428150411263" style="zoom:50%;" />
 
+​           
+
+### swagger path 설정
+
+> 주의: /root 를 기준으로 탐색해주어야 한다.
+> 스프링 부트: 포트번호로 띄우기 때문에 root라는 개념이 없어서 써줄 필요 없지만
+> spring MVC(레거시): 얘는 root를 기준으로 움직이기 때문에 앞에 root를 명시한다.
+> regex문법과 ant 문법은 다르다.
+>
+> [ ant 문법 ]
+>
+> * 다음과 같이 쓰지 않도록 주의한다.(루트가 없어서 인식이 안되는 경우)
+>
+> ```
+> .paths(PathSelectors.ant("**"))
+> ```
+>
+> * 다음과 같이 쓰지 않도록 주의한다.(regex 문법 형식 사용X)
+>
+> ```
+> .paths(PathSelectors.ant("userapi/*."))
+> ```
+>
+> [regex 문법]
+>
+> * ant문법과 조금 다르기 때문에 잘 습득 후 사용한다.
+>
+> ```
+> .paths(regex("/.*")).build()
+> ```
+>
+> ​                
+
+```java
+return new Docket(DocumentationType.SWAGGER_2) // Swagger 2.0 기반의 문서 작성
+				.apiInfo(apiInfo) // 문서에 대한 정보를 설정한다.
+				.select() // ApiSelectorBuilder를 반환하며 상세한 설정 처리
+				.apis(RequestHandlerSelectors.basePackage("com.site.home.controller"))// 대상으로하는 api 설정
+				.paths(PathSelectors.ant("/home/**")) // controller에서 swagger를 지정할 대상 path 설정
+				.build(); // Docket 객체 생성
+```
+
