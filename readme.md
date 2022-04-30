@@ -197,8 +197,8 @@
 4. 나만의 정리
    1. [로그인까지 구현](/Spring2/spring_lecacy_making.md)
    2. [세팅부터 정리](/Spring2/spring_legacy_making2.md)
-   
 6. [환경세팅 정리](/Spring2/spring_setting.md)
+6. [흐름 정리](/Boot/spring_flow.md)
 
 ​                   
 
