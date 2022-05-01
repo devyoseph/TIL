@@ -118,25 +118,25 @@
 
 * AspectJ 표현 적용 예시
 
-  | 사용                                              | 설명                                            |
-  | ------------------------------------------------- | ----------------------------------------------- |
-  | execution(public * *(..))                         | public 메서드 선택                              |
-  | execution(* set*(..))                             | 이름이 set으로 시작하는 모든 메서드             |
-  | execution(* get*(..))                             | 이름이 get으로 시작하는 모든 메서드             |
-  | execution(* main(..))                             | 이름이 main인 메서드                            |
-  | execution(* com.sofia..(..))                      | com.sofia 패키지에 있는 클래스의 모든 메서드    |
-  | execution(* com.sofia.prj.model.UserService(..))  | UserService의 모든 메서드                       |
-  | execution(* com.sofia.prj.model.UserService+(..)) | UserService를 상속받은 모든 클래스              |
-  | execution(* com.sofia.prj.model.service..(..))    | Service 패키지와 하위 패키지의 모든 메서드 실행 |
+  | 사용                                             | 설명                                            |
+  | ------------------------------------------------ | ----------------------------------------------- |
+  | execution(public * *(..))                        | public 메서드 선택                              |
+  | execution(* set*(..))                            | 이름이 set으로 시작하는 모든 메서드             |
+  | execution(* get*(..))                            | 이름이 get으로 시작하는 모든 메서드             |
+  | execution(* main(..))                            | 이름이 main인 메서드                            |
+  | execution(* com.site..(..))                      | com.site 패키지에 있는 클래스의 모든 메서드     |
+  | execution(* com.site.prj.model.UserService(..))  | UserService의 모든 메서드                       |
+  | execution(* com.site.prj.model.UserService+(..)) | UserService를 상속받은 모든 클래스              |
+  | execution(* com.site.prj.model.service..(..))    | Service 패키지와 하위 패키지의 모든 메서드 실행 |
 
 ​         
 
 ### API 클래스
 
-| 사용                 | 주요 메서드                                                  |
-| -------------------- | ------------------------------------------------------------ |
-| JoinPoint            | Object getTarget()<br />핵심기능 클래스 객체<br />Signature getSignature()<br />핵심 기능 클래스의 메서드 |
-| ProceedingJointPoint | Signature getSignature()<br />핵심기능 클래스의 메서드<br />proceed()<br />핵심기능 클래스의 메서드 실행 |
+| 사용                | 주요 메서드                                                  |
+| ------------------- | ------------------------------------------------------------ |
+| JoinPoint           | Object getTarget()<br />핵심기능 클래스 객체<br />Signature getSignature()<br />핵심 기능 클래스의 메서드 |
+| ProceedingJoinPoint | Signature getSignature()<br />핵심기능 클래스의 메서드<br />proceed()<br />핵심기능 클래스의 메서드 실행 |
 
 ​                 
 
@@ -172,7 +172,7 @@
   * bean으로 연결해주기 때문에 어떤 작업도 필요없이 만들면 된다.
 
 ```java
-package com.sofia.model.aop;
+package com.site.model.aop;
 
 
 //횡단 클래스(부가적인 기능을 가지고 있는 클래스)
@@ -190,19 +190,19 @@ public class AOPAspect {
   * config/pointcut/aspect/before/**method**
 
 ```xml
-	<bean id="logAdvice" class="com.sofia.model.aop.AOPAspect"></bean> <!--class를 등록-->
+	<bean id="logAdvice" class="com.site.model.aop.AOPAspect"></bean> <!--class를 등록-->
 	<aop:config>
-		<aop:pointcut expression="execution(* com.sofia.model.service.GuestBookServiceImpl.writeArticle(..))" id="pt1"/> 
+		<aop:pointcut expression="execution(* com.site.model.service.HomeServiceImpl.writeArticle(..))" id="pt1"/> 
 		<aop:aspect id="log1" ref="logAdvice"> 
 			<aop:before pointcut-ref="pt1" method="printA"/>
 		</aop:aspect>
 	</aop:config>
 ```
 
-* JointPoint의 .getSigniture() 메서드를 통해 어떤 메서드에 적용되었는지 가져올 수 있다.
+* Joinpoint의 .getSigniture() 메서드를 통해 어떤 메서드에 적용되었는지 가져올 수 있다.
 
 ```java
-package com.sofia.model.aop;
+package com.site.model.aop;
 
 import org.aspectj.lang.JoinPoint;
 
@@ -220,9 +220,9 @@ public class AOPAspect {
 * 인자값으로 **JoinPoint가 먼저**왔다는 가정하에 반환값을 검색할 수도 있다.
 
 ```xml
-	<bean id="logAdvice" class="com.sofia.model.aop.AOPAspect"></bean>
+	<bean id="logAdvice" class="com.site.model.aop.AOPAspect"></bean>
 	<aop:config>
-		<aop:pointcut expression="execution(* com.ssafy.model.service.GuestBookServiceImpl.*Article(..))" id="pt1"/>
+		<aop:pointcut expression="execution(* com.site.model.service.HomeServiceImpl.*Article(..))" id="pt1"/>
 		<aop:aspect id="log1" ref="logAdvice">
 			<aop:after-returning returning="aaaa" pointcut-ref="pt1" method="printA"/>
 		</aop:aspect>
@@ -230,7 +230,7 @@ public class AOPAspect {
 ```
 
 ```java
-package com.sofia.model.aop;
+package com.site.model.aop;
 
 import org.aspectj.lang.JoinPoint;
 
@@ -245,7 +245,7 @@ public class AOPAspect {
 
 ​           
 
-* around 사용: around는 Jointpoint를 인자로 사용할 수 없다.
+* around 사용: around는 Joinpoint를 인자로 사용할 수 없다.
 
 ```xml
 <aop:aspect id="log1" ref="logAdvice">
@@ -256,7 +256,7 @@ public class AOPAspect {
 * void를 사용할 수 없다: 반드시 return 값을 설정해주어야 한다.
 
 ```java
-package com.sofia.model.aop;
+package com.site.model.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 
@@ -294,7 +294,7 @@ public class AOPAspect {
 * AOP 클래스에 적용하기
 
   ```java
-  package com.sofia.model.aop;
+  package com.site.model.aop;
   
   import org.aspectj.lang.ProceedingJoinPoint;
   import org.aspectj.lang.annotation.Around;
@@ -306,7 +306,7 @@ public class AOPAspect {
   @Aspect
   public class AOPAspect {
   	
-  	@Pointcut("execution(* com.sofia.model.service.GuestBookServiceImpl.*Article(..))")
+  	@Pointcut("execution(* com.site.model.service.HomeServiceImpl.*Article(..))")
   	public void pt1() {}
   	
   	@Around("pt1()")
@@ -327,7 +327,7 @@ public class AOPAspect {
 * AOP는 프록시 서버를 사용하며 **인터페이스를 구현했다**라는 전제를 두고 있다.
 
   ```java
-  GuestBookService guestBookService = context.getBean("gbService", GuestBookServiceImpl.class);
+  HomeService homeService = context.getBean("Service", HomeServiceImpl.class);
   ```
 
   * 그래서 위와 같이 구현체 Impl 클래스로 가져오면 에러가 발생한다.
@@ -339,7 +339,7 @@ public class AOPAspect {
   * 애초에 Impl을 사용하지 않고 Interface 형으로 호출
 
     ```java
-    GuestBookService guestBookService = context.getBean("gbService", GuestBookService.class);
+    HomeService homeService = context.getBean("Service", homeService.class);
     ```
 
   * **application aop 설정**
