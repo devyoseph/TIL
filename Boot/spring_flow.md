@@ -348,6 +348,60 @@
 
 ​                      
 
+### 5. SpringBoot
+
+> 이전 Spring Legacy와 차이점
+>
+> 1. 내부에 내장서버를 이미 포함하고 있다.
+> 2. WAS에 배포하지 않고 JAR 파일로 생성해 배포할 수 있다.
+
+​               
+
+
+
+#### - application.properties
+
+```
+#server setting [tomcat: server.xml]: localhost
+server.port=80
+
+#JSP Setting [view resolver: servlet-context.xml]
+spring.mvc.view.prefix=/WEB-INF/views/
+spring.mvc.view.suffix=.jsp
+
+#DataBase Setting [DataSource: root-context.xml]
+spring.datasource.driver-class=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/ssafyweb?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
+spring.datasource.username=ssafy
+spring.datasource.password=ssafy1234
+
+#MyBatis Setting [DataSource: root-context.xml]
+mybatis.type-aliases-package=com.ssafy.guestbook.model
+mybatis.mapper-locations=mapper/**/*.xml
+
+#File Upload size Setting [Servlet: servlet-context.xml]
+spring.servlet.multipart.max-file-size=5MB
+spring.servlet.multipart.max-request-size=5MB
+
+#log level Setting [Every Method: src/main/resources/log4j.xml]
+logging.level.root=info
+logging.level.com.ssafy.guestbook.controller=debug
+
+#Failed to start bean 'documentationPluginsBootstrapper'; error
+spring.mvc.pathmatch.matching-strategy=ant-path-matcher
+
+#Filter: UTF = Auto So don't need
+```
+
+* 바뀐점들
+  * File 부분
+    * multipartResolver: multipart
+    * maxUploadSize: max-file-size
+    * maxInMemorySize: max-request-size
+  * log4j = logging.level.root / logging.level.com.site.home.controller 
+
+​             
+
 
 
 ### Annotation 정리
@@ -379,9 +433,11 @@
 | @ResponseStatus   | @ResponseStatus(value= HttpStatus.NOT_FOUND)                 | 특정 HTTP 응답 신호를 보낼 수 있다.                          |
 | @Mapper           | @Mapper                                                      | Mapper 역할을 하는 클래스 지정                               |
 | @Transactional    | @Transactional(rollbackFor = Exception.class)                | DB 상으로 begin, commit을 자동으로 수행해준다.<br />예외 발생시 rollback 처리를 자동으로 해준다.<br />@Transaction으로 지정된 메서드 내부에서 하나라도 실패한 경우 실패로 간주한다.(원자성)<br />대표적 속성: rollbackFor / noRollbackFor |
-|                   |                                                              |                                                              |
-|                   |                                                              |                                                              |
-|                   |                                                              |                                                              |
+| @EnableSwagger2   |                                                              | Swagger를 사용하기 위해 설정파일에 적용                      |
+| @Api              | @Api(value="Swagger Name")                                   | Controller의 이름 명시                                       |
+| @ApiOperation     | @ApiOperation(value="설명", response=User.class)             | 설명과 반환값을 적어줄 수 있다.                              |
+| @ApiModel         | @ApiModel(value="설명", description = "xx의 정보를 나타낸다.") | DTO 등 객체에 swagger 등록                                   |
+| @ApiModelProperty | @ApiModelProperty(value="유저 이름")                         | 내부 변수 설명                                               |
 
 ​                   
 
