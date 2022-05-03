@@ -234,6 +234,7 @@
 ### [Vue](/Vue2/vue_basic.md)
 
 1. [Vue Instance](/Vue2/vue_instance.md)
+2. [Vue Interpolation](/Vue2/vue_interpolation.md)
 
 ​          
 
