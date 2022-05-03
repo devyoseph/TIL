@@ -14,7 +14,7 @@
 
 2. PSA(Portable Service Abstraction)
    1. 환경과 세부기술 변경과 관계업이 일관된 방식으로 기술 접근하게 하는 설계 원칙
-   2. 트랜잭션 추상화. OPX 추상화, 데이터 액세스의 Exception 변환 기능 등 기술 구현부와 기술 사용부를 분리
+   2. 트랜잭션 추상화. OXM 추상화, 데이터 액세스의 Exception 변환 기능 등 기술 구현부와 기술 사용부를 분리
       * ex) 데이터베이스 관계없이 트랜잭션 처리 등 가능
 
 3. IoC/DI (Inversion of Control - 제어의 반전, Dependency Injection - 의존성 주입)
@@ -406,38 +406,41 @@ spring.mvc.pathmatch.matching-strategy=ant-path-matcher
 
 ### Annotation 정리
 
-| Annotation 명     | 예시                                                         | 설명                                                         |
-| ----------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| @Component        | `@Component("memberService")`                                |                                                              |
-| @Scope            | `@Scope("singleton")`<br />`@Scope("prototype")`<br />`@Scope("request")`<br />`@Scope("response")` | 스프링 컨테이너당 하나의 인스턴스 빈 생성<br />컨테이너에 빈을 요청할 때마다 새로 생성<br />HTTP Request별로 새로운 인스턴스 생성<br />HTTP Session별로 새로운 인스턴스 생성 |
-| @Controller       | @Controller                                                  | DefaultAnnotationHandlerMapping과 <br />AnnotationHandlerAdapter를 사용 |
-| @RequestMapping   | @RequestMapping("/user")<br />@RequestMapping(value="/index" method=RequestMethod.GET) | URL을 매핑해주는 역할<br />Ant 스타일의 URI 패턴 지원: ? / * / ** |
-| @CrossOrigin      | @CrossOrigin(origins = "*", methods = {RequestMethod.GET , RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}) | Ajax의 크로스 도메인 문제를 해결                             |
-| @PathVariable     | @RequestMapping("/user/{value}")<br />@PathVariable String value, | URI 템플릿 변수에 접근할 때 사용<br />@RequestMapping에서 감싸준 {템플릿 변수}와 같은 이름이어야 한다. |
-| @RequestParam     | @RequestParam("userId") String userId<br />@RequestParam(value="userId", defaultValue="none")<br />@RequestParam(value="name", required=false) | 메서드 인자값으로 들어온 Http 요청 파라미터를 수동으로 매핑시켜준다.<br />defaultValue: 기본값<br />required: 필수 여부 |
-| @RequestHeader    | @RequestHeader(value="Accept")<br />@RequestHeader(value="Accept-Language")<br />@RequestHeader(value="Host") | value 속성을 이용해 Http 요청 헤더값을 컨트롤러 내부에 파라미터 형식으로 전달해준다. |
-| @RequestBody      | @ReqeustBody                                                 | HTTP 요청의 body 내용에 접근할 때 사용, JSON 데이터를 원하는 타입으로 바인딩 |
-| @CookieValue      | @CookieValue(value="auth", defaultValue="none" required=false) | HTTP Header 내부에 저장된 쿠키를 메서드의 인자 안에서 Annotation을 통해 잡아줄 수 있다. |
-| @ModelAttribute   | @ModelAttribute("myDto") MemberDto memberDto                 | Controller에서 파라미터를 인자와 자동매핑한다면 다시 자동으로 Model에 이 값이 담겨서 jsp에서 EL 문법으로 바로 사용할 수 있다(${memberDto.name}). 이 때 @ModelAttribute를 사용해 view로 보낼 객체 이름을 바꿀 수 있다(${myDto.name}). |
-| @RestController   | @RestController                                              | 일반적인 Controller는 문자열을 반환하면 View Resolver가 주소형식으로 만들어 보내주지만<br />RestController는 @ResponseBody 를 자동으로 붙여주어 데이터를 손쉽게 반환하도록 해준다. |
-| @ResponseBody     | @ResponseBody                                                | Http Body의 내용을 객체로 전달한다(비동기 처리).             |
-| @Service          | @Service("myService")                                        | Service Layer의 클래스에 사용                                |
-| @Repository       | @Repository                                                  | Data Access Layer의 DAO 또는 Repository 클래스에 사용<br />DataAccessException 자동변환과 같은 AOP의 적용 대상을 선정하기 위해 사용한다. |
-| @Component        | @Component                                                   | 위의 Layer 구분을 적용하기 어려운 일반적인 경우에 설정       |
-| @Autowired        | @Autowired(required=false)<br />@Qualifier("methodName")<br />@Qualifier("argName") | 멤버변수, setter, constructor, 일반 method에 사용 가능<br />required 속성을 이용해 주입하지 않고도 bean으로 생성하도록 한다.<br />@Autowired가 여러 개인 경우 @Qualifier를 통해 구분<br />@Qualifier는 생성 / 주입시 모든 경우에 사용한다<br />**타입**에 맞춰서 연결 |
-| @Resource         | @Resource(name="myDao")                                      | 멤버변수, setter에 사용 가능<br />특정 Bean이 JNDI 리소스에 대한 Injection을 필요로 하는 경우 사용권장<br />**타입**에 맞춰서 연결 |
-| @Inject           | @Inject                                                      | Spring 3.0부터 지원(@Autowired, @Resource는 2.0)<br />framework 에 종속적이지 않음<br />멤버변수, setter, constructor, 일반 method에 사용 가능<br />javax.inject-x.x.x.jar 파일 추가 필수<br />**이름**으로 연결 |
-| @Configuration    | @Configuration                                               | 초기 Spring의 java 설정 파일<br />스프링 부트의 Interceptor 설정 등을 위한 WebMvcConfiguration<br />Swagger Configuration |
-| @ControllerAdvice | @ControllerAdvice                                            | Exception이 발생했을 때 발동하는 컨트롤러                    |
-| @ExceptionHandler | @ExceptionHandler(NoHandlerFoundException.class)             | 특정 예외를 잡아서 메서드와 매핑                             |
-| @ResponseStatus   | @ResponseStatus(value= HttpStatus.NOT_FOUND)                 | 특정 HTTP 응답 신호를 보낼 수 있다.                          |
-| @Mapper           | @Mapper                                                      | Mapper 역할을 하는 클래스 지정                               |
-| @Transactional    | @Transactional(rollbackFor = Exception.class)                | DB 상으로 begin, commit을 자동으로 수행해준다.<br />예외 발생시 rollback 처리를 자동으로 해준다.<br />@Transaction으로 지정된 메서드 내부에서 하나라도 실패한 경우 실패로 간주한다.(원자성)<br />대표적 속성: rollbackFor / noRollbackFor |
-| @EnableSwagger2   |                                                              | Swagger를 사용하기 위해 설정파일에 적용                      |
-| @Api              | @Api(value="Swagger Name")                                   | Controller의 이름 명시                                       |
-| @ApiOperation     | @ApiOperation(value="설명", response=User.class)             | 설명과 반환값을 적어줄 수 있다.                              |
-| @ApiModel         | @ApiModel(value="설명", description = "xx의 정보를 나타낸다.") | DTO 등 객체에 swagger 등록                                   |
-| @ApiModelProperty | @ApiModelProperty(value="유저 이름")                         | 내부 변수 설명                                               |
+| Annotation 명                                                | 예시                                                         | 설명                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| @Component                                                   | `@Component("memberService")`                                |                                                              |
+| @Scope                                                       | `@Scope("singleton")`<br />`@Scope("prototype")`<br />`@Scope("request")`<br />`@Scope("response")` | 스프링 컨테이너당 하나의 인스턴스 빈 생성<br />컨테이너에 빈을 요청할 때마다 새로 생성<br />HTTP Request별로 새로운 인스턴스 생성<br />HTTP Session별로 새로운 인스턴스 생성 |
+| @Controller                                                  | @Controller                                                  | DefaultAnnotationHandlerMapping과 <br />AnnotationHandlerAdapter를 사용 |
+| @RequestMapping                                              | @RequestMapping("/user")<br />@RequestMapping(value="/index" method=RequestMethod.GET) | URL을 매핑해주는 역할<br />Ant 스타일의 URI 패턴 지원: ? / * / ** |
+| @CrossOrigin                                                 | @CrossOrigin(origins = "*", methods = {RequestMethod.GET , RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}) | Ajax의 크로스 도메인 문제를 해결                             |
+| @PathVariable                                                | @RequestMapping("/user/{value}")<br />@PathVariable String value, | URI 템플릿 변수에 접근할 때 사용<br />@RequestMapping에서 감싸준 {템플릿 변수}와 같은 이름이어야 한다. |
+| @RequestParam                                                | @RequestParam("userId") String userId<br />@RequestParam(value="userId", defaultValue="none")<br />@RequestParam(value="name", required=false) | 메서드 인자값으로 들어온 Http 요청 파라미터를 수동으로 매핑시켜준다.<br />defaultValue: 기본값<br />required: 필수 여부 |
+| @RequestHeader                                               | @RequestHeader(value="Accept")<br />@RequestHeader(value="Accept-Language")<br />@RequestHeader(value="Host") | value 속성을 이용해 Http 요청 헤더값을 컨트롤러 내부에 파라미터 형식으로 전달해준다. |
+| @RequestBody                                                 | @ReqeustBody                                                 | HTTP 요청의 body 내용에 접근할 때 사용, JSON 데이터를 원하는 타입으로 바인딩 |
+| @CookieValue                                                 | @CookieValue(value="auth", defaultValue="none" required=false) | HTTP Header 내부에 저장된 쿠키를 메서드의 인자 안에서 Annotation을 통해 잡아줄 수 있다. |
+| @ModelAttribute                                              | @ModelAttribute("myDto") MemberDto memberDto                 | Controller에서 파라미터를 인자와 자동매핑한다면 다시 자동으로 Model에 이 값이 담겨서 jsp에서 EL 문법으로 바로 사용할 수 있다(${memberDto.name}). 이 때 @ModelAttribute를 사용해 view로 보낼 객체 이름을 바꿀 수 있다(${myDto.name}). |
+| @RestController                                              | @RestController                                              | 일반적인 Controller는 문자열을 반환하면 View Resolver가 주소형식으로 만들어 보내주지만<br />RestController는 @ResponseBody 를 자동으로 붙여주어 데이터를 손쉽게 반환하도록 해준다. |
+| @ResponseBody                                                | @ResponseBody                                                | Http Body의 내용을 객체로 전달한다(비동기 처리).             |
+| @Service                                                     | @Service("myService")                                        | Service Layer의 클래스에 사용                                |
+| @Repository                                                  | @Repository                                                  | Data Access Layer의 DAO 또는 Repository 클래스에 사용<br />DataAccessException 자동변환과 같은 AOP의 적용 대상을 선정하기 위해 사용한다. |
+| @Component                                                   | @Component                                                   | 위의 Layer 구분을 적용하기 어려운 일반적인 경우에 설정       |
+| @Autowired                                                   | @Autowired(required=false)<br />@Qualifier("methodName")<br />@Qualifier("argName") | 멤버변수, setter, constructor, 일반 method에 사용 가능<br />required 속성을 이용해 주입하지 않고도 bean으로 생성하도록 한다.<br />@Autowired가 여러 개인 경우 @Qualifier를 통해 구분<br />@Qualifier는 생성 / 주입시 모든 경우에 사용한다<br />**타입**에 맞춰서 연결 |
+| @Resource                                                    | @Resource(name="myDao")                                      | 멤버변수, setter에 사용 가능<br />특정 Bean이 JNDI 리소스에 대한 Injection을 필요로 하는 경우 사용권장<br />**타입**에 맞춰서 연결 |
+| @Inject                                                      | @Inject                                                      | Spring 3.0부터 지원(@Autowired, @Resource는 2.0)<br />framework 에 종속적이지 않음<br />멤버변수, setter, constructor, 일반 method에 사용 가능<br />javax.inject-x.x.x.jar 파일 추가 필수<br />**이름**으로 연결 |
+| @Aspect                                                      | @Component<br />@Aspect                                      | AOP 지정                                                     |
+| @Before<br />@After<br />@Around<br />@AfterReturning<br />@AfterThrowing | @After(value="execution(* com.site.home.model+)")            | *, +, (..) 를 통해 메서드 지정(execution)<br />JoinPoint 객체를 사용하지만 Around의 경우 ProceedingJoinPoint 객체 사용(proceed() 메서드 필수 호출) |
+| @Pointcut                                                    | @Pointcut("execution(* com.site.model+)")                    | Pointcut을 이용해 AOP를 적용할 대상 지정                     |
+| @Configuration                                               | @Configuration                                               | 초기 Spring의 java 설정 파일<br />스프링 부트의 Interceptor 설정 등을 위한 WebMvcConfiguration<br />Swagger Configuration |
+| @ControllerAdvice                                            | @ControllerAdvice                                            | Exception이 발생했을 때 발동하는 컨트롤러                    |
+| @ExceptionHandler                                            | @ExceptionHandler(NoHandlerFoundException.class)             | 특정 예외를 잡아서 메서드와 매핑                             |
+| @ResponseStatus                                              | @ResponseStatus(value= HttpStatus.NOT_FOUND)                 | 특정 HTTP 응답 신호를 보낼 수 있다.                          |
+| @Mapper                                                      | @Mapper                                                      | Mapper 역할을 하는 클래스 지정                               |
+| @Transactional                                               | @Transactional(rollbackFor = Exception.class)                | DB 상으로 begin, commit을 자동으로 수행해준다.<br />예외 발생시 rollback 처리를 자동으로 해준다.<br />@Transaction으로 지정된 메서드 내부에서 하나라도 실패한 경우 실패로 간주한다.(원자성)<br />대표적 속성: rollbackFor / noRollbackFor |
+| @EnableSwagger2                                              |                                                              | Swagger를 사용하기 위해 설정파일에 적용                      |
+| @Api                                                         | @Api(value="Swagger Name")                                   | Controller의 이름 명시                                       |
+| @ApiOperation                                                | @ApiOperation(value="설명", response=User.class)             | 설명과 반환값을 적어줄 수 있다.                              |
+| @ApiModel                                                    | @ApiModel(value="설명", description = "xx의 정보를 나타낸다.") | DTO 등 객체에 swagger 등록                                   |
+| @ApiModelProperty                                            | @ApiModelProperty(value="유저 이름")                         | 내부 변수 설명                                               |
 
 ​                   
 
