@@ -54,6 +54,21 @@
   console.log(func1(1)); // 1
   ```
 
+* Arrow Function 내에서  `this`로 객체에 접근해도 window객체의 변수를 가리킨다.
+
+  ```js
+  let age = 40;
+  let name = "장나라";
+  let obj = {
+  		name: "홍길동",
+  		age: 33,
+  		print: () => {
+  				console.log(`내 이름은 ${this.name} 나이는 ${obj.age} 입니다.`);
+  				// this = window로 연결, obj = 현재 객체 내 변수로 연결
+  		}
+  	}
+  ```
+
 ​             
 
 ### lamda 표현식
