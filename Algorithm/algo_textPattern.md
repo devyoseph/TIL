@@ -182,6 +182,65 @@ public class Boyer_Moore {
 }
 ```
 
+​              
+
+#### 보이어 무어: 나만의 구현
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main {
+	static boolean isIncluded(String target, Map<Character, Integer> skip, String content) {
+		//마지막 문자부터 비교
+		int i = content.length() - 1; //검사를 시작하는 곳
+		
+		while(i < target.length()) { // 끝점이 검사하는 대상의 길이를 초과하면 종료
+			int j = content.length() - 1;
+			
+			while(j>=0 && target.charAt(i) == content.charAt(j)) { //두 값이 일치하지 않을 때까지 지속
+				i--;
+				j--;
+			}
+			if(j < 0) return true; //모두 일치하는 경우 메서드의 값을 true로 반환
+		
+			//일치하지 않는 경우 멈춘 부분을 skip에서 검사해 얼마나 뒤로보낼껀지 정해주기
+			
+			i += skip.getOrDefault(target.charAt(i), content.length());
+		}
+		return false;
+	}
+	public static void main(String[] args) throws IOException {
+			
+		Map<Character, Integer> skip = new HashMap<Character, Integer>();
+		String content = "ABAC";
+		String target = "ABAD";
+		int length = content.length() - 1; // 전체 길이에서 -1한 값에서부터 출발
+		
+		for(int i=0; i<content.length()-1; i++) {
+			char c = content.charAt(i);
+			
+			skip.put(c, length - i);
+			//System.out.println(c+" "+ (length - i));
+		}
+		
+		System.out.println(isIncluded(target, skip, content));
+	}
+}
+
+```
+
+
+
 ​          
 
 ​          
