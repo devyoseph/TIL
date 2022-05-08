@@ -78,7 +78,7 @@ SELECT ROUND(COLUMN) FROM ta;
 
 ### 숫자 그외
 
-* GREATEST(a,b,c...)와 LEASET(a,b,c,e,..)가 있다
+* GREATEST(a,b,c...)와 LEAST(a,b,c,e,..)가 있다
 
 ​            
 
@@ -118,7 +118,7 @@ SELECT ROUND(COLUMN) FROM ta;
 
   ​       
 
-### SUBSTRING(a,7,5,b)
+### SUBSTRING(a,7,5)
 
 * A의 7번째 자리에서 5길이만큼 **가져옵니다.**
 
@@ -169,7 +169,7 @@ SELECT ROUND(COLUMN) FROM ta;
 
 * A조건이 참이면 B 를 출력 거짓이면 C를 출력
 
-### IFNULL(a,b)
+### IFNULL(column, value)
 
 * 자주쓰임, null이라면 어떻게 할 것인지.
 

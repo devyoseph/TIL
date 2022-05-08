@@ -363,7 +363,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 * #{ }: PreparedStatement 의 프로퍼티로 값을 세팅해주는 것
 
-  * #으로 주입하면 ' '가 감싸져서 들어옴
+  *  ‘작은 따옴표’로 감싸진 String 값이 들어온다. 쿼리 주입을 예방할 수 있다
 
 * ${ }: 컬럼명들이 저장되어있는 곳
 

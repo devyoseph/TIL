@@ -1,6 +1,6 @@
 # MyBatis
 
-> Java Object와 SQL문 사이의 자동 Mapping 기능을 지원하는 ORM Framework
+> Java Object와 SQL문 사이의 자동 Mapping 기능을 지원하는 **ORM(Object Relational Mapping) Framework**
 >
 > * MyBatis는 SQL을 별도의 파일로 분리해서 관리
 > * Object - SQL 사이의 parameter mapping 작업을 자동으로 해줌
@@ -67,7 +67,7 @@
 
 | 파일                                     | 설명                                                         |
 | ---------------------------------------- | ------------------------------------------------------------ |
-| MyBatis 설정파일<br />(sqlMapConfig.xml) | Dao 객체의 정보를 설정한다.(Alias)                           |
+| MyBatis 설정파일<br />(sqlMapConfig.xml) | Dto 객체의 정보를 설정한다.(Alias)                           |
 | SqlSessionFactoryBean                    | MyBatis 설정 파일을 바탕으로 SqlSessionFactory를 생성<br />Spring Bean으로 등록해야 함 |
 | SqlSessionTemplate                       | 핵심적인 역할을 하는 클래스로서 SQL 실행이나 Transaction 관리를 실행<br />SqlSession Interface를 구현하며, Thread-safe하다.<br />Spring Bean으로 등록해야함. |
 | mapping 파일<br />(member.xml)           | SQL문과 ORMapping을 설정                                     |

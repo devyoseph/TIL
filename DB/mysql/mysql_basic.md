@@ -34,7 +34,7 @@
 | 문장     | 설명                                                         |
 | -------- | ------------------------------------------------------------ |
 | INSERT   | DML(Data Manipulation Language), 행을 입력                   |
-| UPDATA   | DML(Data Manipulation Language), 행을 변경                   |
+| UPDATE   | DML(Data Manipulation Language), 행을 변경                   |
 | DELETE   | DML(Data Manipulation Language), 행을 제거                   |
 | SELECT   | DML(Data Manipulation Language), Database로 부터 Data를 검색 |
 | CREATE   | DDL(Data Definition Language), 테이블로부터 데이터 구조 생성 |
@@ -89,7 +89,7 @@
 
 ​        
 
-#### TCL(Transaction Control Language): 데이터 제어어
+#### TCL(Transaction Control Language): 트랜잭션 제어어
 
 * Transaction: 데이터베이스 논리적 연산의 단위
 
