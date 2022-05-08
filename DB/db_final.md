@@ -301,124 +301,146 @@
 
 > 실행순서: FROM - WHERE - GROUP BY - HAVING - SELECT - ORDER BY - LIMIT
 
-\- 연산자 (like, in, not in, is null 등)
+* DISTINCT: 중복제거
+* ALIAS: 별칭
 
-​	- DISTINCT: 중복제거
-
-​	- ALIAS: 별칭
-
-​                   
+​                                
 
 ### JOIN 
 
-  \- 종류: INNER JOIN, LEFT/RIGHT OUTER JOIN, FULL OUTER JOIN(Mysql은 UNION 사용)
+* 종류: INNER JOIN, LEFT/RIGHT OUTER JOIN, FULL OUTER JOIN(Mysql은 UNION 사용)
+* 필수 키워드: ON 또는 USING(alias를 사용할 수 없다)
+* JOIN 조건 명시에 따라
+  * SELF JOIN: 자기 자신을 JOIN
+  * NATURAL JOIN: 두 테이블의 열 값이 모두 같을 때
+  * CROSS JOIN(FULL JOIN, CARTESIAN JOIN): 각 칼럼의 모든 경우에 대한 결과 도출
 
-  \- 필수 키워드: ON 또는 USING(alias를 사용할 수 없다)
+* 최적화: INNER JOIN은 MySQL 옵티마이저가 조인의 순서를 조절해 최적화하지만 OUTER JOIN은 이미 순서가 정해져있다.
 
-  \- JOIN 조건 명시에 따라: SELF JOIN, NATURAL JOIN, CROSS JOIN(FULL JOIN, CARTESIAN JOIN) 
+​              
 
-  \- 사용방법: INNER JOIN은 MySQL 옵티마이저가 조인의 순서를 조절해 최적화하지만 OUTER JOIN은 이미 순서가 정해져있다.
+### 서브쿼리
 
+* WHERE 절에서 사용: Nested Subquery
 
+* FROM 절에서 사용: Inline View
 
-서브쿼리
+* SELECT 절에서 사용: Scalar Subquery
 
-​	WHERE 절에서 사용: Nested Subquery
+​                 
 
-​	FROM 절에서 사용: Inline View
+#### - 서브쿼리의 활용
 
-​	SELECT 절에서 사용: Scalar Subquery
+* CREATE 하면서 동시에 값을 집어넣는 방법
 
+  ```sql
+  create table 테이블명 select * from table_name;
+  ```
 
+*  조건 A에 맞는 정보를 모두 insert
 
-서브쿼리의 활용
+  ```sql
+  insert into 테이블명 select * from where A;
+  ```
 
-​	create table 테이블명 select * from tables : CREATE 하면서 동시에 값을 집어넣는 방법
-
-​	insert into 테이블명 select * from where A: 조건 A에 맞는 정보를 모두 insert
-
-​	
-
-
-
-DDL(Data Definition Language, 데이터 정의어): CREATE, ALTER, DROP, RENAME
-
-  \- auto commit 이므로 주의한다.
-
-  \- CREATE: 데이터베이스 객체 생성 / DROP: 데이터베이스 객체 삭제 / ALTER: 데이터베이스 객체 수정
-
-  \- 테이블 생성: CREATE TABLE 테이블명 ( column명 데이터타입 NOT NULL AUTO_INCREMENT, …, PRIMARY KEY(idx) )
-
-
-
-DML(Data Manipulation Language. 데이터 조작어): INSERT(C) INTO ~ VALUES(), SELECT(R), UPDATE(U) ~ SET~ WHERE , DELETE(D) FROM ~ WHERE
-
-​	- DELETE FROM 객체명 = 객체 내용 전체 삭제
+  ​          
 
 ​	
 
+### DDL(Data Definition Language, 데이터 정의어)
 
+> CREATE, ALTER, DROP, RENAME
 
-DCL(Data Control Language): 데이터 접근 권한 관련
+1. auto commit 이므로 주의한다.
+2. CREATE: 데이터베이스 객체 생성 / DROP: 데이터베이스 객체 삭제 / ALTER: 데이터베이스 객체 수정
+3. 테이블 생성
 
-​	- GRANT(권한 제공), REVOKE(권한 제거)
+```sql
+CREATE TABLE 테이블명 ( column명 데이터타입 NOT NULL AUTO_INCREMENT, …, PRIMARY KEY(idx) )
+```
 
+​               
 
+### DML(Data Manipulation Language. 데이터 조작어)
 
+```sql
+INSERT INTO tableName VALUES(); # C
+SELECT(R) * FROM tableName; # R
+UPDATE(U) tableName SET column=value WHERE condition; # U
+DELETE(D) FROM tableName WHERE condition; # D
+```
 
+* DELETE FROM 객체명 = 객체 내용 전체 삭제
 
-TCL(Transaction Control Language, 트랜잭션 제어어): 트랜잭션 = 데이터베이스 논리적 연산 단위
+​             	
 
-​	- start transaction; (굳이 안써도 알아서 해준다)
+### DCL(Data Control Language)
 
-​	- commit;
+>데이터 접근 권한 관련
 
-​	- savepoint a;
+	- GRANT(권한 제공)
+	- REVOKE(권한 제거)
 
-​	- rollback to savepoint a;
+​              
 
-​	- rollback;
+### TCL(Transaction Control Language, 트랜잭션 제어어)
 
+> 트랜잭션 = 데이터베이스 논리적 연산 단위
 
+```sql
+start transaction; # 굳이 안써도 알아서 해준다. 첫 transaction 기록
+commit;
+savepoint a;
+rollback to savepoint a;
+rollback; # 이전 커밋 지점으로 롤백
+```
 
-그룹함수: MAX, MIN, COUNT, AVG(), SUM()
+​              
 
+### 그룹함수
 
+> MAX, MIN, COUNT, AVG(), SUM()
 
-이외의 함수들:
-
-​	- BINARY: mysql은 대소문자 구분을 못하기 때문에
-
-​	- IF(A, B, C): A가 참이면 B 거짓이면 C
-
-​	- IFNULL( column, value)
-
-​	- NULLIF(a, b): a와 b가 같으면 NULL 표기
-
-​	- DATE_ADD(A, INTERVAL B) ex) INTERVAL 5 HOUR
-
-​	- DATE_FORMAT(A, “FORMAT”)
-
-​	- REVERSE(A), REPLACE(A, B, C), SUBSTRING(A, start, length), LOWER(), UPPER(), LEFT(a,b), RIGHT(a, b)
-
-​	- ABS(), CEIL(), FLOOR(), ROUND(), TRUNCATE(a, b), POW(a, b), MOD(a, b), GREATEST() , LEAST()
-
-
-
-데이터모델링
-
-​	- Entity(개체): 사용자와 관계가 있는 주요 객체, 데이터로 관리되어야할 정보들 (=명사적 표현)
-
-​	- Attrinute(속성): 저장할 필요가 있는 실체에 관한 정보
-
-​	- E-RM / E-R Diagram: Entity Relationship Model/Diagram
-
-​		- 네모: 개체, 동그라미: 속성
-
-
-
-모델링 단계: 개념적 - 논리적 - 물리적
+​             
 
 
 
-기타 추가 키워드들: DESC, SHOW
+### 다양한 함수들
+
+* BINARY: mysql은 대소문자 구분을 못하기 때문에 사용
+
+* IF(A, B, C): A가 참이면 B 거짓이면 C
+
+* IFNULL( column, value)
+
+* NULLIF(a, b): a와 b가 같으면 NULL 표기
+
+* DATE_ADD(A, INTERVAL B) ex) INTERVAL 5 HOUR
+
+* DATE_FORMAT(A, “FORMAT”)
+
+* REVERSE(A), REPLACE(A, B, C), SUBSTRING(A, start, length), LOWER(), UPPER(), LEFT(a,b), RIGHT(a, b)
+
+* ABS(), CEIL(), FLOOR(), ROUND(), TRUNCATE(a, b), POW(a, b), MOD(a, b), GREATEST() , LEAST()
+
+​            
+
+### 데이터모델링
+
+* Entity(개체): 사용자와 관계가 있는 주요 객체, 데이터로 관리되어야할 정보들 (=명사적 표현)
+
+* Attrinute(속성): 저장할 필요가 있는 실체에 관한 정보
+
+* E-RM / E-R Diagram: Entity Relationship Model/Diagram
+  * 네모: 개체, 동그라미: 속성
+
+​                    
+
+#### - 모델링 단계: 개념적 - 논리적 - 물리적
+
+​                         
+
+**기타 추가 키워드들**
+
+* DESC
+* SHOW
