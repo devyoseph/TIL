@@ -1,34 +1,82 @@
-myBatis 
+## MyBatis 
 
   \- Spring 연동(web.xml)
 
-​	<bean id=“dataSource” class=“org.springframework.jndi.JndiObjectFactoryBean”>
+```xml
+<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/site"></property>
+</bean>
+	
+	<!-- <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:mapper/member.xml</value>
+				<value>classpath:mapper/home.xml</value>
+			</list>
+		</property>
+	</bean> -->
+	
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="typeAliasesPackage" value="com.site.home.model"/>
+		<property name="mapperLocations" value="classpath:mapper/*.xml"/>
+	</bean>
+	
+	<!-- <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactoryBean"></constructor-arg>
+	</bean> -->
+	
+	<!-- mybatis에서 제공하는 scan 태그를 통해 repository interface들의 위치를 지정. -->
+	<mybatis-spring:scan base-package="com.site.home.model.mapper"/>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+```
 
-​		<property name=“jndiName” value=“java:comp/env/jdbc/site”/>
-
-​	</bean>
-
-
+​           
 
   \- web.xml 에서 mapper 읽어들이기 
 
-​	<mybatis-spring:scan base-package=“com~mapper”/>
+```xml
+<mybatis-spring:scan base-package=“com.site.root.model.mapper”/>
+```
 
-
+​           
 
   \- transaction 연동(이건 필수)
 
-​	<bean id=“transactionManager” class=“org.springframework.jdbc.datasource.DataSourceTransactionManager”>	<property name=“dataSource” ref=“dataSource” />
+```xml
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource" ref="dataSource" />
+</bean>
+```
 
-​	</bean>
+​            
 
+\- 어노테이션 기반 트랜잭션 설정(선택)
 
+````xml
+<tx:annotation-driven transaction-manager=“transactionManager”/>
+````
 
-  \- 어노테이션 기반 트랜잭션 설정(선택): @Transactional
+````java
+@Transactional
+````
 
-​	<tx:annotation-driven transaction-manager=“transactionManager”/>
+​           
 
+\- mybatis-spring:scan 을 Annotation으로 등록
 
+```java
+@MapperScan(basePackages = {"com.site.root.**.mapper"})
+```
+
+​               
 
   \- 객체와 메서드
 
@@ -36,75 +84,152 @@ myBatis
 
 ​	2. SqlSession = SqlSessionFactory.openSession()
 
-
+​                              
 
   \- 구성파일
 
-​	1. MyBatis 설정파일: sqlMappingConfig.xml (sqlMappingConfig.java 에서 읽어들이기)
+ 1. MyBatis 설정파일: sqlMappingConfig.xml (sqlMappingConfig.java 에서 읽어들이기)
 
-​		- typeAliases(Dto 정보 설정): <typeAlias type=“” alias=“” > 
+    ```xml
+    <configuration>
+        <properties resource="dbinfo.properties"/>
+    
+        <typeAliases>
+          <typeAlias type="com.site.root.model.MemberDto" alias="member" />
+          <typeAlias type="com.site.root.model.BookDto" alias="root" />
+          <typeAlias type="com.site.root.model.FileInfoDto" alias="fileinfo" />
+        </typeAliases>
+    
+        <environments default="development">
+              <environment id="development">
+                  <transactionManager type="JDBC"/>
+                  <dataSource type="POOLED">
+                      <property name="driver" value="${driver}"/>
+                      <property name="url" value="${url}"/>
+                      <property name="username" value="${dbid}"/>
+                      <property name="password" value="${dbpwd}"/>
+                  </dataSource>
+              </environment>
+          </environments>
+    
+    
+      <mappers>
+          <mapper resource="root.xml" />
+          <mapper resource="member.xml" />
+      </mappers>
+    
+    </configuration>
+    ```
 
-​		- environments
-
-​		- mappers: <mappers> <mapper resource="guestbook.xml" /> </mappers>
+    ​            
 
 ​	2. Mapping 파일
 
-​		- <mapper namespace=“com.~”>
+```xml
+<mapper namespace="com.site.root.model.mapper.MemberMapper">
+</mapper>
+```
 
-​			- select, insert, update, delete
+* select, insert, update, delete
 
-​				- 공통 속성: id, parameterType
+  * 공통 속성: id, parameterType
 
-​				- select만 존재: resultType / resultMap
+  ```xml
+  <mapper namespace="com.site.root.model.mapper.MemberMapper">
+  	<select id="메서드명" parameterType="String" resultType="MemberDto">
+    </select>
+     
+    <insert id="메서드명" parameterType="MemberDto">
+    </insert>
+    
+    <update id="메서드명" parameterType="map">
+    </update>
+    
+    <delete id="메서드명" parameterType="String">
+    </delete>
+  </mapper>
+  ```
 
-​				- select외에 존재: <selectKey resultType=“int” keyProperty=“articleNo” order=“AFTER”>
+     - select만 존재: resultType / resultMap
 
-​								select last_insert_id()
+       ```xml
+       <resultMap type="BookDto" id="articleList">
+       		<result column="articleno" property="articleNo"/>
+       		<result column="userid" property="userId"/>
+       		<result column="username" property="userName"/>
+       		<result column="subject" property="subject"/>
+       		<result column="content" property="content"/>
+       		<result column="regtime" property="regTime"/>
+       		<collection property="fileInfos" column="articleno=articleno" javaType="list" ofType="FileInfoDto" select="fileInfoList"/>
+       </resultMap>
+       ```
 
-​							   </selectKey>
+  ​                 
 
+  * select외에 존재: 값이 성공적으로 변경된 것을 알려주기 위함
 
+    ```xml
+    <selectKey resultType="int" keyProperty="articleNo" order="AFTER">
+        select last_insert_id()
+    </selectKey>
+    ```
+
+​                   
 
   \- 태그들과 태그 속성 (sql, selectKey 포함) + 동적 쿼리 태그
 
-​		mappers 내부 태그 = insert, update, select, delete 태그
+```xml
+<sql id="name">
+```
 
-​		-<sql id=“search”> 자주 사용하는 sql문 저장
+  - include refid로 저장한 sql문 불러오기 
 
-​		- include refid로 저장한 sql문 불러오기 : <where> <include refid=“search”></include> </where>
+    - where: 뒤에 AND나 OR가 바로 붙는다면 지워준다.
 
-​		- <if test=“조건”></if>
+    ```xml
+    <where>
+      <include refid="search"></include>
+    </where>
+    ```
 
-​		-<resultMap type=“guestbook” id=“articleList”>
+    * if문
 
-​			<result column=“articleno” property=“articleNo”>
+      ```xml
+      <if test="조건"></if>
+      ```
 
-​			<collection property=“fileInfos” column=“articleno=articleno” javaType=“list” ofType=“fileinfo” select=“fileInfoList”/>
+      ​                 
 
-​			</resultMap>
+    * choose문
 
-​		
+      ```xml
+      <choose>
+        <when test="">
+        </when>
+        
+        <otherwise>
+        </otherwise>
+      </choose>
+      ```
 
-   \- 동적쿼리 태그(동적 SQL문): #을 더 현업에서 선호하는 이유
+      ​                   
 
-​	    - ${} : 파라미터가 바로 출력된다. 내부에 쿼리문을 넣을 경우 바로 실행된다.
+* 동적쿼리 태그(동적 SQL문): #을 더 현업에서 선호하는 이유
 
-​		- #{} : ‘작은 따옴표’로 감싸진 String 값이 들어온다. 쿼리 주입을 예방할 수 있다
+  * ${} : 파라미터가 바로 출력된다. 내부에 쿼리문을 넣을 경우 바로 실행된다.
 
+  * #{} : ‘작은 따옴표’로 감싸진 String 값이 들어온다. **쿼리 주입**을 예방할 수 있다
 
+​                      
 
+### 테이블 제약조건
 
+\- PK, FK 설정이유: 데이터의 무결성(Data Integrity)
 
-테이블 제약조건
+* PK: 데이터의 무결성: NOT NULL + UNIQUE
+* FK: 참조되는 키가 해당 relation에서 PK이므로 참조 무결성을 보장할 수 있다.
 
-\- PK, FK 설정이유:데이터의 참조 무결성(Referential Integrity)
-
-​	PK: 후보키 중에서 선택한 주 키, NOT NULL + UNIQUE
-
-​	FK: 관계를 맺는 두 개체(Entity)에서 서로 참조되는 테이블(Relation)의 속성(Attribute)로 지정되는 키
-
-
+​                                   
 
 \- 제약사항 종류: ex) ON DELELTE CASCADE / ON UPDATE RESTRICT
 
@@ -116,49 +241,65 @@ myBatis
 
 ​	NO ACTION: 부모테이블의 id값을 갱신, 삭제해도 반응하지 않음
 
-
-
-index 특징, view 특징,사용법
-
-​	index: 추가적인 공간을 활용해 데이터베이스의 테이블의 검색 속도를 향상시키기 위한 자료구조
-
-​		- Clustered INDEX: 테이블마다 1개 생성 가능, 기본키에 INDEX 자동 생성
-
-​			CREATE CLUSTERED INDEX 인덱스명 ON 테이블명 (칼럼명);
-
-​		- Non-Clustered INDEX: 따로 저장공간을 활용해 여러 개의 인덱스 생성 가능
-
-​			CREATE INDEX 인덱스명 ON 테이블명 (칼럼명);
-
-​		
-
-​		- Composite INDEX 생성: 칼럼들을 종합한 인덱스 생성
-
-​			CREATE INDEX 인덱스명 ON (칼럼명1, 칼럼명2,…)
+​            
 
 
 
-​	VIEW 생성: CREATE VIEW TOP5_Salary AS SELECT * FROM main.practice ORDER BY Sales DESC LIMIT 5;
+### index 특징, 사용법
 
-​	VIEW 삭제: DROP VIEW 이름 RISTRICT; // RISTRICT: 다른 곳에서 참조하지 않는 경우에만 삭제 가능
+> index: 추가적인 공간을 활용해 데이터베이스의 테이블의 검색 속도를 향상시키기 위한 자료구조
 
-​		* VIEW에서는 ALTER을 사용할 수 없다.
+1. Clustered INDEX: 테이블마다 1개 생성 가능, 기본키에 INDEX 자동 생성
 
-​	VIEW 사용이유
+   ```sql
+   CREATE CLUSTERED INDEX 인덱스명 ON 테이블명 (칼럼명);
+   ```
 
-​		편의성: VIEW를 통해 재사용성 증가(복잡한 쿼리문을 ALIAS로 사용),
+2. Non-Clustered INDEX: 따로 저장공간을 활용해 여러 개의 인덱스 생성 가능
 
-   		데이터 독립성: 민감한 정보에 직접 접근하지 않고 조회문을 통해 공유
+   ```sql
+   CREATE INDEX 인덱스명 ON 테이블명 (칼럼명);
+   ```
 
-​		내용 변경 불가: ALTER VIEW 사용 불가, 수정하기 위해선 삭제 후 재생성
+3. Composite INDEX 생성: 칼럼들을 종합한 인덱스 생성
 
-​		테이블명 사용 불가: 이미 있는 테이블 이름은 VIEW 이름으로 지정 불가
+   ```sql
+   CREATE INDEX 인덱스명 ON (칼럼명1, 칼럼명2,…)
+   ```
 
+​                         
 
+### view 특징, 사용법
 
-Select
+>VIEW는 사용자에게 접근이 허용된 자료만을 제한적으로 보여주기 위해 하나 이상의 기본 테이블로부터 유도된, 이름을 가지는 **가상 테이블**이다.
 
-\- 실행순서: FROM - WHERE - GROUP BY - HAVING - SELECT - ORDER BY - LIMIT
+1. VIEW 생성
+
+   ```sql
+   CREATE VIEW TOP5_Salary AS SELECT * FROM main.practice ORDER BY Sales DESC LIMIT 5;
+   ```
+
+2. VIEW 삭제
+
+   ```sql
+   DROP VIEW 이름 RISTRICT; // RISTRICT: 다른 곳에서 참조하지 않는 경우에만 삭제 가능
+   ```
+
+3. **VIEW 사용**
+
+   >**편의성**: VIEW를 통해 재사용성 증가(복잡한 쿼리문을 ALIAS로 사용),
+   >
+   >**데이터 독립성**: 민감한 정보에 직접 접근하지 않고 조회문을 통해 공유
+   >
+   >**내용 변경 불가**: ALTER VIEW 사용 불가, 수정하기 위해선 삭제 후 재생성
+   >
+   >**테이블명 사용 불가**: 이미 있는 테이블 이름은 VIEW 이름으로 지정 불가
+
+​                             
+
+### Select
+
+> 실행순서: FROM - WHERE - GROUP BY - HAVING - SELECT - ORDER BY - LIMIT
 
 \- 연산자 (like, in, not in, is null 등)
 
@@ -166,9 +307,9 @@ Select
 
 ​	- ALIAS: 별칭
 
+​                   
 
-
-JOIN 
+### JOIN 
 
   \- 종류: INNER JOIN, LEFT/RIGHT OUTER JOIN, FULL OUTER JOIN(Mysql은 UNION 사용)
 
