@@ -487,5 +487,38 @@
  this.$refs.uid.focus();
  ```
 
+​              
+
+#### - $로 접근
+
+```js
+ var vm = new Vue({
+      el: '#app',
+      data: {
+        message: '안녕하세요',
+      },
+      methods: {
+        reversedMsg: function () {
+          console.log('꺼꾸로 찍기');
+          return this.message.split('').reverse().join('');
+        },
+      },
+   		computed: {
+        	test: function(){
+            return "dfdf";
+          }
+      }
+ });
+```
+
+```js
+console.log(vm.$data.message); // 그냥 data를 입력하면 안된다.
+// $methods 는 없다
+
+//computed로 만들어놓은 것은 일반적인 변수로 똑같이 만들어짐($이 안붙은 채로)
+```
+
+
+
 
 
