@@ -12,10 +12,9 @@
 ## 배운 내용 정리
 
 * Web MVC Project 생성시 `webapp` 폴더 아래 `META-INF` 폴더가 자동 생성되지 않으므로 직접 생성 후 context.xml을 넣어준다.
-
 * header 파일 분리를 위해 WEB-INF 아래 include 폴더를 생성하고 EL문법 include로 연결한다.
-
 * Mapper와 Service 결국 주입은 필수이다.
+* RestController 라고 해도 RequestBody는 써주어야한다.
 
 
 ​               
@@ -334,4 +333,14 @@
     					},
   ```
 
-  
+
+
+
+​           
+
+### 3. 게시판 API 사용
+
+```
+https://summernote.org/
+```
+

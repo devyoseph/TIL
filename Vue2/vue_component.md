@@ -224,6 +224,42 @@
 
 ## Component간 통신
 
+* 부모가 자식에게 title, v-bind 등을 통해 태그 내부로 값을 전달한다.
+
+* 그럼 자식이 props로 먼저 받고 내부에서 생성된 데이터를 이벤트와 같이 올려보낸다.
+
+  ```js
+  this.$emit("이벤트이름", {data: this.data});
+  ```
+
+* 이벤트를 올려보냈기 때문에 부모입장에서는 리스너를 통해 받아야한다.
+
+  ```js
+  this.$on~
+  ```
+
+* 웬만하면 이벤트 리스너 `@이벤트명="메서드명"`을 사용한다.
+
+  ```vue
+  <my-component @myevent="f1" title="ssafy"></my-component>
+  ```
+
+  * myevent: `$emit`으로 올려보낸 이벤트이름
+  * f1: 발동하고자 하는 메서드명
+
+* 이벤트와 함께 데이터를 전송한다면 태그내부에서 넣어주는 것이 아니라 `methods: function(data){ }`로 인자로 그냥 넣어준다.
+
+  ```js
+  methods:{
+              f1(payload){
+                  this.result = payload.data;
+              },
+          },
+  ```
+
+  * payload: 주고 받는 데이터의 권장 형식은 `.json`이기 때문에 하나의 파일로 움직이므로 `payload`라고 보통 적어준다.
+  * payload.data 를 이용해 원하는 데이터를 꺼내줄 수 있다.
+
 > * 단 방향 데이터 전달이다.(부모 > 자식)
 > * 상위(부모) - 하위(자식) 컴포넌트 간의 data 전달 방법
 > * 부모에서 자식: props라는 특별한 속성을 전달 (Pass Props)
