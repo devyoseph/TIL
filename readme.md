@@ -236,8 +236,12 @@
 
 ### [Vue](/Vue2/vue_basic.md)
 
-1. [Vue Instance](/Vue2/vue_instance.md)
-2. [Vue Interpolation](/Vue2/vue_interpolation.md)
+1. [Instance](/Vue2/vue_instance.md)
+2. [Interpolation](/Vue2/vue_interpolation.md)
+2. [Component](/Vue2/vue_component.md)
+2. [Axios](/Vue2/vue_axios.md)
+2. [Router](/Vue2/vue_router.md)
+2. [Vue/Cli](/Vue2/vue_cli.md)
 
 ​          
 
