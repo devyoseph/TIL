@@ -6,8 +6,6 @@
 > * Life Cycle Hook 사용 가능
 > * 전역 컴포넌트와 지역 컴포넌트
 
-<img src="/Users/yang-yoseb/Library/Application Support/typora-user-images/image-20220509151743134.png" alt="image-20220509151743134" style="zoom:50%;" />
-
 ​                     
 
 ### 전역 컴포넌트 등록
