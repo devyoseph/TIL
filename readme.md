@@ -202,6 +202,7 @@
    2. [세팅부터 정리](/Spring2/spring_legacy_making2.md)
 6. [환경세팅 정리](/Spring2/spring_setting.md)
 6. [흐름 정리](/Boot/spring_flow.md)
+6. [유효성 검사](/Spring2/spring_valid.md)
 
 ​                   
 
