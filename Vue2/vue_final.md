@@ -25,7 +25,7 @@
 ```js
 new Vue({
 	el: "#app", // Vue가 적용될 요소 지정. CSS Selector or HTML Element
-	data: { // Vue엫서 사용할 정보 저장, 객체 또는 함수 형태
+	data: { // Vue에서 사용할 정보 저장, 객체 또는 함수 형태
     message: "첫번째 Vue.js 앱입니다."
   },
   /* data 추천 형식
@@ -52,6 +52,8 @@ new Vue({
 ​           
 
 ### 3. Vue Instance Life-Cycle
+
+> Vue Instance 기준으로 나눈다.
 
 ```js
 new Vue({
@@ -306,7 +308,7 @@ new Vue({
 >
 >* **캐싱**을 이용해 데이터의 변경이 없을 경우 캐싱된 데이터를 반환(값)
 >
->* Setter, Getter 직접 지정 가능
+>* Setter, Getter 직접 지정 가능: `get()`, `set()`
 >
 >  ```js
 >  computed: {
@@ -427,6 +429,8 @@ watch: {
 * element의 class와 style 변경
 
 * v-bind:class 는 조건에 따라 class 적용이 가능하다.
+
+* 클래스 바인딩은 **중괄호**를 사용함을 명심한다
 
   ```vue
   <div v-bind:class="{ active: isActive }">
@@ -603,7 +607,7 @@ vm.$emit("이벤트명", [ ... 파라미터]);
 * 라우팅: 웹 페이지 간 이동 방법
 * Vue.js의 공식 라우터
 * 라우터는 컴포넌트와 매핑해 사용
-* SPA를 제작할 떄 유용하다
+* SPA를 제작할 때 유용하다
 
 ​             
 
