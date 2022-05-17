@@ -146,6 +146,7 @@ new Vue({
 ## vuex 저장소
 
 * State: 단일 상태 트리 사용. application마다 하나의 저장소를 관리(data)
+  * 메모리에 올라가기 때문에 끄면 날라간다.
 * Getters: Vue Instance의 Computed와 같은 역할. State를 기반으로 계산(computed)
 * Mutations: State의 상태를 변경하는 유일한 방법(동기 methods)
 * Actions: 상태를 변이 시키는 대신 액션으로 변이에 대한 커밋 처리(비동기 methods)
@@ -251,4 +252,8 @@ Updated file babel.config.js:
 
   
 
-  
+  ​           
+
+### mapMutations / mapActions 사용하는 이유
+
+* dispatch(), commit() 을 써서 메서드를 발동시키지만 mapMutations / mapActions 을 통해 그 메서드 조차 숨기는 것이다.

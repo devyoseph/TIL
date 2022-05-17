@@ -8,6 +8,8 @@
 > 4월 28일: 회원 비밀번호 변경(비동기), 게시판 소스 준비(부트스트랩)
 > 5월 11일: 게시판(비동기) CRUD
 > 5월 13일: 유효성 검사
+> 5월 15일: Spring Security 기초 공부
+> 5월 16일: 네이버 세션 로그인
 
 ​            
 
@@ -347,3 +349,30 @@
 https://summernote.org/
 ```
 
+<img src="readMe.assets/image-20220516182037593.png" alt="image-20220516182037593" style="zoom:50%;" />
+
+​              
+
+### 4. Naver Session Login
+
+* 네이버에 API KEY를 발급받고 인증한다.
+* 사용자에게 KEY값을 보이지 않고 숨겨서 통신해 token을 받아온다.
+
+​            
+
+#### - 긴 URL 생성: UriComponents 활용
+
+```
+```
+
+​             
+
+#### - 토큰 값을 가져오기
+
+![image-20220517025721314](readMe.assets/image-20220517025721314.png)
+
+​              
+
+#### - 네이버 공식 JAVA 문서 사용해 프로필 정보 가져오기
+
+<img src="readMe.assets/image-20220517031730332.png" alt="image-20220517031730332" style="zoom:50%;" />
