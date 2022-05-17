@@ -10,6 +10,7 @@
 > 5월 13일: 유효성 검사
 > 5월 15일: Spring Security 기초 공부
 > 5월 16일: 네이버 세션 로그인
+> 5월 17일: JWT 적용, 토큰 발행
 
 ​            
 
@@ -376,3 +377,168 @@ https://summernote.org/
 #### - 네이버 공식 JAVA 문서 사용해 프로필 정보 가져오기
 
 <img src="readMe.assets/image-20220517031730332.png" alt="image-20220517031730332" style="zoom:50%;" />
+
+​                 
+
+### 5. JWT 적용
+
+* 기존 방식: 로그인의 정보를 session에 저장
+
+  ```java
+  return new ResponseEntity<MemberDto>(member, HttpStatus.OK); //찾은 경우 OK로 보낸다.
+  ```
+
+* JWT 사용: 로그인의 정보를 session에 저장하지 않고 대신 token 값을 session에 저장
+
+  ```java
+  //session.setAttribute("userInfo", member);
+  String userToken = jwtService.createToken(member.getUserId()+"", (60 * 1000 * 60));
+  logger.info("유저에게 토큰 발행: { } ", userToken);
+  
+  session.setAttribute("token", userToken); //세션으로 토큰을 저장해준다.
+  return new ResponseEntity<Void>(HttpStatus.OK); //찾은 경우 OK로 보낸다.
+  ```
+
+​           
+
+#### - Interceptor 설정
+
+> 본래 java Config로 설정하는 것이 보통이나 legacy 프로젝트에 맞춰서 servlet.xml 내부에 bean으로 주입
+>
+> * 로그인 유지가 안되어있다면 사용할 수 없는 기능들을 분리해준다.
+
+```xml
+<!-- interceptor -->
+	<beans:bean id="jwtInterceptor" class="com.meedawn.flower.interceptor.JwtInterceptor" />
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/user/resetpwd"/>
+			<mapping path="/board/write"/>
+			<mapping path="/board/edit"/>
+			<mapping path="/board/delete"/>
+			<beans:ref bean="jwtInterceptor"/>
+		</interceptor>
+	</interceptors>
+```
+
+​            
+
+#### - interceptor 오류 해결
+
+* 레거시에서는 PUT, DELETE 에 사용 제약이 존재한다.
+
+  * 다음 필터 설정을 넣어주어야 한다.
+
+  ```xml
+  <filter>
+      <filter-name>httpFilter</filter-name>
+      <filter-class>
+      	org.springframework.web.filter.HiddenHttpMethodFilter
+      </filter-class>
+  </filter>
+  <filter-mapping>
+      <filter-name>httpFilter</filter-name>
+      <servlet-name>사용하는 servlet</servlet-name>
+  </filter-mapping>
+  ```
+
+* 하지만 필터설정 이후에도 springframework 라이브러리와 출동발생
+
+  > **내용**: REST Controller를 설정했고 DELETE, PUT을 사용했으나 Springframework 라이브러리와 충돌이 발생했다.
+  >
+  > ```
+  > WARN : org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'DELETE' not supported]
+  > ```
+
+* 해결책
+
+  * Springframework의 경우 application.properties 설정만 추가해주면 해결된다.
+
+    ```
+    spring.mvc.hiddenmethod.filter.enabled.true
+    ```
+
+​                          
+
+#### - 미해결 문제: interceptor에서 토큰으로 session logout 이후 처리
+
+> **해결 내용**: response에 상태코드를 보내고 ajax에서 location.href로 초기화면 이동을 수행한다.
+
+* token 기간이 만료된 경우 session.invalidate() 는 작동하지만 화면요소에 반영되지 않는 문제가 생겼다.
+
+  ```java
+   @Override
+  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    final String token = request.getHeader(HEADER_AUTH);
+    logger.info("JWT Interceptor Operate: {}", token);
+    if(token != null && jwtService.isUsable(token)){
+      return true;
+    }else{
+      System.out.println("토큰이 만료되어 세션정보를 초기화합니다.");
+      response.sendRedirect(request.getContextPath()+"/user/sessionout");
+      //토큰 만료시 sessionout url로 이동
+      return false;
+    }
+  }
+  ```
+
+* sessionout URL
+
+  * 새로고침하면 화면에 반영되지만 redirect 이후에도 화면 변화가 없는 문제 발생
+
+  ```java
+  @GetMapping("/sessionout") //세션만료와 로그아웃을 구분한다.
+  	public String sessionout(HttpSession session, Model model) {
+  		session.invalidate();
+  		model.addAttribute("session", "invalidated");
+  		System.out.println("세션 종료 메서드");
+  		return "redirect:/";
+  	}
+  ```
+
+  ​               
+
+* **해결**
+
+  * 인터셉터에서도 response를 사용해 status를 보낼 수 있지만 보통 redirect를 사용하므로 그 내역이 초기화된다.
+
+  * 이에 세션만료되어 이동하는 컨트롤러 url에 response에 HttpStatus 상태를 저장한다.
+
+  * 세션을 삭제하기 때문에 redirect가 아닌 페이지 이름으로 이동해 상태를 보낸다.
+
+    ```java
+    
+    	@GetMapping("/sessionout") //세션만료와 로그아웃을 구분한다.
+    	public String sessionout(HttpSession session, HttpServletResponse response,Model model) {
+    		session.invalidate();
+    		response.setStatus(304);
+    		System.out.println("세션 종료 메서드");
+    		return "index";
+    	}
+    ```
+
+    <img src="readMe.assets/image-20220517215301137.png" alt="image-20220517215301137" style="zoom:33%;" />
+
+  * 304에 대한 ajax 반응처리를 해주고 새로고침해준다.
+
+    ```js
+    304: function() {
+        						alert("세션이 만료되었습니다.");
+        						location.href="${root}/"
+      							return false;
+      						},
+    ```
+
+* 설정 주의
+
+  * 적용확인을 위해 토큰 시간을 매우 짧게 설정했으므로 이후 변경하도록 한다.
+
+    ```java
+    String userToken = jwtService.createToken(member.getUserId()+"", (100));
+    ```
+
+    
+
+
+
