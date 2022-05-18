@@ -11,6 +11,7 @@
 > 5월 15일: Spring Security 기초 공부
 > 5월 16일: 네이버 세션 로그인
 > 5월 17일: JWT 적용, 토큰 발행
+> 5월 18일: 구글, 카카오 로그인 추가
 
 ​            
 
@@ -538,7 +539,7 @@ https://summernote.org/
     String userToken = jwtService.createToken(member.getUserId()+"", (100));
     ```
 
-    
+    ​               
 
-
+### 6. 구글 세션 로그인 구현
 
