@@ -381,6 +381,55 @@ https://summernote.org/
 
 ​                 
 
+#### - 이미 회원가입을 했다면 refresh_token으로 갱신 받아 로그인하기
+
+```java
+//이미 회원인데 refresh_token이 전달된 경우(만료된 경우): 갱신해주기
+if(naverRigistered == 1 && changeRefreshToken) {
+memberService.changeRefreshToken((String)jsonObj2.get("id"), map.get("refresh_token"));
+}
+```
+
+​                 
+
+#### * 문제 발생
+
+<img src="readMe.assets/image-20220519011222237.png" alt="image-20220519011222237" style="zoom:33%;" />
+
+```
+네이버가 주는 매우 긴 아이디를 사이트내에서 사용할 수 없으므로 email 앞자리를 아이디로 사이트 내에서 임시로 사용할 수 있다. 하지만 javascript의 변수는 특수문자를 허용하지 않으므로 javascript 코드에 오류가 발생하면서 기능이 정지하는 현상이 발생했다.
+
+해결: xx@naver.com에서 @ 앞의 문자열로 MyBatis .xml에서 id로 인식시켜서 가져온다.
+```
+
+```sql
+select username, SUBSTRING_INDEX(email, '@', 1) as userid, email, exp, lv, platform
+from member
+where userid = #{userId} and email = #{email} and platform='naver'
+```
+
+​               
+
+#### - session에 사이트 내부 토큰을 저장해 검증
+
+```java
+ @Override
+public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+  //final String token = request.getHeader(HEADER_AUTH);
+  final String token = (String) request.getSession().getAttribute("token");
+  logger.info("JWT Interceptor Operate: {}", token);
+  if(token != null && jwtService.isUsable(token)){
+    return true;
+  }else{
+    System.out.println("토큰이 만료되어 세션정보를 초기화합니다.");
+    response.sendRedirect(request.getContextPath()+"/user/sessionout");
+    return false;
+  }
+}
+```
+
+​                
+
 ### 5. JWT 적용
 
 * 기존 방식: 로그인의 정보를 session에 저장
