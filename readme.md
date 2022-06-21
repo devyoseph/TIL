@@ -224,7 +224,7 @@
 2. [스프링 부트 연습](/Boot/boot_practice.md)
 2. [Swagger](/Boot/boot_swagger.md)
 5. File
-   * [FileUpload With JSON](SpringToyProject_MEEDAWN/갤러리기능/파일업로드)
+   * [FileUpload With JSON](SpringToyProject_MEEDAWN/갤러리기능/파일업로드.md)
 
 ​                    
 
