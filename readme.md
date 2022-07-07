@@ -266,6 +266,12 @@
 
 ​               
 
+### [Jira](/JIRA/jira_basic.md)
+
+* [Jira & JQL](JIRA/jira_use.md)
+
+​                  
+
 ### Spring [inflearn]
 
 1. 스프링 입문
