@@ -246,6 +246,15 @@
 
 ​              
 
+### JPA
+
+1. [JPA 학습](JPA/jpa_basic.md)
+2. [SQL 중심적인 개발의 문제점](JPA/jpa_why.md)
+
+​                    
+
+
+
 ### [Vue](/Vue2/vue_basic.md)
 
 1. [Instance](/Vue2/vue_instance.md)
