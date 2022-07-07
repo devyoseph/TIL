@@ -306,4 +306,4 @@
 
 ### [AWS [생활코딩]](/AWS/aws_basic.md)
 
-1. 
+* [EC2](AWS/aws_ec2.md)
