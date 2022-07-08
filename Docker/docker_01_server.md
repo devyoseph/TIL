@@ -76,3 +76,94 @@
 ### - 쿠버네티스의 등장
 
 ![image-20220708134850797](docker_01_server.assets/image-20220708134850797.png)
+
+​                      
+
+* 여유있는 서버 찾아주기
+
+<img src="docker_01_server.assets/image-20220708135815307.png" alt="image-20220708135815307" style="zoom:67%;" />
+
+* 버전 배포
+
+  <img src="docker_01_server.assets/image-20220708135909831.png" alt="image-20220708135909831" style="zoom:67%;" />
+
+* ip를 추가하고 삭제해주는 작업
+
+  <img src="docker_01_server.assets/image-20220708135959368.png" alt="image-20220708135959368" style="zoom:50%;" />
+
+* 같은 서버에서 분기
+
+  <img src="docker_01_server.assets/image-20220708140043342.png" alt="image-20220708140043342" style="zoom:50%;" />
+
+* 서버에 문제가 발생한 경우
+
+  * 24시간 대응 가능한 자동화 기술
+
+  <img src="docker_01_server.assets/image-20220708140134666.png" alt="image-20220708140134666" style="zoom:67%;" />
+
+  ​                   
+
+  ## Container Orchestration
+
+  > 복잡한 컨테이너 환경을 효과적으로 관리하기 위한 도구
+
+  ![image-20220708140243940](docker_01_server.assets/image-20220708140243940.png)
+
+  ​                
+
+  ### 1) 중앙제어(master-node)
+
+  * 스케일(scale)이 늘어나도 잘 작동해야한다.
+
+  ​               
+
+  ### 2) 상태관리
+
+  * App1을 복제해서 띄워주라고 명령
+
+  ​            
+
+  ### 3) 스케줄링
+
+  * 여유 있는 공간에 알아서 띄워준다.
+
+  <img src="docker_01_server.assets/image-20220708140554124.png" alt="image-20220708140554124" style="zoom:50%;" />
+
+  ​               
+
+  ### 4) ROLLOUT/ROLLBACK
+
+  * 버전 배포 관리: RollBack을 통해 이전 버전 적용 가능
+
+  ​              
+
+  ### 5) SERVICE DISCOVERY
+
+  * Watch를 통해 프로세스를 감시하고 문제 발생 시 재시작해줌
+
+  ​               
+
+  ### 6) VOLUME
+
+  * mount가 은근히 복잡하다.
+  * 설정만 추가하면 VOLUME 추가 등을 자동으로 해준다.
+
+  ​                   
+
+  ​                  
+
+  ​                            
+
+  ## kubernetes
+
+  * 컨테이너를 쉽고 빠르게 배포/확장하고 관리를 자동화해주는 오픈소스 플랫폼
+
+  ​             
+
+  #### - 본래의 방식
+
+  <img src="docker_01_server.assets/image-20220708141250216.png" alt="image-20220708141250216" style="zoom:67%;" />
+
+  
+
+  
