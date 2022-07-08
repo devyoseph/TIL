@@ -22,7 +22,7 @@
   $ docker pull jenkins/jenkins:lts-jdk11
   ```
 
-  ![image-20220616132546343](/Users/yang-yoseb/workplace/TIL/Docker/docker_basic.assets/image-20220616132546343.png)
+  ![image-20220708135218240](docker_basic.assets/image-20220708135218240.png)
 
 * Jenkins 설치(M1)
 
