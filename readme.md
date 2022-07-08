@@ -272,7 +272,7 @@
 ### [Docker](/Docker/)
 
 1. [Docker/kubernetes를 사용하는 이유](Docker/docker_why.md)
-   1. [서버를 관리한다는 것](Docker/docker_01_server.md)
+   * [서버를 관리한다는 것](Docker/docker_01_server.md)
 2. [Docker&Jenkins&배포](/Docker/docker_basic.md)
 
 ​               
