@@ -84,7 +84,7 @@ $ docker container ps -a # 확인
 - `6080:80` : 1000이상의 포트를 지정 (그 이하는 운영체제가 사용)
 - `[localhost:6080](http://localhost:6080)` : 웹브라우저에서 해당 포트 번호로 이동
 
-![Untitled](docker%20%E1%84%80%E1%85%B5%E1%84%87%E1%85%A9%E1%86%AB%20%E1%84%86%E1%85%A7%E1%86%BC%E1%84%85%E1%85%A7%E1%86%BC%E1%84%8B%E1%85%A5%2038472dc10a094201872d3926d07dfa76/Untitled.png)
+![image-20220709235455818](docker_basic_command.assets/image-20220709235455818.png)
 
 ```bash
 $ docker container [top | stats] webserver # 컨테이너 정보 확인
