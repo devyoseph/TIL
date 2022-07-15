@@ -264,7 +264,7 @@
 2. [Axios](/Vue2/vue_axios.md)
 2. [Router](/Vue2/vue_router.md)
 2. [Vue/Cli](/Vue2/vue_cli.md)
-7. 소셜 로그인
+7. [소셜 로그인](Vue3/frontend_basic.md)
    1. [Kakao](/Vue2/vue_kakao_login.md)
 
 
