@@ -252,7 +252,12 @@
 ### JPA
 
 1. [JPA 학습](JPA/jpa_basic.md)
+
+   * [JPA 맛보기](JPA/jpa_practice,md)
+
 2. [SQL 중심적인 개발의 문제점](JPA/jpa_why.md)
+
+   
 
 ​                    
 
