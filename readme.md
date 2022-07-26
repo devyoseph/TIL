@@ -162,6 +162,7 @@
 3. [JOIN](/DB/mysql/mysql_join.md)
 3. [SubQuery](/DB/mysql/mysql_subquery.md)
 3. [데이터베이스 모델링](/DB/db_modeling.md)
+3. [CSV 파일 import](DB/csvToMySQL.md)
 
 ​          
 
@@ -324,6 +325,8 @@
 
 ​                
 
-### [AWS [생활코딩]](/AWS/aws_basic.md)
+### [AWS](/AWS/aws_basic.md)
 
 * [EC2](AWS/aws_ec2.md)
+* [pem key로 접근하기](AWS/aws_pem_access.md)
+
