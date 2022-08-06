@@ -10,6 +10,7 @@ https://crispyblog.kr/development/common/10
 AWS 인바운드: https://dbjh.tistory.com/65
 https://velog.io/@lluna/%EB%82%B4%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-1.-Ubuntu-%EC%97%90-%EB%8F%84%EC%BB%A4%EC%99%80-Nginx-%EC%84%A4%EC%B9%98
 https://velog.io/@lluna/Deploy-EC2%EC%97%90-jenkins-nginx-%EB%A5%BC-%EB%8F%84%EC%BB%A4%EB%A1%9C-%EC%84%A4%EC%B9%98%EC%8B%9C-v%EB%A1%9C-%EB%B3%BC%EB%A5%A8-%EB%A7%A4%ED%95%91%ED%95%98%EA%B3%A0-%EA%B8%B0%EB%B3%B8-%EC%84%A4%EC%A0%95%ED%8C%8C%EC%9D%BC-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0
+http://dev.blog.sellmate.co.kr/post/continuous-deployment/
 ```
 
 ​            
@@ -221,41 +222,98 @@ $ docker run --name jenkins -d --restart always -p 9090:8080 -p 50000:50000 -e T
 
 ​                 
 
-### 8. Nginx
+### 8. Jenkins와 Github 연결
 
-* 설치
+* 라이브러리 설치: [Jenkins 관리] - [플러그인 관리]
 
-  ```bash
-  $ docker pull nginx # 설치
-  $ docker images # 확인
-  ```
+  ![image-20220806010013565](개인 프로젝트 AWS 배포.assets/image-20220806010013565.png)
 
-  ![image-20220805225401544](개인 프로젝트 AWS 배포.assets/image-20220805225401544.png)
+* Github API, Github, Gradle 플러그인 설치
 
-* 작동
+​              
 
-  ```bash
-  $ mkdir site-content # nginx 마운트 폴더
-  ```
+* Global Setting 설정
 
-  ```bash
-  docker run --name webserver 
-  -d 
-  --restart always 
-  -p 80:80
-  -v ~/site-content:/usr/share/nginx/html nginx
-  ```
+  ![image-20220806010605625](개인 프로젝트 AWS 배포.assets/image-20220806010605625.png)
 
-  ```bash
-  $ docker run --name webserver -d --restart always -p 80:80 -v ~/site-content:/usr/share/nginx/html nginx
-  ```
+  * JDK, Gradle 설정
 
-  * `-d`: detach - 백그라운드로 실행
-  * `-p`: HTTP 80번포트에 대한 엑세스 허가
+    ![image-20220806013645631](개인 프로젝트 AWS 배포.assets/image-20220806013645631.png)
 
-​            
+    ![image-20220806013704359](개인 프로젝트 AWS 배포.assets/image-20220806013704359.png)
 
+    
 
+​              
 
-​                     
+### 9. Github 연동
 
+* 프로젝트 생성
+
+![image-20220806013840866](개인 프로젝트 AWS 배포.assets/image-20220806013840866.png)
+
+* 바로 클론하지 않고 프로젝트 내부 최상위 루트에서 터미널 창을 연다.
+
+  * 만약 프로젝트명이 A라면 A디렉토리 내부 중 최상위 위치
+
+    ```bash
+    $ git init
+    $ git remote add origin [git 주소]
+    $ git add .
+    $ git commit -m "first CI"
+    $ git push origin master
+    ```
+
+  ![image-20220806014237388](개인 프로젝트 AWS 배포.assets/image-20220806014237388.png)
+
+* 토큰 발급: 자신의 깃허브에서 Profile - Settings - Developer Settings - Personal Access Token 클릭
+
+  * Generate New Token 클릭
+
+    * repo. webhook 체크
+
+      ![image-20220806015007953](개인 프로젝트 AWS 배포.assets/image-20220806015007953.png)
+
+    
+
+    
+
+* 레포지토리로 나가서 Webhook 설정
+
+  ![image-20220806015317096](개인 프로젝트 AWS 배포.assets/image-20220806015317096.png)
+
+  * webhook Payload URL 추가
+
+    ```
+    http://[EC2 ip 또는 DNS 주소]/github-webhook/
+    ```
+
+    ![image-20220806015606725](개인 프로젝트 AWS 배포.assets/image-20220806015606725.png)
+
+​           
+
+#### - Jenkins 세팅
+
+```
+https://junhyunny.github.io/information/jenkins/github/jenkins-github-webhook/
+```
+
+* 인증 등록
+
+  * Add를 눌러 인증을 등록하고 `Secret Text`선택 후 Secret에 token 넣기
+
+  ![image-20220806020550473](개인 프로젝트 AWS 배포.assets/image-20220806020550473.png)
+
+* 새로운 Item 클릭
+
+  ![image-20220806015750612](개인 프로젝트 AWS 배포.assets/image-20220806015750612.png)
+
+* 생성
+
+  ![image-20220806015900774](개인 프로젝트 AWS 배포.assets/image-20220806015900774.png)
+
+* Add를 눌러 인증을 등록하고 `Secret Text`선택 후 Secret에 token 넣기
+
+  ![image-20220806021237093](개인 프로젝트 AWS 배포.assets/image-20220806021237093.png)
+
+  
