@@ -284,6 +284,16 @@
    * [서버를 관리한다는 것](Docker/docker_01_server.md)
 2. [Docker&Jenkins&배포](/Docker/docker_basic.md)
 2. [Docker 기본 명령어](Docker/docker_basic_command.md)
+2. [개인 프로젝트 배포 With GiLab](/AWS/개인 프로젝트 AWS 배포.md)
+2. [MariaDB with Docker](/AWS/MariaDB docker d32f02a7f86d49f891012bce64a740ae.md)
+2. [Spring In Docker 상황에서 파일 업/다운로드](/AWS/aws_spring_docker_image_save.md)
+
+​          
+
+### Nginx
+
+1. [Nginx 설치](/AWS/nginx_basic)
+2. [Ubuntu Nginx 세팅](/Nginx/Ubuntu Nginx 세팅 800c408178ed4f298f3546de4c6730e7.md)
 
 ​               
 
