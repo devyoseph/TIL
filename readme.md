@@ -292,8 +292,8 @@
 
 ### Nginx
 
-1. [Nginx 설치](/AWS/nginx_basic)
-2. [Ubuntu Nginx 세팅](/Nginx/Ubuntu Nginx 세팅 800c408178ed4f298f3546de4c6730e7.md)
+1. [Nginx 설치](/AWS/nginx_basic.md)
+2. [Ubuntu Nginx 세팅](/Nginx/Ubuntu Nginx800c408178ed4f298f3546de4c6730e7.md)
 
 ​               
 
