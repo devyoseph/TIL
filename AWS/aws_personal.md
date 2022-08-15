@@ -226,7 +226,7 @@ $ docker run --name jenkins -d --restart always -p 9090:8080 -p 50000:50000 -e T
 
 * 라이브러리 설치: [Jenkins 관리] - [플러그인 관리]
 
-  ![image-20220806010013565](개인 프로젝트 AWS 배포.assets/image-20220806010013565.png)
+  ![image-20220806010013565](aws_personal.assets/image-20220806010013565.png)
 
 * Github API, Github, Gradle 플러그인 설치
 
@@ -234,11 +234,11 @@ $ docker run --name jenkins -d --restart always -p 9090:8080 -p 50000:50000 -e T
 
 * Global Setting 설정
 
-  ![image-20220806010605625](개인 프로젝트 AWS 배포.assets/image-20220806010605625.png)
+  ![image-20220806010605625](aws_personal.assets/image-20220806010605625.png)
 
   * JDK, Gradle 설정
 
-    ![image-20220806013645631](개인 프로젝트 AWS 배포.assets/image-20220806013645631.png)
+    ![image-20220806013645631](aws_personal.assets/image-20220806013645631.png)
 
     ![image-20220806013704359](개인 프로젝트 AWS 배포.assets/image-20220806013704359.png)
 
@@ -250,7 +250,7 @@ $ docker run --name jenkins -d --restart always -p 9090:8080 -p 50000:50000 -e T
 
 * 프로젝트 생성
 
-![image-20220806013840866](개인 프로젝트 AWS 배포.assets/image-20220806013840866.png)
+![image-20220806013840866](aws_personal.assets/image-20220806013840866.png)
 
 * 바로 클론하지 않고 프로젝트 내부 최상위 루트에서 터미널 창을 연다.
 
@@ -264,7 +264,7 @@ $ docker run --name jenkins -d --restart always -p 9090:8080 -p 50000:50000 -e T
     $ git push origin master
     ```
 
-  ![image-20220806014237388](개인 프로젝트 AWS 배포.assets/image-20220806014237388.png)
+  ![image-20220806014237388](aws_personal.assets/image-20220806014237388.png)
 
 * 토큰 발급: 자신의 깃허브에서 Profile - Settings - Developer Settings - Personal Access Token 클릭
 
@@ -272,7 +272,7 @@ $ docker run --name jenkins -d --restart always -p 9090:8080 -p 50000:50000 -e T
 
     * repo. webhook 체크
 
-      ![image-20220806015007953](개인 프로젝트 AWS 배포.assets/image-20220806015007953.png)
+      ![image-20220806015007953](aws_personal.assets/image-20220806015007953.png)
 
     
 
@@ -280,7 +280,7 @@ $ docker run --name jenkins -d --restart always -p 9090:8080 -p 50000:50000 -e T
 
 * 레포지토리로 나가서 Webhook 설정
 
-  ![image-20220806015317096](개인 프로젝트 AWS 배포.assets/image-20220806015317096.png)
+  ![image-20220806015317096](aws_personal.assets/image-20220806015317096.png)
 
   * webhook Payload URL 추가
 
@@ -288,7 +288,7 @@ $ docker run --name jenkins -d --restart always -p 9090:8080 -p 50000:50000 -e T
     http://[EC2 ip 또는 DNS 주소]/github-webhook/
     ```
 
-    ![image-20220806015606725](개인 프로젝트 AWS 배포.assets/image-20220806015606725.png)
+    ![image-20220806015606725](aws_personal.assets/image-20220806015606725.png)
 
 ​           
 
@@ -302,18 +302,18 @@ https://junhyunny.github.io/information/jenkins/github/jenkins-github-webhook/
 
   * Add를 눌러 인증을 등록하고 `Secret Text`선택 후 Secret에 token 넣기
 
-  ![image-20220806020550473](개인 프로젝트 AWS 배포.assets/image-20220806020550473.png)
+  ![image-20220806020550473](aws_personal.assets/image-20220806020550473.png)
 
 * 새로운 Item 클릭
 
-  ![image-20220806015750612](개인 프로젝트 AWS 배포.assets/image-20220806015750612.png)
+  ![image-20220806015750612](aws_personal.assets/image-20220806015750612.png)
 
 * 생성
 
-  ![image-20220806015900774](개인 프로젝트 AWS 배포.assets/image-20220806015900774.png)
+  ![image-20220806015900774](aws_personal.assets/image-20220806015900774.png)
 
 * Add를 눌러 인증을 등록하고 `Secret Text`선택 후 Secret에 token 넣기
 
-  ![image-20220806021237093](개인 프로젝트 AWS 배포.assets/image-20220806021237093.png)
+  ![image-20220806021237093](aws_personal.assets/image-20220806021237093.png)
 
   
