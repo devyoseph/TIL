@@ -1,4 +1,4 @@
-# 개인 프로젝트 AWS 배포
+# aws_personal
 
 ​                
 
