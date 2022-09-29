@@ -1,0 +1,1 @@
+docker run -d -p 8545:8545 hyperledger/besu:latest --network=dev --miner-enabled --miner-coinbase=0x172aB7431BdBdE9E485b477bF0f434Ab7B219Bb6 --rpc-http-enabled=true --rpc-http-host=0.0.0.0 --min-gas-price=0 --rpc-http-api=ETH,NET,IBFT --host-allowlist="*" --rpc-http-cors-origins="all”
